@@ -12,10 +12,6 @@ public class LevelTwo extends LevelParent {
 		boss = new Boss();
 	}
 
-	@Override
-	protected void initializeFriendlyUnits() {
-		getRoot().getChildren().add(getUser());
-	}
 
 	@Override
 	protected void checkIfGameOver() {
@@ -25,6 +21,11 @@ public class LevelTwo extends LevelParent {
 		else if (boss.isDestroyed()) {
 			winGame();
 		}
+	}
+
+	@Override
+	protected void initializeFriendlyUnits() {
+		getRoot().getChildren().add(getUser());
 	}
 
 	@Override

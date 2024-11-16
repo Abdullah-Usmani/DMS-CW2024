@@ -93,6 +93,7 @@ public class Boss extends FighterPlane {
 	}
 
 	private boolean bossFiresInCurrentFrame() {
+
 		return Math.random() < BOSS_FIRE_RATE;
 	}
 
