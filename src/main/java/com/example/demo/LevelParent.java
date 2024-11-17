@@ -158,28 +158,32 @@ public abstract class LevelParent extends Observable {
 		actors.removeAll(destroyedActors);
 	}
 
-	private void handlePlaneCollisions() {
-		handleCollisions(friendlyUnits, enemyUnits);
+	private boolean handlePlaneCollisions() {
+		return handleCollisions(friendlyUnits, enemyUnits);
 	}
 
-	private void handleUserProjectileCollisions() {
-		handleCollisions(userProjectiles, enemyUnits);
+	private boolean handleUserProjectileCollisions() {
+		System.out.println();
+		return handleCollisions(userProjectiles, enemyUnits);
 	}
 
-	private void handleEnemyProjectileCollisions() {
-		handleCollisions(enemyProjectiles, friendlyUnits);
+	private boolean handleEnemyProjectileCollisions() {
+		return handleCollisions(enemyProjectiles, friendlyUnits);
 	}
 
-	private void handleCollisions(List<ActiveActorDestructible> actors1,
+	private boolean handleCollisions(List<ActiveActorDestructible> actors1,
 			List<ActiveActorDestructible> actors2) {
+		boolean targetHit = false;
 		for (ActiveActorDestructible actor : actors2) {
 			for (ActiveActorDestructible otherActor : actors1) {
 				if (actor.getBoundsInParent().intersects(otherActor.getBoundsInParent())) {
 					actor.takeDamage();
 					otherActor.takeDamage();
+					targetHit = true;
 				}
 			}
 		}
+		return targetHit;
 	}
 
 	private void handleEnemyPenetration() {
@@ -192,16 +196,23 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private void updateLevelView() {
+
 		levelView.removeHearts(user.getHealth());
 	}
 
 	private void updateKillCount() {
-		for (int i = 0; i < currentNumberOfEnemies - enemyUnits.size(); i++) {
+		if (handleUserProjectileCollisions()) {
 			user.incrementKillCount();
+			System.out.println("User kill-count:" + user.getNumberOfKills());
+			System.out.println("User health:" + user.getHealth());
+		}
+		else {
+			System.out.println("Flag not working:" + user.getNumberOfKills());
 		}
 	}
 
 	private boolean enemyHasPenetratedDefenses(ActiveActorDestructible enemy) {
+//		say you adjust screen-size mid-game, does that penetrate defenses?
 		return Math.abs(enemy.getTranslateX()) > screenWidth;
 	}
 
@@ -224,6 +235,7 @@ public abstract class LevelParent extends Observable {
 	}
 
 	protected int getCurrentNumberOfEnemies() {
+		System.out.println("Enemies:" + enemyUnits.size());
 		return enemyUnits.size();
 	}
 

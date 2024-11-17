@@ -18,7 +18,6 @@ public abstract class FighterPlane extends ActiveActorDestructible {
 			this.destroy();
 		}
 	}
-
 	protected double getProjectileXPosition(double xPositionOffset) {
 		return getLayoutX() + getTranslateX() + xPositionOffset;
 	}
