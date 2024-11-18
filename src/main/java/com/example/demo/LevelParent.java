@@ -65,6 +65,7 @@ public abstract class LevelParent extends Observable {
 		initializeBackground();
 		initializeFriendlyUnits();
 		levelView.showHeartDisplay();
+		levelView.showKillDisplay();
 		return scene;
 	}
 
@@ -84,11 +85,9 @@ public abstract class LevelParent extends Observable {
 		generateEnemyFire();
 		updateNumberOfEnemies();
 		handleEnemyPenetration();         // Check for enemies penetrating defenses
-
 		boolean userProjectileCollisions = handleUserProjectileCollisions();
 		boolean enemyProjectileCollisions = handleEnemyProjectileCollisions();
 		boolean planeCollisions = handlePlaneCollisions();
-
 		removeAllDestroyedActors();       // Removes destroyed actors after collision checks
 		updateKillCount(userProjectileCollisions);
 		updateLevelView();                // Update health, kills, etc.
@@ -207,6 +206,7 @@ public abstract class LevelParent extends Observable {
 	private void updateLevelView() {
 
 		levelView.removeHearts(user.getHealth());
+		levelView.addKills(user.getNumberOfKills());
 	}
 
 	private void updateKillCount(boolean collisionDetected) {
