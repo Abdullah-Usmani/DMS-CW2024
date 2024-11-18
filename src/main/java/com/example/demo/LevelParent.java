@@ -204,9 +204,8 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private void updateLevelView() {
-
 		levelView.removeHearts(user.getHealth());
-		levelView.addKills(user.getNumberOfKills());
+		levelView.updateKills(user.getNumberOfKills());
 	}
 
 	private void updateKillCount(boolean collisionDetected) {

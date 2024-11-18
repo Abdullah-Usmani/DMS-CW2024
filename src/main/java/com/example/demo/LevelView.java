@@ -18,10 +18,10 @@ public class LevelView {
 	private final HeartDisplay heartDisplay;
 	private final KillDisplay killDisplay;
 
-	public LevelView(Group root, int heartsToDisplay, int killsToDisplay) {
+	public LevelView(Group root, int heartsToDisplay) {
 		this.root = root;
 		this.heartDisplay = new HeartDisplay(HEART_DISPLAY_X_POSITION, HEART_DISPLAY_Y_POSITION, heartsToDisplay);
-		this.killDisplay = new KillDisplay(KILL_DISPLAY_X_POSITION, KILL_DISPLAY_Y_POSITION, killsToDisplay);
+		this.killDisplay = new KillDisplay(KILL_DISPLAY_X_POSITION, KILL_DISPLAY_Y_POSITION);
 		this.winImage = new WinImage(WIN_IMAGE_X_POSITION, WIN_IMAGE_Y_POSITION);
 		this.gameOverImage = new GameOverImage(LOSS_SCREEN_X_POSITION, LOSS_SCREEN_Y_POSITION);
 	}
@@ -49,11 +49,8 @@ public class LevelView {
 		}
 	}
 
-	public void addKills(int currentKills) {
-		int currentNumberOfHearts = killDisplay.getContainer().getChildren().size();
-		for (int i = 0; i < currentNumberOfHearts - currentKills; i++) {
-			killDisplay.addKill();
-		}
+	public void updateKills(int newKillCount) {
+		killDisplay.updateKills(newKillCount);
 	}
 
 }
