@@ -75,6 +75,7 @@ public abstract class LevelParent extends Observable {
 	}
 
 	public void goToNextLevel(String levelName) {
+		timeline.stop();
 		setChanged();
 		notifyObservers(levelName);
 	}
@@ -164,11 +165,6 @@ public abstract class LevelParent extends Observable {
 
 	private boolean handleUserProjectileCollisions() {
 		boolean collision = handleCollisions(userProjectiles, enemyUnits);
-//		if (collision) {
-//			System.out.println("Collision detected in handleUserProjectileCollisions!");
-//			System.out.println("User projectiles: " + userProjectiles);
-//			System.out.println("Enemy units: " + enemyUnits);
-//		}
 		return collision;
 	}
 
@@ -187,7 +183,6 @@ public abstract class LevelParent extends Observable {
 					actor.takeDamage();
 					otherActor.takeDamage();
 					targetHit = true;
-					System.out.println("Collision detected: " + actor + " vs " + otherActor);
 				}
 			}
 		}
@@ -209,13 +204,10 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private void updateKillCount(boolean collisionDetected) {
-		System.out.println("Collision detected: " + collisionDetected); // Debug log
 		if (collisionDetected) {
 			user.incrementKillCount(); // Update kill count if a collision occurred
 			System.out.println("User kill-count: " + user.getNumberOfKills());
 			System.out.println("User health: " + user.getHealth());
-		} else {
-			System.out.println("No collision detected. Kill count: " + user.getNumberOfKills());
 		}
 	}
 
@@ -243,7 +235,6 @@ public abstract class LevelParent extends Observable {
 	}
 
 	protected int getCurrentNumberOfEnemies() {
-		System.out.println("Enemies:" + enemyUnits.size());
 		return enemyUnits.size();
 	}
 
