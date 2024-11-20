@@ -29,9 +29,10 @@ public abstract class LevelParent extends Observable {
 	private final List<ActiveActorDestructible> enemyUnits;
 	private final List<ActiveActorDestructible> userProjectiles;
 	private final List<ActiveActorDestructible> enemyProjectiles;
-	
+
 	private int currentNumberOfEnemies;
-	private final LevelView levelView;
+	protected final LevelView levelView;
+	protected abstract LevelView instantiateLevelView();
 
 	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
 		this.root = new Group();
@@ -58,8 +59,6 @@ public abstract class LevelParent extends Observable {
 	protected abstract void checkIfGameOver();
 
 	protected abstract void spawnEnemyUnits();
-
-	protected abstract LevelView instantiateLevelView();
 
 	public Scene initializeScene() {
 		initializeBackground();

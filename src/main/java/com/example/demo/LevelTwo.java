@@ -30,13 +30,16 @@ public class LevelTwo extends LevelParent {
 	@Override
 	protected void spawnEnemyUnits() {
 		if (getCurrentNumberOfEnemies() == 0) {
+			Boss boss = new Boss();
+			boss.setLevelView(levelView); // Set the LevelView reference
 			addEnemyUnit(boss);
 		}
 	}
 
+
 	@Override
 	protected LevelView instantiateLevelView() {
-        return new LevelViewLevelTwo(getRoot(), PLAYER_INITIAL_HEALTH);
+		return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
 	}
 
 }
