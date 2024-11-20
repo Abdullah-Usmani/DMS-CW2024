@@ -206,7 +206,7 @@ public abstract class LevelParent extends Observable {
 		if (collisionDetected) {
 			user.incrementKillCount(); // Update kill count if a collision occurred
 			System.out.println("User kill-count: " + user.getNumberOfKills());
-			System.out.println("User health: " + user.getHealth());
+//			System.out.println("User health: " + user.getHealth());
 		}
 	}
 
@@ -218,6 +218,7 @@ public abstract class LevelParent extends Observable {
 	protected void winGame() {
 		timeline.stop();
 		levelView.showWinImage();
+		System.out.println("You win!");
 	}
 
 	protected void loseGame() {

@@ -8,7 +8,8 @@ public class LevelTwo extends LevelParent {
 
     public LevelTwo(double screenHeight, double screenWidth) {
 		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
-		boss = new Boss();
+		this.boss = new Boss();
+		this.boss.setLevelView(levelView);
 	}
 
 
@@ -18,6 +19,7 @@ public class LevelTwo extends LevelParent {
 			loseGame();
 		}
 		else if (boss.isDestroyed()) {
+			System.out.println("Boss Destroyed");
 			winGame();
 		}
 	}
@@ -29,9 +31,8 @@ public class LevelTwo extends LevelParent {
 
 	@Override
 	protected void spawnEnemyUnits() {
-		if (getCurrentNumberOfEnemies() == 0) {
-			Boss boss = new Boss();
-			boss.setLevelView(levelView); // Set the LevelView reference
+		if (getCurrentNumberOfEnemies() == 0 && !boss.isDestroyed()) {
+			System.out.println("SPAWNING BOSS");
 			addEnemyUnit(boss);
 		}
 	}

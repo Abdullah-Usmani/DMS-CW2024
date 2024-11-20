@@ -59,7 +59,6 @@ public class LevelView {
 		killDisplay.updateKills(newKillCount);
 	}
 
-	// Add Shield Handling
 	public void showShield() {
 		if (!root.getChildren().contains(shieldImage)) {
 			root.getChildren().add(shieldImage); // Add shield to root if not already added
