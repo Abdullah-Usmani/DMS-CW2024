@@ -17,6 +17,7 @@ public abstract class ActiveActor extends ImageView {
 
 	public abstract void updatePosition();
 
+
 	protected void moveHorizontally(double horizontalMove) {
 		this.setTranslateX(getTranslateX() + horizontalMove);
 	}
@@ -24,5 +25,4 @@ public abstract class ActiveActor extends ImageView {
 	protected void moveVertically(double verticalMove) {
 		this.setTranslateY(getTranslateY() + verticalMove);
 	}
-
 }

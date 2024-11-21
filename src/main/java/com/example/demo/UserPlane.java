@@ -28,6 +28,7 @@ public class UserPlane extends FighterPlane {
 			if (newPosition < Y_UPPER_BOUND || newPosition > Y_LOWER_BOUND) {
 				this.setTranslateY(initialTranslateY);
 			}
+			super.updatePosition();
 		}
 	}
 	

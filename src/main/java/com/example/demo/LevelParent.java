@@ -205,7 +205,7 @@ public abstract class LevelParent extends Observable {
 	private void updateKillCount(boolean collisionDetected) {
 		if (collisionDetected) {
 			user.incrementKillCount(); // Update kill count if a collision occurred
-			System.out.println("User kill-count: " + user.getNumberOfKills());
+			System.out.println("User hit-count: " + user.getNumberOfKills());
 //			System.out.println("User health: " + user.getHealth());
 		}
 	}

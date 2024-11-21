@@ -21,6 +21,15 @@ public class Main extends Application {
 		myController.launchGame();
 	}
 
+	public static int getScreenWidth() {
+		return SCREEN_WIDTH;
+	}
+
+	public static int getScreenHeight() {
+		return SCREEN_HEIGHT;
+	}
+
+
 	public static void main(String[] args) {
 		launch();
 	}

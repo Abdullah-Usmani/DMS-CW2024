@@ -9,7 +9,7 @@ public class LevelView {
 	private static final double KILL_DISPLAY_X_POSITION = 1000;
 	private static final double KILL_DISPLAY_Y_POSITION = 25;
 	private static final double SHIELD_X_POSITION = 1150;
-	private static final double SHIELD_Y_POSITION = 500;
+	private static final double SHIELD_Y_POSITION = 25;
 	private static final int WIN_IMAGE_X_POSITION = 0;
 	private static final int WIN_IMAGE_Y_POSITION = 0;
 	private static final int LOSS_SCREEN_X_POSITION = 0;
@@ -41,7 +41,6 @@ public class LevelView {
 
 	public void showWinImage() {
 		root.getChildren().add(winImage);
-		winImage.showWinImage();
 	}
 
 	public void showGameOverImage() {
