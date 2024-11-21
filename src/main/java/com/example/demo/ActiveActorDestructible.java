@@ -19,24 +19,13 @@ public abstract class ActiveActorDestructible extends ActiveActor implements Des
 	public void updatePosition() {
         double x = getLayoutX() + getTranslateX();
 		double y = getLayoutY() + getTranslateY();
-
-//		System.out.println("X: " + x + " Y: " + y);
-
 		if (isOutOfBounds(x, Main.getScreenWidth())) {
 //			System.out.println("Class: " + this.getClass().getSimpleName());
 //			System.out.println( "Width: " + Main.getScreenHeight() + " Height: " + Main.getScreenWidth());
 //			System.out.println("X: " + x + " Y: " + y);
-			System.out.println(this.getClass().getSimpleName() + " exited bounds and was destroyed.");
+//			System.out.println(this.getClass().getSimpleName() + " exited bounds and was destroyed.");
 			this.destroy(); // Mark projectile as destroyed
 		}
-
-//		if (x > Main.getScreenWidth()) {
-//			System.out.println("Class: " + this.getClass().getSimpleName());
-//			System.out.println( "Width: " + Main.getScreenHeight() + " Height: " + Main.getScreenWidth());
-//			System.out.println("X: " + x + " Y: " + y);
-//			System.out.println(this.getClass().getSimpleName() + " has went way far out to the right");
-//			this.destroy(); // Mark projectile as destroyed
-//		}
 	}
 
 	public abstract void updateActor();

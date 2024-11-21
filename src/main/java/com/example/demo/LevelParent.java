@@ -89,7 +89,7 @@ public abstract class LevelParent extends Observable {
 		boolean enemyProjectileCollisions = handleEnemyProjectileCollisions();
 		boolean planeCollisions = handlePlaneCollisions();
 		removeAllDestroyedActors();       // Removes destroyed actors after collision checks
-		updateKillCount(userProjectileCollisions);
+		updateHitCount(userProjectileCollisions);
 		updateLevelView();                // Update health, kills, etc.
 		checkIfGameOver();                // Check game-over conditions
 	}
@@ -199,13 +199,13 @@ public abstract class LevelParent extends Observable {
 
 	private void updateLevelView() {
 		levelView.removeHearts(user.getHealth());
-		levelView.updateKills(user.getNumberOfKills());
+		levelView.updateKills(user.getNumberOfHits());
 	}
 
-	private void updateKillCount(boolean collisionDetected) {
+	private void updateHitCount(boolean collisionDetected) {
 		if (collisionDetected) {
-			user.incrementKillCount(); // Update kill count if a collision occurred
-			System.out.println("User hit-count: " + user.getNumberOfKills());
+			user.incrementHitCount(); // Update kill count if a collision occurred
+			System.out.println("User hit-count: " + user.getNumberOfHits());
 //			System.out.println("User health: " + user.getHealth());
 		}
 	}

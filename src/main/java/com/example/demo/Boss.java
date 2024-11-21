@@ -26,6 +26,7 @@ public class Boss extends FighterPlane {
 	private int framesWithShieldActivated;
 	private LevelView levelView;
 
+
 	public Boss() {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, HEALTH);
 		movePattern = new ArrayList<>();
@@ -65,11 +66,6 @@ public class Boss extends FighterPlane {
 			System.out.println("Boss health: " + getHealth());
 		}
 	}
-
-//	@Override
-//	public boolean isDestroyed() {
-//		return super.getHealth() <= 0; // Return true if health is 0 or less
-//	}
 
 	private void initializeMovePattern() {
 		for (int i = 0; i < MOVE_FREQUENCY_PER_CYCLE; i++) {
