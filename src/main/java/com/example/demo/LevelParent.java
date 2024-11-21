@@ -123,8 +123,12 @@ public abstract class LevelParent extends Observable {
 
 	private void fireProjectile() {
 		ActiveActorDestructible projectile = user.fireProjectile();
-		root.getChildren().add(projectile);
-		userProjectiles.add(projectile);
+		if (projectile != null) { // Only add the projectile if it is not null
+			root.getChildren().add(projectile);
+			userProjectiles.add(projectile);
+		} else {
+			System.out.println("Cooldown active: No projectile fired.");
+		}
 	}
 
 	private void generateEnemyFire() {

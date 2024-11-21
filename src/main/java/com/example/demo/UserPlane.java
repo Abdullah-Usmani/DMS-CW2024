@@ -11,8 +11,10 @@ public class UserPlane extends FighterPlane {
 	private static final int VERTICAL_VELOCITY = 8;
 	private static final int PROJECTILE_X_POSITION = 110;
 	private static final int PROJECTILE_Y_POSITION_OFFSET = 0;
+	private static final long FIRE_RATE_COOLDOWN = 150; // Cooldown in milliseconds
 	private int velocityMultiplier;
 	private int numberOfHits;
+	private long lastFiredTime; // Tracks the last projectile fire time
 
 	public UserPlane(int initialHealth) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, initialHealth);
@@ -36,12 +38,20 @@ public class UserPlane extends FighterPlane {
 	public void updateActor() {
 		updatePosition();
 	}
-	
+
 	@Override
 	public ActiveActorDestructible fireProjectile() {
-//		esh daa? What's with the offsets
-		return new UserProjectile(PROJECTILE_X_POSITION, getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET));
+		long currentTime = System.currentTimeMillis();
+		if (currentTime - lastFiredTime >= FIRE_RATE_COOLDOWN) { // Check cooldown
+			lastFiredTime = currentTime; // Update last fired time
+			return new UserProjectile(PROJECTILE_X_POSITION, getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET));
+		} else {
+			// Cooldown active, no projectile fired
+			System.out.println("Cooldown active, cannot fire yet!");
+			return null;
+		}
 	}
+
 
 	private boolean isMoving() {
 		return velocityMultiplier != 0;
