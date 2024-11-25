@@ -1,23 +1,27 @@
 package com.example.demo;
 
+import com.example.demo.controller.Main;
+
 import java.util.*;
 
 public class Boss extends FighterPlane {
 
+	private static final int SCREEN_HEIGHT = Main.getScreenHeight();
+	private static final int SCREEN_WIDTH = Main.getScreenWidth();
 	private static final String IMAGE_NAME = "bossplane.png";
-	private static final double INITIAL_X_POSITION = 1000.0;
-	private static final double INITIAL_Y_POSITION = 400;
-	private static final double PROJECTILE_Y_POSITION_OFFSET = 75.0;
+	private static final int IMAGE_HEIGHT =  (int) (SCREEN_HEIGHT * .1);
+	private static final double INITIAL_X_POSITION = SCREEN_WIDTH - (SCREEN_WIDTH * .3);
+	private static final double INITIAL_Y_POSITION = SCREEN_HEIGHT * .5;
+	private static final int Y_POSITION_UPPER_BOUND =  (int) -(SCREEN_HEIGHT * .01);
+	private static final int Y_POSITION_LOWER_BOUND = SCREEN_HEIGHT - (2*IMAGE_HEIGHT) - Y_POSITION_UPPER_BOUND;
+	private static final int VERTICAL_VELOCITY = (int) (SCREEN_HEIGHT * .0075);
+	private static final double PROJECTILE_Y_POSITION_OFFSET = ((double) IMAGE_HEIGHT /2);
 	private static final double BOSS_FIRE_RATE = .04;
 	private static final double BOSS_SHIELD_PROBABILITY = .01;
-	private static final int IMAGE_HEIGHT = 100;
-	private static final int VERTICAL_VELOCITY = 8;
 	private static final int HEALTH = 15;
-	private static final int MOVE_FREQUENCY_PER_CYCLE = 5;
 	private static final int ZERO = 0;
+	private static final int MOVE_FREQUENCY_PER_CYCLE = 5;
 	private static final int MAX_FRAMES_WITH_SAME_MOVE = 10;
-	private static final int Y_POSITION_UPPER_BOUND = -100;
-	private static final int Y_POSITION_LOWER_BOUND = 475;
 	private static final int MAX_FRAMES_WITH_SHIELD = 50;
 	private final List<Integer> movePattern;
 	private boolean isShielded;
@@ -47,7 +51,7 @@ public class Boss extends FighterPlane {
 		}
 		super.updatePosition();
 	}
-	
+
 	@Override
 	public void updateActor() {
 		updatePosition();
@@ -58,10 +62,10 @@ public class Boss extends FighterPlane {
 	public ActiveActorDestructible fireProjectile() {
 		return bossFiresInCurrentFrame() ? new BossProjectile(getProjectileInitialPosition()) : null;
 	}
-	
+
 	@Override
 	public void takeDamage() {
-		if (!isShielded) {
+		if (!isShielded && getHealth() > 0) {
 			super.takeDamage();
 			System.out.println("Boss health: " + getHealth());
 		}
@@ -114,6 +118,10 @@ public class Boss extends FighterPlane {
 
 	private double getProjectileInitialPosition() {
 		return getLayoutY() + getTranslateY() + PROJECTILE_Y_POSITION_OFFSET;
+
+	}
+	static double getBossXPosition() {
+		return INITIAL_X_POSITION;
 	}
 
 	private boolean shieldShouldBeActivated() {

@@ -126,9 +126,10 @@ public abstract class LevelParent extends Observable {
 		if (projectile != null) { // Only add the projectile if it is not null
 			root.getChildren().add(projectile);
 			userProjectiles.add(projectile);
-		} else {
-			System.out.println("Cooldown active: No projectile fired.");
 		}
+//		else {
+//			System.out.println("Cooldown active: No projectile fired.");
+//		}
 	}
 
 	private void generateEnemyFire() {

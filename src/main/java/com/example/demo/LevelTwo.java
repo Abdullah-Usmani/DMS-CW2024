@@ -21,9 +21,6 @@ public class LevelTwo extends LevelParent {
 	protected void initializeFriendlyUnits() {
 		// Add the player unit
 		getRoot().getChildren().add(getUser());
-
-		// Add the BossHealthDisplay to the root node
-		getRoot().getChildren().add(bossHealthDisplay.getContainer());
 	}
 
 	@Override
@@ -31,13 +28,14 @@ public class LevelTwo extends LevelParent {
 		if (getCurrentNumberOfEnemies() == 0 && !boss.isDestroyed()) {
 			System.out.println("SPAWNING BOSS");
 			addEnemyUnit(boss);
+			getRoot().getChildren().add(bossHealthDisplay.getContainer());
 		}
-		// Update the boss health display after spawning logic
-		bossHealthDisplay.updateHealth(boss.getHealth());
 	}
 
 	@Override
 	protected void checkIfGameOver() {
+		// Update the boss health display after spawning logic
+		bossHealthDisplay.updateHealth(boss.getHealth());
 		if (userIsDestroyed()) {
 			loseGame();
 		} else if (boss.isDestroyed()) {
