@@ -3,6 +3,7 @@ package com.example.demo;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.example.demo.controller.Controller;
 import javafx.animation.*;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -19,14 +20,13 @@ public abstract class LevelParent extends Observable {
 	private final double screenWidth;
 	private final double enemyMaximumYPosition;
 	private boolean isPaused;
-//	private boolean pauseLock = false;
 
+	private static Controller controller; // Reference to Controller
 	private final Group root;
 	private final Timeline timeline;
 	private final UserPlane user;
 	private final Scene scene;
 	private final ImageView background;
-//	private final PauseMenu pauseMenu;
 
 	private final List<ActiveActorDestructible> friendlyUnits;
 	private final List<ActiveActorDestructible> enemyUnits;
@@ -41,8 +41,6 @@ public abstract class LevelParent extends Observable {
         this.root = new Group();
 		this.scene = new Scene(root, screenWidth, screenHeight);
 		this.timeline = new Timeline();
-//		this.pauseMenu = new PauseMenu(screenWidth, screenHeight); // Initialize pause menu
-//		this.isPaused = false;
 		this.user = new UserPlane(playerInitialHealth);
 		this.friendlyUnits = new ArrayList<>();
 		this.enemyUnits = new ArrayList<>();
@@ -57,9 +55,6 @@ public abstract class LevelParent extends Observable {
 		this.currentNumberOfEnemies = 0;
 		initializeTimeline();
 		friendlyUnits.add(user);
-
-//		pauseMenu.getContinueButton().setOnAction(event -> togglePauseMenu()); // Resume game
-//		pauseMenu.getExitButton().setOnAction(event -> System.exit(0));        // Exit game
 	}
 
 	protected abstract void initializeFriendlyUnits();
@@ -134,48 +129,6 @@ public abstract class LevelParent extends Observable {
 			}
 		});
 	}
-
-//	private void initializePauseMenuActions() {
-//		// Action for Continue Button
-//		pauseMenu.getContinueButton().setOnAction(event -> togglePauseMenu());
-//
-//		// Action for Exit Button
-//		pauseMenu.getExitButton().setOnAction(event -> {
-//			System.out.println("Exiting game...");
-//			System.exit(0); // Exit the application
-//		});
-//	}
-//
-//	private void togglePauseMenu() {
-//		if (pauseLock) {
-//			return; // Ignore if already processing a pause toggle
-//		}
-//
-//		pauseLock = true; // Lock the toggle to prevent re-entrance
-//
-//		if (isPaused) {
-//			// Resume game logic
-//			timeline.play();
-//			System.out.println("Game Resumed");
-//
-//			// Update UI
-//			javafx.application.Platform.runLater(() -> {
-//				root.getChildren().remove(pauseMenu);
-//				pauseLock = false; // Unlock after the UI update
-//			});
-//		} else {
-//			// Pause game logic
-//			timeline.pause();
-//			System.out.println("Game Paused");
-//
-//			// Update UI
-//			javafx.application.Platform.runLater(() -> {
-//				root.getChildren().add(pauseMenu);
-//				pauseLock = false; // Unlock after the UI update
-//			});
-//		}
-//		isPaused = !isPaused;
-//	}
 
 	private void fireProjectile() {
 		ActiveActorDestructible projectile = user.fireProjectile();
@@ -269,19 +222,53 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private boolean enemyHasPenetratedDefenses(ActiveActorDestructible enemy) {
-//		say you adjust screen-size mid-game, does that penetrate defenses?
 		return Math.abs(enemy.getTranslateX()) > screenWidth;
+	}
+
+	// Static method to set the Controller
+	public static void setController(Controller gameController) {
+		controller = gameController;
 	}
 
 	protected void winGame() {
 		timeline.stop();
 		levelView.showWinImage();
-		System.out.println("You win!");
+
+		// Show EndGameMenu with "You Win" message
+		EndGameMenu endGameMenu = new EndGameMenu("You Win!", screenWidth, screenHeight);
+		setupEndGameMenuActions(endGameMenu);
+		root.getChildren().add(endGameMenu);
 	}
 
 	protected void loseGame() {
 		timeline.stop();
 		levelView.showGameOverImage();
+
+		// Show EndGameMenu with "Game Over" message
+		EndGameMenu endGameMenu = new EndGameMenu("Game Over", screenWidth, screenHeight);
+		setupEndGameMenuActions(endGameMenu);
+		root.getChildren().add(endGameMenu);
+	}
+
+	private void setupEndGameMenuActions(EndGameMenu endGameMenu) {
+		endGameMenu.getExitButton().setOnAction(event -> {
+			System.out.println("Exiting game...");
+			System.exit(0); // Exit the application
+		});
+
+		endGameMenu.getRestartButton().setOnAction(event -> {
+			System.out.println("Restarting game...");
+			restartGame();
+		});
+	}
+
+	private void restartGame() {
+		try {
+			controller.goToLevel(Controller.LEVEL_ONE_CLASS_NAME); // Call Controller to restart the game
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Failed to restart the game.");
+		}
 	}
 
 	public void pauseGame() {
