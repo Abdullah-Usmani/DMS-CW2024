@@ -18,12 +18,15 @@ public abstract class LevelParent extends Observable {
 	private final double screenHeight;
 	private final double screenWidth;
 	private final double enemyMaximumYPosition;
+	private boolean isPaused;
+//	private boolean pauseLock = false;
 
 	private final Group root;
 	private final Timeline timeline;
 	private final UserPlane user;
 	private final Scene scene;
 	private final ImageView background;
+//	private final PauseMenu pauseMenu;
 
 	private final List<ActiveActorDestructible> friendlyUnits;
 	private final List<ActiveActorDestructible> enemyUnits;
@@ -35,9 +38,11 @@ public abstract class LevelParent extends Observable {
 	protected abstract LevelView instantiateLevelView();
 
 	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
-		this.root = new Group();
+        this.root = new Group();
 		this.scene = new Scene(root, screenWidth, screenHeight);
 		this.timeline = new Timeline();
+//		this.pauseMenu = new PauseMenu(screenWidth, screenHeight); // Initialize pause menu
+//		this.isPaused = false;
 		this.user = new UserPlane(playerInitialHealth);
 		this.friendlyUnits = new ArrayList<>();
 		this.enemyUnits = new ArrayList<>();
@@ -52,6 +57,9 @@ public abstract class LevelParent extends Observable {
 		this.currentNumberOfEnemies = 0;
 		initializeTimeline();
 		friendlyUnits.add(user);
+
+//		pauseMenu.getContinueButton().setOnAction(event -> togglePauseMenu()); // Resume game
+//		pauseMenu.getExitButton().setOnAction(event -> System.exit(0));        // Exit game
 	}
 
 	protected abstract void initializeFriendlyUnits();
@@ -62,6 +70,8 @@ public abstract class LevelParent extends Observable {
 
 	public Scene initializeScene() {
 		initializeBackground();
+		initializeKeyListeners();
+//		initializePauseMenuActions();
 		initializeFriendlyUnits();
 		levelView.showHeartDisplay();
 		levelView.showKillDisplay();
@@ -104,22 +114,68 @@ public abstract class LevelParent extends Observable {
 		background.setFocusTraversable(true);
 		background.setFitHeight(screenHeight);
 		background.setFitWidth(screenWidth);
-		background.setOnKeyPressed(new EventHandler<KeyEvent>() {
+		root.getChildren().add(background);
+	}
+
+	private void initializeKeyListeners() {
+		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent e) {
 				KeyCode kc = e.getCode();
 				if (kc == KeyCode.UP) user.moveUp();
 				if (kc == KeyCode.DOWN) user.moveDown();
 				if (kc == KeyCode.SPACE) fireProjectile();
+//				if (kc == KeyCode.P) togglePauseMenu();
 			}
 		});
-		background.setOnKeyReleased(new EventHandler<KeyEvent>() {
+		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent e) {
 				KeyCode kc = e.getCode();
 				if (kc == KeyCode.UP || kc == KeyCode.DOWN) user.stop();
 			}
 		});
-		root.getChildren().add(background);
 	}
+
+//	private void initializePauseMenuActions() {
+//		// Action for Continue Button
+//		pauseMenu.getContinueButton().setOnAction(event -> togglePauseMenu());
+//
+//		// Action for Exit Button
+//		pauseMenu.getExitButton().setOnAction(event -> {
+//			System.out.println("Exiting game...");
+//			System.exit(0); // Exit the application
+//		});
+//	}
+//
+//	private void togglePauseMenu() {
+//		if (pauseLock) {
+//			return; // Ignore if already processing a pause toggle
+//		}
+//
+//		pauseLock = true; // Lock the toggle to prevent re-entrance
+//
+//		if (isPaused) {
+//			// Resume game logic
+//			timeline.play();
+//			System.out.println("Game Resumed");
+//
+//			// Update UI
+//			javafx.application.Platform.runLater(() -> {
+//				root.getChildren().remove(pauseMenu);
+//				pauseLock = false; // Unlock after the UI update
+//			});
+//		} else {
+//			// Pause game logic
+//			timeline.pause();
+//			System.out.println("Game Paused");
+//
+//			// Update UI
+//			javafx.application.Platform.runLater(() -> {
+//				root.getChildren().add(pauseMenu);
+//				pauseLock = false; // Unlock after the UI update
+//			});
+//		}
+//		isPaused = !isPaused;
+//	}
 
 	private void fireProjectile() {
 		ActiveActorDestructible projectile = user.fireProjectile();
@@ -127,9 +183,6 @@ public abstract class LevelParent extends Observable {
 			root.getChildren().add(projectile);
 			userProjectiles.add(projectile);
 		}
-//		else {
-//			System.out.println("Cooldown active: No projectile fired.");
-//		}
 	}
 
 	private void generateEnemyFire() {
@@ -229,6 +282,22 @@ public abstract class LevelParent extends Observable {
 	protected void loseGame() {
 		timeline.stop();
 		levelView.showGameOverImage();
+	}
+
+	public void pauseGame() {
+		if (!isPaused) {
+			System.out.println("Pausing game...");
+			timeline.pause(); // Pauses the main game loop
+			isPaused = true;
+		}
+	}
+
+	public void resumeGame() {
+		if (isPaused) {
+			System.out.println("Resuming game...");
+			timeline.play(); // Resumes the main game loop
+			isPaused = false;
+		}
 	}
 
 	protected UserPlane getUser() {
