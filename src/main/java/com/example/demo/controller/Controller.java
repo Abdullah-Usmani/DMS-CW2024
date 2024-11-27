@@ -22,7 +22,7 @@ public class Controller implements Observer {
 	private LevelParent currentLevel;
 	private boolean isPaused = false; // Track pause state
 	private final Timeline timeline;
-	private LevelTwo levelTwo;
+//	private LevelTwo levelTwo;
 
 	public Controller(Stage stage) {
 		this.stage = stage;
@@ -60,8 +60,10 @@ public class Controller implements Observer {
 		LevelParent myLevel = (LevelParent) constructor.newInstance(stage.getHeight(), stage.getWidth());
 		myLevel.addObserver(this);
 		Scene scene = myLevel.initializeScene();
+		scene.addEventHandler(KeyEvent.KEY_PRESSED, this::handleKeyPress);
 		stage.setScene(scene);
 		myLevel.startGame();
+		currentLevel = myLevel; // Set the current level reference
 	}
 
 	private void handleKeyPress(KeyEvent event) {

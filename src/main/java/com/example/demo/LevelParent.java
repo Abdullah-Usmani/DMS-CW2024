@@ -119,7 +119,6 @@ public abstract class LevelParent extends Observable {
 				if (kc == KeyCode.UP) user.moveUp();
 				if (kc == KeyCode.DOWN) user.moveDown();
 				if (kc == KeyCode.SPACE) fireProjectile();
-//				if (kc == KeyCode.P) togglePauseMenu();
 			}
 		});
 		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
