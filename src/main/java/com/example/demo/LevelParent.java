@@ -182,13 +182,18 @@ public abstract class LevelParent extends Observable {
 		return handleCollisions(enemyProjectiles, friendlyUnits);
 	}
 
-	private boolean handleCollisions(List<ActiveActorDestructible> actors1,
-									 List<ActiveActorDestructible> actors2) {
+	private boolean handleCollisions(List<ActiveActorDestructible> actors1, List<ActiveActorDestructible> actors2) {
 		boolean targetHit = false;
 		for (ActiveActorDestructible actor : actors2) {
 			for (ActiveActorDestructible otherActor : actors1) {
-//				System.out.println("Checking collision between " + actor + " and " + otherActor);
 				if (actor.getBoundsInParent().intersects(otherActor.getBoundsInParent())) {
+					// Calculate collision coordinates
+					double collisionX = actor.getBoundsInParent().getMinX();
+					double collisionY = actor.getBoundsInParent().getMinY();
+
+					// Use ExplosionEffect to handle explosion
+					ExplosionEffect.createExplosion(collisionX, collisionY, root);
+
 					actor.takeDamage();
 					otherActor.takeDamage();
 					targetHit = true;
