@@ -191,8 +191,16 @@ public abstract class LevelParent extends Observable {
 					double collisionX = actor.getBoundsInParent().getMinX();
 					double collisionY = actor.getBoundsInParent().getMinY();
 
-					// Use ExplosionEffect to handle explosion
-					ExplosionEffect.createExplosion(collisionX, collisionY, root);
+					// Determine collision type and trigger corresponding effect
+					if (actor instanceof EnemyPlane && otherActor instanceof Projectile) {
+						handleCollisionEffects(collisionX, collisionY, "PLANE_PROJECTILE");
+					} else if (actor instanceof EnemyPlane && otherActor instanceof UserPlane) {
+						handleCollisionEffects(collisionX, collisionY, "PLANE_PLANE");
+					} else if (actor instanceof Projectile && otherActor instanceof Projectile) {
+						handleCollisionEffects(collisionX, collisionY, "PROJECTILE_PROJECTILE");
+					} else {
+						handleCollisionEffects(collisionX, collisionY, "DEFAULT");
+					}
 
 					actor.takeDamage();
 					otherActor.takeDamage();
@@ -201,6 +209,43 @@ public abstract class LevelParent extends Observable {
 			}
 		}
 		return targetHit;
+	}
+
+	private void handleCollisionEffects(double x, double y, String collisionType) {
+		ExplosionEffect explosionEffect;
+
+		switch (collisionType) {
+			case "PLANE_PROJECTILE":
+				explosionEffect = new ExplosionEffect(
+						"/com/example/demo/images/explosion1.png",
+						50, 50, 1.0,
+						"/com/example/demo/sounds/small_explosion.wav"
+				);
+				break;
+			case "PLANE_PLANE":
+				explosionEffect = new ExplosionEffect(
+						"/com/example/demo/images/explosion1.png",
+						100, 100, 1.5,
+						"/com/example/demo/sounds/large_explosion.wav"
+				);
+				break;
+			case "PROJECTILE_PROJECTILE":
+				explosionEffect = new ExplosionEffect(
+						"/com/example/demo/images/explosion1.png",
+						30, 30, 0.5,
+						"/com/example/demo/sounds/sparks.wav"
+				);
+				break;
+			default:
+				explosionEffect = new ExplosionEffect(
+						"/com/example/demo/images/explosion1.png",
+						50, 50, 1.0,
+						"/com/example/demo/sounds/default_explosion.wav"
+				);
+		}
+
+		// Trigger the effect
+		explosionEffect.createEffect(x, y, root);
 	}
 
 	private void handleEnemyPenetration() {
