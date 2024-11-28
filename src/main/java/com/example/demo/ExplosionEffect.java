@@ -4,7 +4,7 @@ import javafx.animation.FadeTransition;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-//import javafx.scene.media.AudioClip;
+import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
 
 public class ExplosionEffect {
@@ -35,7 +35,7 @@ public class ExplosionEffect {
         root.getChildren().add(explosion);
 
         // Play the sound effect
-//        playSoundEffect();
+        playSoundEffect();
 
         // Create a fade-out animation
         FadeTransition fadeOut = new FadeTransition(Duration.seconds(fadeDuration), explosion);
@@ -47,10 +47,10 @@ public class ExplosionEffect {
         fadeOut.play();
     }
 
-//    private void playSoundEffect() {
-//        if (soundPath != null) {
-//            AudioClip explosionSound = new AudioClip(getClass().getResource(soundPath).toExternalForm());
-//            explosionSound.play();
-//        }
-//    }
+    private void playSoundEffect() {
+        if (soundPath != null) {
+            AudioClip explosionSound = new AudioClip(getClass().getResource(soundPath).toExternalForm());
+            explosionSound.play();
+        }
+    }
 }
