@@ -2,19 +2,19 @@ package com.example.demo;
 
 import com.example.demo.controller.Main;
 
-public class EnemyPlane extends FighterPlane {
+public class EnemyPlane2 extends FighterPlane {
 
 	private static final int SCREEN_HEIGHT = Main.getScreenHeight();
 	private static final int SCREEN_WIDTH = Main.getScreenWidth();
-	private static final String IMAGE_NAME = "enemyplane.png";
-	private static final int IMAGE_HEIGHT = (int) (SCREEN_HEIGHT * .05);
+	private static final String IMAGE_NAME = "Mig-29.png";
+	private static final int IMAGE_HEIGHT = (int) (SCREEN_HEIGHT * .07);
 	private static final int HORIZONTAL_VELOCITY = (int) -(SCREEN_WIDTH * .0025);;
 	private static final double PROJECTILE_X_POSITION_OFFSET = (int) -(SCREEN_WIDTH * .05);
 	private static final double PROJECTILE_Y_POSITION_OFFSET = (double) IMAGE_HEIGHT /2;
-	private static final int INITIAL_HEALTH = 1;
-	private static final double FIRE_RATE = .01;
+	private static final int INITIAL_HEALTH = 2;
+	private static final double FIRE_RATE = .02;
 
-	public EnemyPlane(double initialXPos, double initialYPos) {
+	public EnemyPlane2(double initialXPos, double initialYPos) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, initialXPos, initialYPos, INITIAL_HEALTH);
 	}
 

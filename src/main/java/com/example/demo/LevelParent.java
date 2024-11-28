@@ -15,7 +15,7 @@ import javafx.util.Duration;
 public abstract class LevelParent extends Observable {
 
 	private static final double SCREEN_HEIGHT_ADJUSTMENT = 150;
-	private static final int MILLISECOND_DELAY = (int) 1000/60;
+	private static final int MILLISECOND_DELAY = 30;
 	private final double screenHeight;
 	private final double screenWidth;
 	private final double enemyMaximumYPosition;
@@ -219,28 +219,28 @@ public abstract class LevelParent extends Observable {
 				explosionEffect = new ExplosionEffect(
 						"/com/example/demo/images/explosion1.png",
 						50, 50, 1.0,
-						"/com/example/demo/sounds/small_explosion.wav"
+						"/com/example/demo/audio/fortnite-pump.mp3"
 				);
 				break;
 			case "PLANE_PLANE":
 				explosionEffect = new ExplosionEffect(
 						"/com/example/demo/images/explosion1.png",
 						100, 100, 1.5,
-						"/com/example/demo/sounds/large_explosion.wav"
+						"/com/example/demo/audio/fortnite-pump.mp3"
 				);
 				break;
 			case "PROJECTILE_PROJECTILE":
 				explosionEffect = new ExplosionEffect(
 						"/com/example/demo/images/explosion1.png",
 						30, 30, 0.5,
-						"/com/example/demo/sounds/sparks.wav"
+						"/com/example/demo/audio/fortnite-pump.mp3"
 				);
 				break;
 			default:
 				explosionEffect = new ExplosionEffect(
 						"/com/example/demo/images/explosion1.png",
 						50, 50, 1.0,
-						"/com/example/demo/sounds/default_explosion.wav"
+						"/com/example/demo/audio/fortnite-pump.mp3"
 				);
 		}
 

@@ -8,8 +8,8 @@ public class Boss extends FighterPlane {
 
 	private static final int SCREEN_HEIGHT = Main.getScreenHeight();
 	private static final int SCREEN_WIDTH = Main.getScreenWidth();
-	private static final String IMAGE_NAME = "bossplane.png";
-	private static final int IMAGE_HEIGHT =  (int) (SCREEN_HEIGHT * .1);
+	private static final String IMAGE_NAME = "c17.png";
+	private static final int IMAGE_HEIGHT =  (int) (SCREEN_HEIGHT * .2);
 	private static final double INITIAL_X_POSITION = SCREEN_WIDTH - (SCREEN_WIDTH * .3);
 	private static final double INITIAL_Y_POSITION = SCREEN_HEIGHT * .5;
 	private static final int Y_POSITION_UPPER_BOUND =  (int) -(SCREEN_HEIGHT * .01);

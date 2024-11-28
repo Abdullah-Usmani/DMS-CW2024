@@ -2,19 +2,19 @@ package com.example.demo;
 
 import com.example.demo.controller.Main;
 
-public class EnemyPlane extends FighterPlane {
+public class EnemyPlane3 extends FighterPlane {
 
 	private static final int SCREEN_HEIGHT = Main.getScreenHeight();
 	private static final int SCREEN_WIDTH = Main.getScreenWidth();
-	private static final String IMAGE_NAME = "enemyplane.png";
-	private static final int IMAGE_HEIGHT = (int) (SCREEN_HEIGHT * .05);
+	private static final String IMAGE_NAME = "a10c.png";
+	private static final int IMAGE_HEIGHT = (int) (SCREEN_HEIGHT * .08);
 	private static final int HORIZONTAL_VELOCITY = (int) -(SCREEN_WIDTH * .0025);;
 	private static final double PROJECTILE_X_POSITION_OFFSET = (int) -(SCREEN_WIDTH * .05);
 	private static final double PROJECTILE_Y_POSITION_OFFSET = (double) IMAGE_HEIGHT /2;
-	private static final int INITIAL_HEALTH = 1;
-	private static final double FIRE_RATE = .01;
+	private static final int INITIAL_HEALTH = 3;
+	private static final double FIRE_RATE = .02;
 
-	public EnemyPlane(double initialXPos, double initialYPos) {
+	public EnemyPlane3(double initialXPos, double initialYPos) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, initialXPos, initialYPos, INITIAL_HEALTH);
 	}
 
@@ -29,7 +29,7 @@ public class EnemyPlane extends FighterPlane {
 		if (Math.random() < FIRE_RATE) {
 			double projectileXPosition = getProjectileXPosition(PROJECTILE_X_POSITION_OFFSET);
 			double projectileYPosition = getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET);
-			return new EnemyProjectile(projectileXPosition, projectileYPosition);
+			return new EnemyProjectile2(projectileXPosition, projectileYPosition);
 		}
 		return null;
 	}
