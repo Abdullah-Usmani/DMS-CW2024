@@ -23,6 +23,4 @@ public class EnemyProjectile extends Projectile {
 	public void updateActor() {
 		updatePosition();
 	}
-
-
 }

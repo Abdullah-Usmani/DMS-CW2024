@@ -4,6 +4,7 @@ import com.example.demo.controller.Main;
 
 public abstract class ActiveActorDestructible extends ActiveActor implements Destructible {
 
+	private int health;
 	private boolean isDestroyed;
 
 	public ActiveActorDestructible(String imageName, int imageHeight, double initialXPos, double initialYPos) {
@@ -27,9 +28,6 @@ public abstract class ActiveActorDestructible extends ActiveActor implements Des
 	public abstract void updateActor();
 
 	@Override
-	public abstract void takeDamage();
-
-	@Override
 	public void destroy() {
 		setDestroyed();
 	}
@@ -41,5 +39,19 @@ public abstract class ActiveActorDestructible extends ActiveActor implements Des
 	public boolean isDestroyed() {
 		return isDestroyed;
 	}
-	
+
+	public void takeDamage(int damage) {
+		health -= damage;
+		if (health <= 0) {
+			destroy();
+		}
+	}
+
+	public int getHealth() {
+		return health;
+	}
+
+	public void setHealth(int health) {
+		this.health = health;
+	}
 }

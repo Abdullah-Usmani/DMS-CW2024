@@ -118,7 +118,6 @@ public class Boss extends FighterPlane {
 
 	private double getProjectileInitialPosition() {
 		return getLayoutY() + getTranslateY() + PROJECTILE_Y_POSITION_OFFSET;
-
 	}
 	static double getBossXPosition() {
 		return INITIAL_X_POSITION;
@@ -140,5 +139,4 @@ public class Boss extends FighterPlane {
 		isShielded = false;
 		framesWithShieldActivated = 0;
 	}
-
 }

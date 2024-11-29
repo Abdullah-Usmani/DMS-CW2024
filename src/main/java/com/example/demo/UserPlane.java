@@ -56,6 +56,18 @@ public class UserPlane extends FighterPlane {
 		}
 	}
 
+	public ActiveActorDestructible fireMissile() {
+		long currentTime = System.currentTimeMillis();
+		if (currentTime - lastFiredTime >= FIRE_RATE_COOLDOWN) { // Check cooldown
+			lastFiredTime = currentTime; // Update last fired time
+			return new UserMissile(PROJECTILE_X_POSITION, getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET));
+		} else {
+			// Cooldown active, no projectile fired
+//			System.out.println("Cooldown active, cannot fire yet!");
+			return null;
+		}
+	}
+
 
 	private boolean isMoving() {
 		return velocityMultiplier != 0;
@@ -82,7 +94,7 @@ public class UserPlane extends FighterPlane {
 
 	}
 
-//	public void incrementHitCount() {
-//		numberOfHits++;
+//	public void incrementKillCount() {
+//		numberOfKills++;
 //	}
 }

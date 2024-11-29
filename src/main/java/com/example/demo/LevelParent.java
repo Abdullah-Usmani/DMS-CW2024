@@ -28,10 +28,15 @@ public abstract class LevelParent extends Observable {
 	private final Scene scene;
 	private final ImageView background;
 
-	private final List<ActiveActorDestructible> friendlyUnits;
-	private final List<ActiveActorDestructible> enemyUnits;
-	private final List<ActiveActorDestructible> userProjectiles;
-	private final List<ActiveActorDestructible> enemyProjectiles;
+	private final List<ActiveActorDestructible> friendlyUnits = new ArrayList<>();
+	private final List<ActiveActorDestructible> enemyUnits = new ArrayList<>();
+	private final List<Projectile> projectiles = new ArrayList<>();
+//	private final List<ActiveActorDestructible> friendlyUnits;
+//	private final List<ActiveActorDestructible> enemyUnits;
+//	private final List<ActiveActorDestructible> userProjectiles;
+//	private final List<ActiveActorDestructible> userMissiles;
+//	private final List<ActiveActorDestructible> enemyProjectiles;
+//	private final List<ActiveActorDestructible> enemyMissiles;
 
 	private int currentNumberOfEnemies;
 	protected final LevelView levelView;
@@ -42,10 +47,12 @@ public abstract class LevelParent extends Observable {
 		this.scene = new Scene(root, screenWidth, screenHeight);
 		this.timeline = new Timeline();
 		this.user = new UserPlane(playerInitialHealth);
-		this.friendlyUnits = new ArrayList<>();
-		this.enemyUnits = new ArrayList<>();
-		this.userProjectiles = new ArrayList<>();
-		this.enemyProjectiles = new ArrayList<>();
+//		this.friendlyUnits = new ArrayList<>();
+//		this.enemyUnits = new ArrayList<>();
+//		this.userProjectiles = new ArrayList<>();
+//		this.userMissiles = new ArrayList<>();
+//		this.enemyProjectiles = new ArrayList<>();
+//		this.enemyMissiles = new ArrayList<>();
 
 		this.background = new ImageView(new Image(getClass().getResource(backgroundImageName).toExternalForm()));
 		this.screenHeight = screenHeight;
@@ -66,7 +73,6 @@ public abstract class LevelParent extends Observable {
 	public Scene initializeScene() {
 		initializeBackground();
 		initializeKeyListeners();
-//		initializePauseMenuActions();
 		initializeFriendlyUnits();
 		levelView.showHeartDisplay();
 		levelView.showKillDisplay();
@@ -90,11 +96,11 @@ public abstract class LevelParent extends Observable {
 		generateEnemyFire();
 		updateNumberOfEnemies();
 		handleEnemyPenetration();         // Check for enemies penetrating defenses
-		boolean userProjectileCollisions = handleUserProjectileCollisions();
-		boolean enemyProjectileCollisions = handleEnemyProjectileCollisions();
-		boolean planeCollisions = handlePlaneCollisions();
+		handleCollisions(projectiles, enemyUnits);
+		handleCollisions(projectiles, friendlyUnits);
+		handleCollisions(enemyUnits, friendlyUnits);
 		removeAllDestroyedActors();       // Removes destroyed actors after collision checks
-		updateHitCount(userProjectileCollisions);
+//		updateHitCount(userProjectileCollisions);
 		updateLevelView();                // Update health, kills, etc.
 		checkIfGameOver();                // Check game-over conditions
 	}
@@ -119,6 +125,7 @@ public abstract class LevelParent extends Observable {
 				if (kc == KeyCode.UP) user.moveUp();
 				if (kc == KeyCode.DOWN) user.moveDown();
 				if (kc == KeyCode.SPACE) fireProjectile();
+				if (kc == KeyCode.M) fireMissile();
 			}
 		});
 		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
@@ -130,87 +137,109 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private void fireProjectile() {
-		ActiveActorDestructible projectile = user.fireProjectile();
-		if (projectile != null) { // Only add the projectile if it is not null
+		Projectile projectile = ProjectileFactory.createUserProjectile(
+				user.getLayoutX() + user.getWidth(),
+				user.getLayoutY() + user.getHeight() / 2
+		);
+		if (projectile != null) {
 			root.getChildren().add(projectile);
-			userProjectiles.add(projectile);
+			projectiles.add(projectile);
+		}
+	}
+	private void fireMissile(FighterPlane plane) {
+		Projectile missile = ProjectileFactory.createMissile(plane.getMissileType(), plane.getProjectileInitialX(), plane.getProjectileInitialY());
+		if (missile != null) {
+			root.getChildren().add(missile);
+			projectiles.add(missile);
+		}
+	}
+
+	private void handleCollisions(List<Projectile> projectiles, List<ActiveActorDestructible> targets) {
+		Iterator<Projectile> projectileIterator = projectiles.iterator();
+		while (projectileIterator.hasNext()) {
+			Projectile projectile = projectileIterator.next();
+			for (ActiveActorDestructible target : targets) {
+				if (projectile.getBoundsInParent().intersects(target.getBoundsInParent())) {
+					target.takeDamage(projectile.getDamage());
+					projectileIterator.remove(); // Remove projectile on collision
+					root.getChildren().remove(projectile);
+					handleCollisionEffects(projectile.getLayoutX(), projectile.getLayoutY(), projectile.getImageName());
+					break;
+				}
+			}
 		}
 	}
 
 	private void generateEnemyFire() {
-		enemyUnits.forEach(enemy -> spawnEnemyProjectile(((FighterPlane) enemy).fireProjectile()));
-	}
-
-	private void spawnEnemyProjectile(ActiveActorDestructible projectile) {
-		if (projectile != null) {
+		enemyUnits.forEach(enemy -> {
+			Projectile projectile = ProjectileFactory.createEnemyProjectile(enemy.getProjectileInitialX(), enemy.getProjectileInitialY());
 			root.getChildren().add(projectile);
 			enemyProjectiles.add(projectile);
-		}
+		});
 	}
+//
+//	private void spawnEnemyProjectile(ActiveActorDestructible projectile) {
+//		if (projectile != null) {
+//			root.getChildren().add(projectile);
+//			enemyProjectiles.add(projectile);
+//		}
+//	}
+//
+//	private void spawnEnemyMissile(ActiveActorDestructible projectile) {
+//		if (projectile != null) {
+//			root.getChildren().add(projectile);
+//			enemyMissiles.add(projectile);
+//		}
+//	}
 
 	private void updateActors() {
 		friendlyUnits.forEach(ActiveActorDestructible::updateActor);
 		enemyUnits.forEach(ActiveActorDestructible::updateActor);
-		userProjectiles.forEach(ActiveActorDestructible::updateActor);
-		enemyProjectiles.forEach(ActiveActorDestructible::updateActor);
+		projectiles.forEach(Projectile::updateActor);
 	}
+
 	private void removeAllDestroyedActors() {
 		removeDestroyedActors(friendlyUnits);
 		removeDestroyedActors(enemyUnits);
-		removeDestroyedActors(userProjectiles);
-		removeDestroyedActors(enemyProjectiles);
+		removeDestroyedActors(projectiles);
 	}
 
-	private void removeDestroyedActors(List<ActiveActorDestructible> actors) {
-		List<ActiveActorDestructible> destroyedActors = actors.stream()
+	private void removeDestroyedActors(List<? extends ActiveActorDestructible> actors) {
+		List<? extends ActiveActorDestructible> destroyedActors = actors.stream()
 				.filter(ActiveActorDestructible::isDestroyed)
 				.collect(Collectors.toList());
-		root.getChildren().removeAll(destroyedActors); // Remove from scene
-		actors.removeAll(destroyedActors);            // Remove from list
-	}
-	private boolean handlePlaneCollisions() {
-		return handleCollisions(friendlyUnits, enemyUnits);
+		root.getChildren().removeAll(destroyedActors);
+		actors.removeAll(destroyedActors);
 	}
 
-	private boolean handleUserProjectileCollisions() {
-		boolean collision = handleCollisions(userProjectiles, enemyUnits);
-		return collision;
-	}
-
-
-	private boolean handleEnemyProjectileCollisions() {
-		return handleCollisions(enemyProjectiles, friendlyUnits);
-	}
-
-	private boolean handleCollisions(List<ActiveActorDestructible> actors1, List<ActiveActorDestructible> actors2) {
-		boolean targetHit = false;
-		for (ActiveActorDestructible actor : actors2) {
-			for (ActiveActorDestructible otherActor : actors1) {
-				if (actor.getBoundsInParent().intersects(otherActor.getBoundsInParent())) {
-					// Calculate collision coordinates
-					double collisionX = actor.getBoundsInParent().getMinX();
-					double collisionY = actor.getBoundsInParent().getMinY();
-
-					// Determine collision type and trigger corresponding effect
-					if (actor instanceof EnemyPlane && otherActor instanceof Projectile) {
-						handleCollisionEffects(collisionX, collisionY, "PLANE_PROJECTILE");
-					} else if (actor instanceof EnemyPlane && otherActor instanceof UserPlane) {
-						handleCollisionEffects(collisionX, collisionY, "PLANE_PLANE");
-					} else if (actor instanceof Projectile && otherActor instanceof Projectile) {
-						handleCollisionEffects(collisionX, collisionY, "PROJECTILE_PROJECTILE");
-					} else {
-						handleCollisionEffects(collisionX, collisionY, "DEFAULT");
-					}
-
-					actor.takeDamage();
-					otherActor.takeDamage();
-					targetHit = true;
-				}
-			}
-		}
-		return targetHit;
-	}
-
+//	private boolean handlePlaneCollisions() {
+//		return handleCollisions(friendlyUnits, enemyUnits);
+//	}
+//
+//	private boolean handleUserProjectileCollisions() { return  handleCollisions(userProjectiles, enemyUnits); }
+//
+//	private boolean handleUserMissileCollisions() { return  handleCollisions(userMissiles, enemyUnits); }
+//
+//	private boolean handleEnemyProjectileCollisions() { return handleCollisions(enemyProjectiles, friendlyUnits); }
+//
+//	private boolean handleEnemyMissileCollisions() { return handleCollisions(enemyMissiles, friendlyUnits); }
+//
+//	private boolean handleCollisions(List<ActiveActorDestructible> attackers, List<ActiveActorDestructible> defenders, String collisionType) {
+//		boolean collisionOccurred = false;
+//
+//		for (ActiveActorDestructible defender : defenders) {
+//			for (ActiveActorDestructible attacker : attackers) {
+//				if (attacker.getBoundsInParent().intersects(defender.getBoundsInParent())) {
+//					defender.takeDamage(attacker.getDamage()); // Apply attacker's damage
+//					attacker.destroy(); // Destroy the projectile/missile
+//					handleCollisionEffects(attacker.getLayoutX(), attacker.getLayoutY(), collisionType); // Add visual/audio effects
+//					collisionOccurred = true;
+//				}
+//			}
+//		}
+//
+//		return collisionOccurred;
+//	}
 	private void handleCollisionEffects(double x, double y, String collisionType) {
 		ExplosionEffect explosionEffect;
 
@@ -264,7 +293,7 @@ public abstract class LevelParent extends Observable {
 
 	private void updateHitCount(boolean collisionDetected) {
 		if (collisionDetected) {
-			user.incrementHitCount(); // Update kill count if a collision occurred
+			user.incrementHitCount(); // Update hit count if a collision occurred
 			System.out.println("User hit-count: " + user.getNumberOfHits());
 //			System.out.println("User health: " + user.getHealth());
 		}
