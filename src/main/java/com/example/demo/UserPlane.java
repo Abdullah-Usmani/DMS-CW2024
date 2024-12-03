@@ -9,8 +9,10 @@ public class UserPlane extends FighterPlane {
 	private static final int SCREEN_WIDTH = Main.getScreenWidth();
 	private static final String IMAGE_NAME = "userplane1.png";
 	private static final Image PLANE_IMAGE = new Image(UserPlane.class.getResource("/com/example/demo/images/"+IMAGE_NAME).toExternalForm());
-	private static final int IMAGE_HEIGHT = (int) PLANE_IMAGE.getHeight(); // Dynamically get height
-	private static final int IMAGE_WIDTH = (int) PLANE_IMAGE.getWidth();  // Dynamically get width
+	private static final int IMAGE_HEIGHT =  (int) (SCREEN_HEIGHT * .01);
+	private static final int src_IMAGE_HEIGHT = (int) PLANE_IMAGE.getHeight(); // Dynamically get height
+	private static final int src_IMAGE_WIDTH = (int) PLANE_IMAGE.getWidth();  // Dynamically get width
+	private static final int IMAGE_WIDTH = (src_IMAGE_WIDTH * IMAGE_HEIGHT) / src_IMAGE_HEIGHT;  // Dynamically get width
 
 	private static final double INITIAL_X_POSITION = SCREEN_WIDTH * .01;
 	private static final double INITIAL_Y_POSITION = SCREEN_HEIGHT * .5;
@@ -58,15 +60,14 @@ public class UserPlane extends FighterPlane {
 		}
 	}
 
-	public ActiveActorDestructible fireMissile() {
+	public void fireMissile() {
 		long currentTime = System.currentTimeMillis();
 		if (currentTime - lastFiredTime >= FIRE_RATE_COOLDOWN) { // Check cooldown
 			lastFiredTime = currentTime; // Update last fired time
-			return new UserMissile(getProjectileXPosition(), getProjectileYPosition());
+			new UserMissile(getProjectileXPosition(), getProjectileYPosition());
 		} else {
 			// Cooldown active, no projectile fired
 //			System.out.println("Cooldown active, cannot fire yet!");
-			return null;
 		}
 	}
 

@@ -49,12 +49,10 @@ public abstract class ActiveActorDestructible extends ActiveActor {
 		if (shouldTakeDamage()) {
 			int newHealth = getHealth() - damage;
 			setHealth(newHealth);
-			System.out.println(this.getClass().getSimpleName() + " took damage: " + damage + ", Health: " + getHealth());
+//			System.out.println(this.getClass().getSimpleName() + " took damage: " + damage + ", Health: " + getHealth());
 			if (getHealth() <= 0) {
 				destroy();
 			}
-		} else {
-			System.out.println(this.getClass().getSimpleName() + " avoided damage!");
 		}
 	}
 
@@ -72,6 +70,6 @@ public abstract class ActiveActorDestructible extends ActiveActor {
 
 	public void setHealth(int health) {
 		this.health = health;
-		System.out.println("Updated health for " + this.getClass().getSimpleName() + ": " + this.health);
+//		System.out.println("Updated health for " + this.getClass().getSimpleName() + ": " + this.health);
 	}
 }

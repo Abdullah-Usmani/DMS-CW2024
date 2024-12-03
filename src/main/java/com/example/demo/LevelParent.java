@@ -89,7 +89,7 @@ public abstract class LevelParent extends Observable {
 		handleCollisions(projectiles, friendlyUnits);
 		// Update hit count only if user projectile hits an enemy
 		if (userProjectileCollision) {
-			System.out.println("User projcetile collision detected");
+//			System.out.println("User projectile collision detected");
 			updateHitCount(true);
 		}
 		removeAllDestroyedActors();       // Removes destroyed actors after collision checks
@@ -116,8 +116,10 @@ public abstract class LevelParent extends Observable {
 				KeyCode kc = e.getCode();
 				if (kc == KeyCode.UP) user.moveUp();
 				if (kc == KeyCode.DOWN) user.moveDown();
-				if (kc == KeyCode.SPACE) fireProjectile(user);
-				if (kc == KeyCode.M) fireMissile(user);
+//				if (kc == KeyCode.SPACE) fireProjectile(user);
+				if (kc == KeyCode.SPACE) user.fireProjectile();
+//				if (kc == KeyCode.M) fireMissile(user);
+				if (kc == KeyCode.M) user.fireMissile();
 			}
 		});
 		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
@@ -129,6 +131,7 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private void fireProjectile(FighterPlane plane) {
+//		Projectile userprojectile = ProjectileFactory.createUserProjectile(plane.getProjectileXPosition(), plane.getProjectileYPosition());
 		Projectile userprojectile = ProjectileFactory.createUserProjectile(plane.getProjectileXPosition(), plane.getProjectileYPosition());
 		root.getChildren().add(userprojectile);
 		projectiles.add(userprojectile);
@@ -160,14 +163,14 @@ public abstract class LevelParent extends Observable {
 			Projectile projectile = projectileIterator.next();
 			for (ActiveActorDestructible target : targets) {
 				if (projectile.getBoundsInParent().intersects(target.getBoundsInParent())) {
-					System.out.println("User Health = " + user.getHealth());
+//					System.out.println("User Health = " + user.getHealth());
 					target.takeDamage(projectile.getDamage());
-					System.out.println("User Health = " + user.getHealth());
-					System.out.println("Target = " + target);
-					System.out.println("Projectile Damage = " + projectile.getDamage());
+//					System.out.println("User Health = " + user.getHealth());
+//					System.out.println("Target = " + target);
+//					System.out.println("Projectile Damage = " + projectile.getDamage());
 					projectileIterator.remove(); // Remove projectile on collision
 					root.getChildren().remove(projectile);
-					System.out.println("User Health = " + user.getHealth());
+//					System.out.println("User Health = " + user.getHealth());
 					handleCollisionEffects(projectile.getLayoutX(), projectile.getLayoutY(), projectile.getImageName());
 					collisionOccurred = true;
 					break;
