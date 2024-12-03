@@ -116,10 +116,10 @@ public abstract class LevelParent extends Observable {
 				KeyCode kc = e.getCode();
 				if (kc == KeyCode.UP) user.moveUp();
 				if (kc == KeyCode.DOWN) user.moveDown();
-//				if (kc == KeyCode.SPACE) fireProjectile(user);
-				if (kc == KeyCode.SPACE) user.fireProjectile();
-//				if (kc == KeyCode.M) fireMissile(user);
-				if (kc == KeyCode.M) user.fireMissile();
+				if (kc == KeyCode.SPACE) fireProjectile(user);
+//				if (kc == KeyCode.SPACE) user.fireProjectile();
+				if (kc == KeyCode.M) fireMissile(user);
+//				if (kc == KeyCode.M) user.fireMissile();
 			}
 		});
 		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {

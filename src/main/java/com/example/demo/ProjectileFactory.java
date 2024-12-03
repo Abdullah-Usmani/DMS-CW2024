@@ -4,10 +4,11 @@ import com.example.demo.controller.Main;
 import javafx.scene.image.Image;
 
 public class ProjectileFactory {
+    public static final String IMAGE_LOCATION = "/com/example/demo/images/";
     private static final int SCREEN_HEIGHT = Main.getScreenHeight();
     private static final int SCREEN_WIDTH = Main.getScreenWidth();
 //    private static final String IMAGE_NAME;
-    private static final Image PLANE_IMAGE = new Image(UserPlane.class.getResource("/com/example/demo/images/userfire.png").toExternalForm());
+    private static final Image PLANE_IMAGE = new Image(UserPlane.class.getResource(IMAGE_LOCATION + "userfire.png").toExternalForm());
     private static final int IMAGE_HEIGHT =  (int) (SCREEN_HEIGHT * .01);
     private static final int src_IMAGE_HEIGHT = (int) PLANE_IMAGE.getHeight(); // Dynamically get height
     private static final int src_IMAGE_WIDTH = (int) PLANE_IMAGE.getWidth();  // Dynamically get width
@@ -15,7 +16,7 @@ public class ProjectileFactory {
 
     public static Projectile createUserProjectile(double initialXPos, double initialYPos) {
         return new Projectile(
-                "/com/example/demo/images/userfire.png",
+                "userfire.png",
                 (int) (SCREEN_HEIGHT * 0.01),
                 (int) (SCREEN_WIDTH * 0.01),
                 initialXPos,
@@ -27,7 +28,7 @@ public class ProjectileFactory {
 
     public static Projectile createEnemyProjectile(double initialXPos, double initialYPos) {
         return new Projectile(
-                "/com/example/demo/images/enemyFire.png",
+                "enemyFire.png",
                 (int) (SCREEN_HEIGHT * 0.03),
                 (int) (SCREEN_WIDTH * 0.03),
                 initialXPos,
@@ -39,7 +40,7 @@ public class ProjectileFactory {
 
     public static Projectile createUserMissile(double initialXPos, double initialYPos) {
         return new Projectile(
-                "/com/example/demo/images/sidewinder.png",
+                "sidewinder.png",
                 (int) (SCREEN_HEIGHT * 0.015),
                 (int) (SCREEN_WIDTH * 0.015),
                 initialXPos,
@@ -51,7 +52,7 @@ public class ProjectileFactory {
 
     public static Projectile createEnemyMissile(double initialXPos, double initialYPos) {
         return new Projectile(
-                "/com/example/demo/images/enemymissiler33.png",
+                "enemymissiler33.png",
                 (int) (SCREEN_HEIGHT * 0.03),
                 (int) (SCREEN_WIDTH * 0.03),
                 initialXPos,

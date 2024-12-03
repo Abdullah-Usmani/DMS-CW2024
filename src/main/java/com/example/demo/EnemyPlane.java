@@ -8,11 +8,11 @@ public class EnemyPlane extends FighterPlane {
 	private static final int SCREEN_HEIGHT = Main.getScreenHeight();
 	private static final int SCREEN_WIDTH = Main.getScreenWidth();
 	private static final String IMAGE_NAME = "enemyplane.png";
-	private static final Image PLANE_IMAGE = new Image(UserPlane.class.getResource("/com/example/demo/images/"+IMAGE_NAME).toExternalForm());
-	private static final int IMAGE_HEIGHT =  (int) (SCREEN_HEIGHT * .01);
+	private static final Image PLANE_IMAGE = new Image(UserPlane.class.getResource(IMAGE_LOCATION+IMAGE_NAME).toExternalForm());
+	private static final int IMAGE_HEIGHT =  (int) (SCREEN_HEIGHT * .05);
+	private static final int IMAGE_WIDTH =  (int) (SCREEN_WIDTH * .05);  // Dynamically get width
 	private static final int src_IMAGE_HEIGHT = (int) PLANE_IMAGE.getHeight(); // Dynamically get height
 	private static final int src_IMAGE_WIDTH = (int) PLANE_IMAGE.getWidth();  // Dynamically get width
-	private static final int IMAGE_WIDTH = (src_IMAGE_WIDTH * IMAGE_HEIGHT) / src_IMAGE_HEIGHT;  // Dynamically get width
 	private static final int HORIZONTAL_VELOCITY = (int) -(SCREEN_WIDTH * .0025);;
 	private static final int INITIAL_HEALTH = 1;
 	private static final double FIRE_RATE = .01;
