@@ -117,9 +117,7 @@ public abstract class LevelParent extends Observable {
 				if (kc == KeyCode.UP) user.moveUp();
 				if (kc == KeyCode.DOWN) user.moveDown();
 				if (kc == KeyCode.SPACE) fireProjectile(user);
-//				if (kc == KeyCode.SPACE) user.fireProjectile();
 				if (kc == KeyCode.M) fireMissile(user);
-//				if (kc == KeyCode.M) user.fireMissile();
 			}
 		});
 		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
@@ -132,13 +130,13 @@ public abstract class LevelParent extends Observable {
 
 	private void fireProjectile(FighterPlane plane) {
 //		Projectile userprojectile = ProjectileFactory.createUserProjectile(plane.getProjectileXPosition(), plane.getProjectileYPosition());
-		Projectile userprojectile = ProjectileFactory.createUserProjectile(plane.getProjectileXPosition(), plane.getProjectileYPosition());
+		Projectile userprojectile = (Projectile) user.fireProjectile();
 		root.getChildren().add(userprojectile);
 		projectiles.add(userprojectile);
 	}
 	private void fireMissile(FighterPlane plane) {
 //		Projectile missile = ProjectileFactory.createMissile(plane.getMissileType(), plane.getProjectileInitialX(), plane.getProjectileInitialY());
-		Projectile missile = ProjectileFactory.createUserMissile(plane.getProjectileXPosition(), plane.getProjectileYPosition());
+		Projectile missile = (Projectile) user.fireMissile();
         root.getChildren().add(missile);
         projectiles.add(missile);
     }

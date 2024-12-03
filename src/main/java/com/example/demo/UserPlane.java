@@ -20,6 +20,7 @@ public class UserPlane extends FighterPlane {
 	private static final double Y_LOWER_BOUND = (double) SCREEN_HEIGHT - 2*IMAGE_HEIGHT;
 	private static final int VERTICAL_VELOCITY = (int) (SCREEN_HEIGHT * .015);
 	private static final long FIRE_RATE_COOLDOWN = 150; // Cooldown in milliseconds
+	private static final long MISSILE_COOLDOWN = 1000; // Cooldown in milliseconds
 	private int velocityMultiplier;
 	private int numberOfHits;
 	private long lastFiredTime; // Tracks the last projectile fire time
@@ -49,24 +50,26 @@ public class UserPlane extends FighterPlane {
 
 	@Override
 	public ActiveActorDestructible fireProjectile() {
-		System.out.println("projectile fired?");
 		long currentTime = System.currentTimeMillis();
 		if (currentTime - lastFiredTime >= FIRE_RATE_COOLDOWN) { // Check cooldown
-			System.out.println("projectile fired?");
 			lastFiredTime = currentTime; // Update last fired time
 			return new UserProjectile(getProjectileXPosition(), getProjectileYPosition());
 		} else {
 			// Cooldown active, no projectile fired
-//			System.out.println("Cooldown active, cannot fire yet!");
+			System.out.println("Cooldown active, cannot fire yet!");
 			return null;
 		}
 	}
 
-	public void fireMissile() {
+	public ActiveActorDestructible fireMissile() {
 		long currentTime = System.currentTimeMillis();
-		if (currentTime - lastFiredTime >= FIRE_RATE_COOLDOWN) { // Check cooldown
+		if (currentTime - lastFiredTime >= MISSILE_COOLDOWN) { // Check cooldown
 			lastFiredTime = currentTime; // Update last fired time
-			new UserMissile(getProjectileXPosition(), getProjectileYPosition());
+			return new UserMissile(getProjectileXPosition(), getProjectileYPosition());
+		} else {
+			// Cooldown active, no projectile fired
+			System.out.println("Cooldown active, cannot fire yet!");
+			return null;
 		}
 	}
 
