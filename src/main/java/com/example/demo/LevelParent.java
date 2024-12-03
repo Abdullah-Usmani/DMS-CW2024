@@ -82,15 +82,16 @@ public abstract class LevelParent extends Observable {
 		updateActors();                   // Updates all actor positions
 		generateEnemyFire();
 		updateNumberOfEnemies();
+		handleEnemyPenetration();         // Check for enemies penetrating defenses
 		// Process all collisions in a single pass
 		boolean userProjectileCollision = handleCollisions(projectiles, enemyUnits);
 //		handleCollisions(enemyUnits, friendlyUnits);
 		handleCollisions(projectiles, friendlyUnits);
 		// Update hit count only if user projectile hits an enemy
 		if (userProjectileCollision) {
+			System.out.println("User projcetile collision detected");
 			updateHitCount(true);
 		}
-		handleEnemyPenetration();         // Check for enemies penetrating defenses
 		removeAllDestroyedActors();       // Removes destroyed actors after collision checks
 		updateLevelView();                // Update health, kills, etc.
 		checkIfGameOver();                // Check game-over conditions
@@ -160,12 +161,10 @@ public abstract class LevelParent extends Observable {
 			for (ActiveActorDestructible target : targets) {
 				if (projectile.getBoundsInParent().intersects(target.getBoundsInParent())) {
 					System.out.println("User Health = " + user.getHealth());
-//					Is it because it's using the activeactordestructible declaration of takedamage?
 					target.takeDamage(projectile.getDamage());
 					System.out.println("User Health = " + user.getHealth());
 					System.out.println("Target = " + target);
 					System.out.println("Projectile Damage = " + projectile.getDamage());
-					System.out.println("Projectile Iterator = " + projectileIterator);
 					projectileIterator.remove(); // Remove projectile on collision
 					root.getChildren().remove(projectile);
 					System.out.println("User Health = " + user.getHealth());
@@ -182,32 +181,32 @@ public abstract class LevelParent extends Observable {
 		ExplosionEffect explosionEffect;
 
 		switch (collisionType) {
-			case "PLANE_PROJECTILE":
-				explosionEffect = new ExplosionEffect(
-						"/com/example/demo/images/explosion1.png",
-						50, 50, 1.0,
-						"/com/example/demo/audio/fortnite-pump.mp3"
-				);
-				break;
-			case "PLANE_PLANE":
-				explosionEffect = new ExplosionEffect(
-						"/com/example/demo/images/explosion1.png",
-						100, 100, 1.5,
-						"/com/example/demo/audio/fortnite-pump.mp3"
-				);
-				break;
-			case "PROJECTILE_PROJECTILE":
-				explosionEffect = new ExplosionEffect(
-						"/com/example/demo/images/explosion1.png",
-						30, 30, 0.5,
-						"/com/example/demo/audio/fortnite-pump.mp3"
-				);
-				break;
+//			case "PLANE_PROJECTILE":
+//				explosionEffect = new ExplosionEffect(
+//						"/com/example/demo/images/explosion1.png",
+//						50, 50, 1.0,
+//						"/com/example/demo/audio/fortnite-pump.mp3"
+//				);
+//			break;
+//			case "PLANE_PLANE":
+//				explosionEffect = new ExplosionEffect(
+//						"/com/example/demo/images/explosion1.png",
+//						100, 100, 1.5,
+//						"/com/example/demo/audio/fortnite-pump.mp3"
+//				);
+//				break;
+//			case "PROJECTILE_PROJECTILE":
+//				explosionEffect = new ExplosionEffect(
+//						"/com/example/demo/images/explosion1.png",
+//						30, 30, 0.5,
+//						"/com/example/demo/audio/fortnite-pump.mp3"
+//				);
+//				break;
 			default:
 				explosionEffect = new ExplosionEffect(
 						"/com/example/demo/images/explosion1.png",
 						50, 50, 1.0,
-						"/com/example/demo/audio/fortnite-pump.mp3"
+						null
 				);
 		}
 

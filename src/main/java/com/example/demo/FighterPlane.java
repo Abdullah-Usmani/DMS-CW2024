@@ -4,13 +4,13 @@ import com.example.demo.controller.Main;
 
 public abstract class FighterPlane extends ActiveActorDestructible {
 
-	private static final int SCREEN_HEIGHT = Main.getScreenHeight();
-	private static final int SCREEN_WIDTH = Main.getScreenWidth();
 	private final int imageHeight;
+	private final int imageWidth;
 
-    public FighterPlane(String imageName, int imageHeight, double initialXPos, double initialYPos, int health) {
-		super(imageName, imageHeight, initialXPos, initialYPos, health);
+    public FighterPlane(String imageName, int imageHeight, int imageWidth, double initialXPos, double initialYPos, int health) {
+		super(imageName, imageHeight, imageWidth, initialXPos, initialYPos, health);
 		this.imageHeight = imageHeight;
+		this.imageWidth = imageWidth;
     }
 
 	public abstract ActiveActorDestructible fireProjectile();
@@ -26,9 +26,13 @@ public abstract class FighterPlane extends ActiveActorDestructible {
 	// Method to determine X offset dynamically
 	protected double getProjectileXOffset() {
 		if (this instanceof UserPlane) {
-			return (SCREEN_WIDTH * .1); // Positive offset for user
-		} else {
-			return -(SCREEN_WIDTH * .1); // Negative offset for enemy
+			return (imageWidth * .1); // Positive offset for user
+		}
+		if (this instanceof BossPlane) {
+			return -(imageWidth * .2); // Negative
+		}
+		else {
+			return -(imageWidth * .1); // Negative offset for enemy
 		}
 	}
 }

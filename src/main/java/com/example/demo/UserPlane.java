@@ -1,27 +1,29 @@
 package com.example.demo;
 
 import com.example.demo.controller.Main;
+import javafx.scene.image.Image;
 
 public class UserPlane extends FighterPlane {
 
 	private static final int SCREEN_HEIGHT = Main.getScreenHeight();
 	private static final int SCREEN_WIDTH = Main.getScreenWidth();
 	private static final String IMAGE_NAME = "userplane1.png";
-	private static final int IMAGE_HEIGHT = (int) (SCREEN_HEIGHT * .05);
+	private static final Image PLANE_IMAGE = new Image(UserPlane.class.getResource("/com/example/demo/images/"+IMAGE_NAME).toExternalForm());
+	private static final int IMAGE_HEIGHT = (int) PLANE_IMAGE.getHeight(); // Dynamically get height
+	private static final int IMAGE_WIDTH = (int) PLANE_IMAGE.getWidth();  // Dynamically get width
+
 	private static final double INITIAL_X_POSITION = SCREEN_WIDTH * .01;
 	private static final double INITIAL_Y_POSITION = SCREEN_HEIGHT * .5;
 	private static final double Y_UPPER_BOUND = 0;
 	private static final double Y_LOWER_BOUND = (double) SCREEN_HEIGHT - 2*IMAGE_HEIGHT;
 	private static final int VERTICAL_VELOCITY = (int) (SCREEN_HEIGHT * .015);
-	private static final int PROJECTILE_X_POSITION = (int) (SCREEN_WIDTH * .05);
-	private static final int PROJECTILE_Y_POSITION_OFFSET = IMAGE_HEIGHT/2;
 	private static final long FIRE_RATE_COOLDOWN = 150; // Cooldown in milliseconds
 	private int velocityMultiplier;
 	private int numberOfHits;
 	private long lastFiredTime; // Tracks the last projectile fire time
 
 	public UserPlane(int initialHealth) {
-		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, initialHealth);
+		super(IMAGE_NAME, IMAGE_HEIGHT, IMAGE_WIDTH, INITIAL_X_POSITION, INITIAL_Y_POSITION, initialHealth);
 		velocityMultiplier = 0;
 	}
 	

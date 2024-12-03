@@ -1,21 +1,23 @@
 package com.example.demo;
 
 import com.example.demo.controller.Main;
+import javafx.scene.image.Image;
 
 import java.util.*;
 
-public class Boss extends FighterPlane {
+public class BossPlane extends FighterPlane {
 
 	private static final int SCREEN_HEIGHT = Main.getScreenHeight();
 	private static final int SCREEN_WIDTH = Main.getScreenWidth();
 	private static final String IMAGE_NAME = "c17.png";
-	private static final int IMAGE_HEIGHT =  (int) (SCREEN_HEIGHT * .2);
+	private static final Image PLANE_IMAGE = new Image(UserPlane.class.getResource("/com/example/demo/images/"+IMAGE_NAME).toExternalForm());
+	private static final int IMAGE_HEIGHT = (int) PLANE_IMAGE.getHeight(); // Dynamically get height
+	private static final int IMAGE_WIDTH = (int) PLANE_IMAGE.getWidth();  // Dynamically get width
 	private static final double INITIAL_X_POSITION = SCREEN_WIDTH - (SCREEN_WIDTH * .3);
 	private static final double INITIAL_Y_POSITION = SCREEN_HEIGHT * .5;
 	private static final int Y_POSITION_UPPER_BOUND =  (int) -(SCREEN_HEIGHT * .01);
 	private static final int Y_POSITION_LOWER_BOUND = SCREEN_HEIGHT - (2*IMAGE_HEIGHT) - Y_POSITION_UPPER_BOUND;
 	private static final int VERTICAL_VELOCITY = (int) (SCREEN_HEIGHT * .0075);
-	private static final double PROJECTILE_Y_POSITION_OFFSET = ((double) IMAGE_HEIGHT /2);
 	private static final double BOSS_FIRE_RATE = .04;
 	private static final double BOSS_SHIELD_PROBABILITY = .01;
 	private static final int HEALTH = 15;
@@ -31,8 +33,8 @@ public class Boss extends FighterPlane {
 	private LevelView levelView;
 
 
-	public Boss() {
-		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, HEALTH);
+	public BossPlane() {
+		super(IMAGE_NAME, IMAGE_HEIGHT, IMAGE_WIDTH, INITIAL_X_POSITION, INITIAL_Y_POSITION, HEALTH);
 		movePattern = new ArrayList<>();
 		consecutiveMovesInSameDirection = 0;
 		indexOfCurrentMove = 0;
@@ -60,7 +62,7 @@ public class Boss extends FighterPlane {
 
 	@Override
 	public ActiveActorDestructible fireProjectile() {
-		return bossFiresInCurrentFrame() ? new BossProjectile(getBossXPosition(), getProjectileInitialPosition()) : null;
+		return bossFiresInCurrentFrame() ? new BossProjectile(getProjectileXPosition(), getProjectileYPosition()) : null;
 	}
 
 	@Override
@@ -68,56 +70,8 @@ public class Boss extends FighterPlane {
 		return !isShielded;
 	}
 
-	private void initializeMovePattern() {
-		for (int i = 0; i < MOVE_FREQUENCY_PER_CYCLE; i++) {
-			movePattern.add(VERTICAL_VELOCITY);
-			movePattern.add(-VERTICAL_VELOCITY);
-			movePattern.add(ZERO);
-		}
-		Collections.shuffle(movePattern);
-	}
-
-	public void setLevelView(LevelView levelView) {
-		this.levelView = levelView;
-	}
-
-	private void updateShield() {
-		if (isShielded) {
-			framesWithShieldActivated++;
-		} else if (shieldShouldBeActivated()) {
-			activateShield();
-			levelView.showShield();
-		}
-		if (shieldExhausted()) {
-			deactivateShield();
-			levelView.hideShield();
-		}
-	}
-
-
-	private int getNextMove() {
-		int currentMove = movePattern.get(indexOfCurrentMove);
-		consecutiveMovesInSameDirection++;
-		if (consecutiveMovesInSameDirection == MAX_FRAMES_WITH_SAME_MOVE) {
-			Collections.shuffle(movePattern);
-			consecutiveMovesInSameDirection = 0;
-			indexOfCurrentMove++;
-		}
-		if (indexOfCurrentMove == movePattern.size()) {
-			indexOfCurrentMove = 0;
-		}
-		return currentMove;
-	}
-
 	private boolean bossFiresInCurrentFrame() {
 		return Math.random() < BOSS_FIRE_RATE;
-	}
-
-	private double getProjectileInitialPosition() {
-		return getLayoutY() + getTranslateY() + PROJECTILE_Y_POSITION_OFFSET;
-	}
-	static double getBossXPosition() {
-		return INITIAL_X_POSITION;
 	}
 
 	private boolean shieldShouldBeActivated() {
@@ -135,5 +89,45 @@ public class Boss extends FighterPlane {
 	private void deactivateShield() {
 		isShielded = false;
 		framesWithShieldActivated = 0;
+	}
+
+	private void updateShield() {
+		if (isShielded) {
+			framesWithShieldActivated++;
+		} else if (shieldShouldBeActivated()) {
+			activateShield();
+			levelView.showShield();
+		}
+		if (shieldExhausted()) {
+			deactivateShield();
+			levelView.hideShield();
+		}
+	}
+
+	private int getNextMove() {
+		int currentMove = movePattern.get(indexOfCurrentMove);
+		consecutiveMovesInSameDirection++;
+		if (consecutiveMovesInSameDirection == MAX_FRAMES_WITH_SAME_MOVE) {
+			Collections.shuffle(movePattern);
+			consecutiveMovesInSameDirection = 0;
+			indexOfCurrentMove++;
+		}
+		if (indexOfCurrentMove == movePattern.size()) {
+			indexOfCurrentMove = 0;
+		}
+		return currentMove;
+	}
+
+	private void initializeMovePattern() {
+		for (int i = 0; i < MOVE_FREQUENCY_PER_CYCLE; i++) {
+			movePattern.add(VERTICAL_VELOCITY);
+			movePattern.add(-VERTICAL_VELOCITY);
+			movePattern.add(ZERO);
+		}
+		Collections.shuffle(movePattern);
+	}
+
+	public void setLevelView(LevelView levelView) {
+		this.levelView = levelView;
 	}
 }

@@ -7,8 +7,8 @@ public abstract class ActiveActorDestructible extends ActiveActor {
 	private int health; // Health initialized through the constructor
 	private boolean isDestroyed;
 
-	public ActiveActorDestructible(String imageName, int imageHeight, double initialXPos, double initialYPos, int health) {
-		super(imageName, imageHeight, initialXPos, initialYPos);
+	public ActiveActorDestructible(String imageName, int imageHeight, int imageWidth, double initialXPos, double initialYPos, int health) {
+		super(imageName, imageHeight, imageWidth, initialXPos, initialYPos);
 		this.health = health; // Set health via constructor
 		this.isDestroyed = false;
 	}

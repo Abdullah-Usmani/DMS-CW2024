@@ -1,21 +1,21 @@
 package com.example.demo;
 
 import com.example.demo.controller.Main;
+import javafx.scene.image.Image;
 
 public class EnemyPlane3 extends FighterPlane {
 
-	private static final int SCREEN_HEIGHT = Main.getScreenHeight();
 	private static final int SCREEN_WIDTH = Main.getScreenWidth();
 	private static final String IMAGE_NAME = "a10c.png";
-	private static final int IMAGE_HEIGHT = (int) (SCREEN_HEIGHT * .08);
+	private static final Image PLANE_IMAGE = new Image(UserPlane.class.getResource("/com/example/demo/images/"+IMAGE_NAME).toExternalForm());
+	private static final int IMAGE_HEIGHT = (int) PLANE_IMAGE.getHeight(); // Dynamically get height
+	private static final int IMAGE_WIDTH = (int) PLANE_IMAGE.getWidth();  // Dynamically get width
 	private static final int HORIZONTAL_VELOCITY = (int) -(SCREEN_WIDTH * .0025);;
-	private static final double PROJECTILE_X_POSITION_OFFSET = (int) -(SCREEN_WIDTH * .05);
-	private static final double PROJECTILE_Y_POSITION_OFFSET = (double) IMAGE_HEIGHT /2;
 	private static final int INITIAL_HEALTH = 3;
 	private static final double FIRE_RATE = .02;
 
 	public EnemyPlane3(double initialXPos, double initialYPos) {
-		super(IMAGE_NAME, IMAGE_HEIGHT, initialXPos, initialYPos, INITIAL_HEALTH);
+		super(IMAGE_NAME, IMAGE_HEIGHT, IMAGE_WIDTH, initialXPos, initialYPos, INITIAL_HEALTH);
 	}
 
 	@Override

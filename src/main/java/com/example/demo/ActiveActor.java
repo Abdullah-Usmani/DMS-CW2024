@@ -6,12 +6,13 @@ public abstract class ActiveActor extends ImageView {
 	
 	private static final String IMAGE_LOCATION = "/com/example/demo/images/";
 
-	public ActiveActor(String imageName, int imageHeight, double initialXPos, double initialYPos) {
+	public ActiveActor(String imageName, int imageHeight, int imageWidth, double initialXPos, double initialYPos) {
 		//this.setImage(new Image(IMAGE_LOCATION + imageName));
 		this.setImage(new Image(getClass().getResource(IMAGE_LOCATION + imageName).toExternalForm()));
 		this.setLayoutX(initialXPos);
 		this.setLayoutY(initialYPos);
 		this.setFitHeight(imageHeight);
+		this.setFitHeight(imageWidth);
 		this.setPreserveRatio(true);
 	}
 
