@@ -8,11 +8,11 @@ public class BossProjectile extends Projectile {
 	private static final int SCREEN_WIDTH = Main.getScreenWidth();
 	private static final String IMAGE_NAME = "bossfire.png";
 	private static final int IMAGE_HEIGHT = (int) (SCREEN_HEIGHT * .05);
-	private static final int HORIZONTAL_VELOCITY = (int) -(SCREEN_WIDTH * .02);
-	private static final int INITIAL_X_POSITION = (int) Boss.getBossXPosition();
+	private static final double HORIZONTAL_VELOCITY = -(SCREEN_WIDTH * .015);
+	private static final int DAMAGE_MULTIPLIER = 1;
 
-	public BossProjectile(double initialYPos) {
-		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, initialYPos);
+	public BossProjectile(double initialXPos, double initialYPos) {
+		super(IMAGE_NAME, IMAGE_HEIGHT, initialXPos, initialYPos, HORIZONTAL_VELOCITY, DAMAGE_MULTIPLIER);
 	}
 
 	@Override

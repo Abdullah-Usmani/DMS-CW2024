@@ -15,14 +15,12 @@ import com.example.demo.LevelParent;
 
 public class Controller implements Observer {
 
-	public static final String LEVEL_ONE_CLASS_NAME = "com.example.demo.LevelOne";
-//	private static final String LEVEL_ONE_CLASS_NAME = "com.example.demo.LevelOne";
+	public static final String LEVEL_ONE_CLASS_NAME = "com.example.demo.LevelThree";
 	private final Stage stage;
 	private PauseMenu pauseMenu;
 	private LevelParent currentLevel;
 	private boolean isPaused = false; // Track pause state
 	private final Timeline timeline;
-//	private LevelTwo levelTwo;
 
 	public Controller(Stage stage) {
 		this.stage = stage;

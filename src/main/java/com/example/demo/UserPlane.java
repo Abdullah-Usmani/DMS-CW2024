@@ -48,7 +48,7 @@ public class UserPlane extends FighterPlane {
 		long currentTime = System.currentTimeMillis();
 		if (currentTime - lastFiredTime >= FIRE_RATE_COOLDOWN) { // Check cooldown
 			lastFiredTime = currentTime; // Update last fired time
-			return new UserProjectile(PROJECTILE_X_POSITION, getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET));
+			return new UserProjectile(getProjectileXPosition(), getProjectileYPosition());
 		} else {
 			// Cooldown active, no projectile fired
 //			System.out.println("Cooldown active, cannot fire yet!");
@@ -60,7 +60,7 @@ public class UserPlane extends FighterPlane {
 		long currentTime = System.currentTimeMillis();
 		if (currentTime - lastFiredTime >= FIRE_RATE_COOLDOWN) { // Check cooldown
 			lastFiredTime = currentTime; // Update last fired time
-			return new UserMissile(PROJECTILE_X_POSITION, getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET));
+			return new UserMissile(getProjectileXPosition(), getProjectileYPosition());
 		} else {
 			// Cooldown active, no projectile fired
 //			System.out.println("Cooldown active, cannot fire yet!");

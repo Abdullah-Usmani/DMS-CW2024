@@ -27,8 +27,8 @@ public class EnemyPlane2 extends FighterPlane {
 	@Override
 	public ActiveActorDestructible fireProjectile() {
 		if (Math.random() < FIRE_RATE) {
-			double projectileXPosition = getProjectileXPosition(PROJECTILE_X_POSITION_OFFSET);
-			double projectileYPosition = getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET);
+			double projectileXPosition = getProjectileXPosition();
+			double projectileYPosition = getProjectileYPosition();
 			return new EnemyProjectile(projectileXPosition, projectileYPosition);
 		}
 		return null;

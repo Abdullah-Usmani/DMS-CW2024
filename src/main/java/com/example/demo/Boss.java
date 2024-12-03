@@ -60,15 +60,12 @@ public class Boss extends FighterPlane {
 
 	@Override
 	public ActiveActorDestructible fireProjectile() {
-		return bossFiresInCurrentFrame() ? new BossProjectile(getProjectileInitialPosition()) : null;
+		return bossFiresInCurrentFrame() ? new BossProjectile(getBossXPosition(), getProjectileInitialPosition()) : null;
 	}
 
 	@Override
-	public void takeDamage() {
-		if (!isShielded && getHealth() > 0) {
-			super.takeDamage();
-			System.out.println("Boss health: " + getHealth());
-		}
+	protected boolean shouldTakeDamage() {
+		return !isShielded;
 	}
 
 	private void initializeMovePattern() {

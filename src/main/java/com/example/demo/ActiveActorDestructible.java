@@ -2,14 +2,15 @@ package com.example.demo;
 
 import com.example.demo.controller.Main;
 
-public abstract class ActiveActorDestructible extends ActiveActor implements Destructible {
+public abstract class ActiveActorDestructible extends ActiveActor {
 
-	private int health;
+	private int health; // Health initialized through the constructor
 	private boolean isDestroyed;
 
-	public ActiveActorDestructible(String imageName, int imageHeight, double initialXPos, double initialYPos) {
+	public ActiveActorDestructible(String imageName, int imageHeight, double initialXPos, double initialYPos, int health) {
 		super(imageName, imageHeight, initialXPos, initialYPos);
-		isDestroyed = false;
+		this.health = health; // Set health via constructor
+		this.isDestroyed = false;
 	}
 
 	public boolean isOutOfBounds(double x, double screenWidth) {
@@ -18,7 +19,7 @@ public abstract class ActiveActorDestructible extends ActiveActor implements Des
 
 	@Override
 	public void updatePosition() {
-        double x = getLayoutX() + getTranslateX();
+		double x = getLayoutX() + getTranslateX();
 		double y = getLayoutY() + getTranslateY();
 		if (isOutOfBounds(x, Main.getScreenWidth())) {
 			this.destroy();
@@ -27,7 +28,6 @@ public abstract class ActiveActorDestructible extends ActiveActor implements Des
 
 	public abstract void updateActor();
 
-	@Override
 	public void destroy() {
 		setDestroyed();
 	}
@@ -40,11 +40,30 @@ public abstract class ActiveActorDestructible extends ActiveActor implements Des
 		return isDestroyed;
 	}
 
-	public void takeDamage(int damage) {
-		health -= damage;
-		if (health <= 0) {
-			destroy();
+	/**
+	 * Decrements health based on damage and destroys the object if health is zero or less.
+	 *
+	 * @param damage Amount of damage to inflict
+	 */
+	public final void takeDamage(int damage) {
+		if (shouldTakeDamage()) {
+			int newHealth = getHealth() - damage;
+			setHealth(newHealth);
+			System.out.println(this.getClass().getSimpleName() + " took damage: " + damage + ", Health: " + getHealth());
+			if (getHealth() <= 0) {
+				destroy();
+			}
+		} else {
+			System.out.println(this.getClass().getSimpleName() + " avoided damage!");
 		}
+	}
+
+	/**
+	 * Determines whether the actor should take damage. Default: Always true.
+	 * Can be overridden by subclasses like Boss or Shielded objects.
+	 */
+	protected boolean shouldTakeDamage() {
+		return true;
 	}
 
 	public int getHealth() {
@@ -53,5 +72,6 @@ public abstract class ActiveActorDestructible extends ActiveActor implements Des
 
 	public void setHealth(int health) {
 		this.health = health;
+		System.out.println("Updated health for " + this.getClass().getSimpleName() + ": " + this.health);
 	}
 }
