@@ -30,7 +30,7 @@ public abstract class LevelParent extends Observable {
 
 	private final List<ActiveActorDestructible> friendlyUnits = new ArrayList<>();
 	private final List<ActiveActorDestructible> enemyUnits = new ArrayList<>();
-	private final List<Projectile> projectiles = new ArrayList<>();
+	private final List<ActiveActorDestructible> projectiles = new ArrayList<>();
 	private int currentNumberOfEnemies;
 	protected final LevelView levelView;
 	protected abstract LevelView instantiateLevelView();
@@ -83,14 +83,14 @@ public abstract class LevelParent extends Observable {
 		generateEnemyFire();
 		updateNumberOfEnemies();
 		handleEnemyPenetration();         // Check for enemies penetrating defenses
-		// Process all collisions in a single pass
-		boolean userProjectileCollision = handleCollisions(projectiles, enemyUnits);
-//		handleCollisions(enemyUnits, friendlyUnits);
 		handleCollisions(projectiles, friendlyUnits);
-		// Update hit count only if user projectile hits an enemy
+		boolean userProjectileCollision = handleCollisions(projectiles, enemyUnits); 		// Process all collisions in a single pass
+		boolean planeCollision = handleCollisions(enemyUnits, friendlyUnits);
 		if (userProjectileCollision) {
-//			System.out.println("User projectile collision detected");
-			updateHitCount(true);
+			updateHitCount(true); 		// Update hit count only if user projectile hits an enemy
+		}
+		if (planeCollision) {
+			user.takeDamage(1);		// Update hit count only if user projectile hits an enemy
 		}
 		removeAllDestroyedActors();       // Removes destroyed actors after collision checks
 		updateLevelView();                // Update health, kills, etc.
@@ -154,22 +154,27 @@ public abstract class LevelParent extends Observable {
 		}
 	}
 
-	private boolean handleCollisions(List<Projectile> projectiles, List<ActiveActorDestructible> targets) {
-		Iterator<Projectile> projectileIterator = projectiles.iterator();
+	private boolean handleCollisions(List<ActiveActorDestructible> projectiles, List<ActiveActorDestructible> targets) {
+		Iterator<ActiveActorDestructible> projectileIterator = projectiles.iterator();
 		boolean collisionOccurred = false;
 		while (projectileIterator.hasNext()) {
-			Projectile projectile = projectileIterator.next();
+			ActiveActorDestructible projectile = projectileIterator.next();
 			for (ActiveActorDestructible target : targets) {
 				if (projectile.getBoundsInParent().intersects(target.getBoundsInParent())) {
 //					System.out.println("User Health = " + user.getHealth());
 					target.takeDamage(projectile.getDamage());
+					double collisionX = projectile.getLayoutX() + projectile.getTranslateX();
+					double collisionY = projectile.getLayoutY() + projectile.getTranslateY();
+
+					// Handle collision effects
+					handleCollisionEffects(collisionX, collisionY, projectile.getImageName());
+
+					// Remove the projectile
+					projectileIterator.remove();
+					root.getChildren().remove(projectile);
 //					System.out.println("User Health = " + user.getHealth());
 //					System.out.println("Target = " + target);
 //					System.out.println("Projectile Damage = " + projectile.getDamage());
-					projectileIterator.remove(); // Remove projectile on collision
-					root.getChildren().remove(projectile);
-//					System.out.println("User Health = " + user.getHealth());
-					handleCollisionEffects(projectile.getLayoutX(), projectile.getLayoutY(), projectile.getImageName());
 					collisionOccurred = true;
 					break;
 				}
@@ -182,32 +187,32 @@ public abstract class LevelParent extends Observable {
 		ExplosionEffect explosionEffect;
 
 		switch (collisionType) {
-//			case "PLANE_PROJECTILE":
-//				explosionEffect = new ExplosionEffect(
-//						"/com/example/demo/images/explosion1.png",
-//						50, 50, 1.0,
-//						"/com/example/demo/audio/fortnite-pump.mp3"
-//				);
-//			break;
-//			case "PLANE_PLANE":
-//				explosionEffect = new ExplosionEffect(
-//						"/com/example/demo/images/explosion1.png",
-//						100, 100, 1.5,
-//						"/com/example/demo/audio/fortnite-pump.mp3"
-//				);
-//				break;
-//			case "PROJECTILE_PROJECTILE":
-//				explosionEffect = new ExplosionEffect(
-//						"/com/example/demo/images/explosion1.png",
-//						30, 30, 0.5,
-//						"/com/example/demo/audio/fortnite-pump.mp3"
-//				);
-//				break;
+			case "PLANE_PROJECTILE":
+				explosionEffect = new ExplosionEffect(
+						"/com/example/demo/images/explosion1.png",
+						50, 50, 1.0,
+						"/com/example/demo/audio/fortnite-pump.mp3"
+				);
+			break;
+			case "PLANE_PLANE":
+				explosionEffect = new ExplosionEffect(
+						"/com/example/demo/images/explosion1.png",
+						100, 100, 1.5,
+						"/com/example/demo/audio/fortnite-pump.mp3"
+				);
+				break;
+			case "PROJECTILE_PROJECTILE":
+				explosionEffect = new ExplosionEffect(
+						"/com/example/demo/images/explosion1.png",
+						30, 30, 0.5,
+						"/com/example/demo/audio/fortnite-pump.mp3"
+				);
+				break;
 			default:
 				explosionEffect = new ExplosionEffect(
 						"/com/example/demo/images/explosion1.png",
 						50, 50, 1.0,
-						null
+						"/com/example/demo/audio/fortnite-rpg.mp3"
 				);
 		}
 
@@ -219,7 +224,7 @@ public abstract class LevelParent extends Observable {
 	private void updateActors() {
 		friendlyUnits.forEach(ActiveActorDestructible::updateActor);
 		enemyUnits.forEach(ActiveActorDestructible::updateActor);
-		projectiles.forEach(Projectile::updateActor);
+		projectiles.forEach(ActiveActorDestructible::updateActor);
 	}
 
 	private void removeAllDestroyedActors() {

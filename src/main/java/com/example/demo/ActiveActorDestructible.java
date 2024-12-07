@@ -5,11 +5,14 @@ import com.example.demo.controller.Main;
 public abstract class ActiveActorDestructible extends ActiveActor {
 
 	private int health; // Health initialized through the constructor
+	private int damage; // Health initialized through the constructor
+	private final String imageName;
 	private boolean isDestroyed;
 
 	public ActiveActorDestructible(String imageName, int imageHeight, int imageWidth, double initialXPos, double initialYPos, int health) {
 		super(imageName, imageHeight, imageWidth, initialXPos, initialYPos);
 		this.health = health; // Set health via constructor
+        this.imageName = imageName;
 		this.isDestroyed = false;
 	}
 
@@ -71,5 +74,13 @@ public abstract class ActiveActorDestructible extends ActiveActor {
 	public void setHealth(int health) {
 		this.health = health;
 //		System.out.println("Updated health for " + this.getClass().getSimpleName() + ": " + this.health);
+	}
+
+	public int getDamage() {
+		return damage;
+	}
+
+	public String getImageName() {
+		return imageName;
 	}
 }
