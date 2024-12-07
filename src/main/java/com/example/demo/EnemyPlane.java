@@ -25,17 +25,13 @@ public class EnemyPlane extends FighterPlane {
 	public void updatePosition() {
 		moveHorizontally(HORIZONTAL_VELOCITY);
 		super.updatePosition();
-//		System.out.println("nice");
 	}
 
 	@Override
 	public ActiveActorDestructible fireProjectile() {
 		if (Math.random() < FIRE_RATE) {
-//			double projectileXPosition = getProjectileXPosition(PROJECTILE_X_POSITION_OFFSET);
-			double projectileXPosition = getProjectileXPosition();
-//			double projectileYPosition = getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET);
-			double projectileYPosition = getProjectileYPosition();
-			return new EnemyProjectile(projectileXPosition, projectileYPosition);
+			playFiringSound("/com/example/demo/audio/ricochet-1.mp3"); // Play enemy-specific sound
+			return new EnemyProjectile(getProjectileXPosition(), getProjectileYPosition());
 		}
 		return null;
 	}

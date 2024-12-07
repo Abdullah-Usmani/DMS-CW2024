@@ -1,11 +1,13 @@
 package com.example.demo;
 
 import com.example.demo.controller.Main;
+import javafx.scene.media.AudioClip;
 
 public abstract class FighterPlane extends ActiveActorDestructible {
 
 	private final int imageHeight;
 	private final int imageWidth;
+	private static final String DEFAULT_FIRE_SOUND = "/com/example/demo/audio/ricochet-2.mp3";
 
     public FighterPlane(String imageName, int imageHeight, int imageWidth, double initialXPos, double initialYPos, int health) {
 		super(imageName, imageHeight, imageWidth, initialXPos, initialYPos, health);
@@ -14,6 +16,12 @@ public abstract class FighterPlane extends ActiveActorDestructible {
     }
 
 	public abstract ActiveActorDestructible fireProjectile();
+
+	// Plays the firing sound for the plane
+	protected void playFiringSound(String audioFilePath) {
+		AudioClip fireSound = new AudioClip(getClass().getResource(audioFilePath).toExternalForm());
+		fireSound.play();
+	}
 
 	protected double getProjectileXPosition() {
 		return getLayoutX() + getTranslateX() + getProjectileXOffset();

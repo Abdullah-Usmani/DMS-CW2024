@@ -10,7 +10,11 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
+import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
+import javafx.animation.PauseTransition;
+import javafx.scene.control.Label;
+import javafx.scene.text.Font;
 
 public abstract class LevelParent extends Observable {
 
@@ -33,7 +37,7 @@ public abstract class LevelParent extends Observable {
 	private final List<ActiveActorDestructible> projectiles = new ArrayList<>();
 	private int currentNumberOfEnemies;
 	protected final LevelView levelView;
-	protected abstract LevelView instantiateLevelView();
+
 
 	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
         this.root = new Group();
@@ -50,6 +54,8 @@ public abstract class LevelParent extends Observable {
 		initializeTimeline();
 		friendlyUnits.add(user);
 	}
+
+	protected abstract LevelView instantiateLevelView();
 
 	protected abstract void initializeFriendlyUnits();
 
@@ -70,6 +76,35 @@ public abstract class LevelParent extends Observable {
 		background.requestFocus();
 		timeline.play();
 	}
+
+	public void startLevel(String levelName, String enemyDetails, int killsNeeded, String controls) {
+		showLevelOverlay(levelName, enemyDetails, killsNeeded, controls);
+
+		// Delay starting the game until the overlay is shown
+		PauseTransition delay = new PauseTransition(Duration.seconds(5));
+		delay.setOnFinished(e -> {
+			background.requestFocus(); // Sets focus on the game background
+			timeline.play();          // Starts the game timeline
+		});
+		delay.play();
+	}
+
+	private void showLevelOverlay(String levelName, String enemyDetails, int killsNeeded, String controls) {
+		StackPane overlay = new StackPane();
+		Label overlayText = new Label("Level: " + levelName + "\n" +
+				"Enemies: " + enemyDetails + "\n" +
+				"Kills Needed: " + killsNeeded + "\n" +
+				"Controls: " + controls);
+
+		overlayText.setFont(new Font("Arial", 24));
+		overlay.getChildren().add(overlayText);
+		root.getChildren().add(overlay);
+
+		PauseTransition delay = new PauseTransition(Duration.seconds(5));
+		delay.setOnFinished(e -> root.getChildren().remove(overlay));
+		delay.play();
+	}
+
 
 	public void goToNextLevel(String levelName) {
 		timeline.stop();
@@ -116,8 +151,8 @@ public abstract class LevelParent extends Observable {
 				KeyCode kc = e.getCode();
 				if (kc == KeyCode.UP) user.moveUp();
 				if (kc == KeyCode.DOWN) user.moveDown();
-				if (kc == KeyCode.SPACE) fireProjectile(user);
-				if (kc == KeyCode.M) fireMissile(user);
+				if (kc == KeyCode.SPACE) fireProjectile();
+				if (kc == KeyCode.M) fireMissile();
 			}
 		});
 		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
@@ -128,14 +163,12 @@ public abstract class LevelParent extends Observable {
 		});
 	}
 
-	private void fireProjectile(FighterPlane plane) {
-//		Projectile userprojectile = ProjectileFactory.createUserProjectile(plane.getProjectileXPosition(), plane.getProjectileYPosition());
+	private void fireProjectile() {
 		Projectile userprojectile = (Projectile) user.fireProjectile();
 		root.getChildren().add(userprojectile);
 		projectiles.add(userprojectile);
 	}
-	private void fireMissile(FighterPlane plane) {
-//		Projectile missile = ProjectileFactory.createMissile(plane.getMissileType(), plane.getProjectileInitialX(), plane.getProjectileInitialY());
+	private void fireMissile() {
 		Projectile missile = (Projectile) user.fireMissile();
         root.getChildren().add(missile);
         projectiles.add(missile);
@@ -161,20 +194,12 @@ public abstract class LevelParent extends Observable {
 			ActiveActorDestructible projectile = projectileIterator.next();
 			for (ActiveActorDestructible target : targets) {
 				if (projectile.getBoundsInParent().intersects(target.getBoundsInParent())) {
-//					System.out.println("User Health = " + user.getHealth());
 					target.takeDamage(projectile.getDamage());
 					double collisionX = projectile.getLayoutX() + projectile.getTranslateX();
 					double collisionY = projectile.getLayoutY() + projectile.getTranslateY();
-
-					// Handle collision effects
 					handleCollisionEffects(collisionX, collisionY, projectile.getImageName());
-
-					// Remove the projectile
 					projectileIterator.remove();
 					root.getChildren().remove(projectile);
-//					System.out.println("User Health = " + user.getHealth());
-//					System.out.println("Target = " + target);
-//					System.out.println("Projectile Damage = " + projectile.getDamage());
 					collisionOccurred = true;
 					break;
 				}
@@ -187,32 +212,32 @@ public abstract class LevelParent extends Observable {
 		ExplosionEffect explosionEffect;
 
 		switch (collisionType) {
-			case "PLANE_PROJECTILE":
+			case "userfire.png":
 				explosionEffect = new ExplosionEffect(
 						"/com/example/demo/images/explosion1.png",
 						50, 50, 1.0,
-						"/com/example/demo/audio/fortnite-pump.mp3"
+						"/com/example/demo/audio/ricochet-1.mp3"
 				);
 			break;
-			case "PLANE_PLANE":
+			case "userplane1.png":
 				explosionEffect = new ExplosionEffect(
 						"/com/example/demo/images/explosion1.png",
-						100, 100, 1.5,
+						75, 75, 1.5,
 						"/com/example/demo/audio/fortnite-pump.mp3"
 				);
 				break;
-			case "PROJECTILE_PROJECTILE":
+			case "sidewinder.png":
 				explosionEffect = new ExplosionEffect(
 						"/com/example/demo/images/explosion1.png",
-						30, 30, 0.5,
-						"/com/example/demo/audio/fortnite-pump.mp3"
+						100, 100, 1.5,
+						"/com/example/demo/audio/roblox-explosion-sound.mp3"
 				);
 				break;
 			default:
 				explosionEffect = new ExplosionEffect(
 						"/com/example/demo/images/explosion1.png",
 						50, 50, 1.0,
-						"/com/example/demo/audio/fortnite-rpg.mp3"
+						"/com/example/demo/audio/roblox-explosion-sound.mp3"
 				);
 		}
 
@@ -242,11 +267,9 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private void updateHitCount(boolean collisionDetected) {
-//		System.out.println("update hit count called");
 		if (collisionDetected) {
 			user.incrementHitCount(); // Update hit count if a collision occurred
 			System.out.println("User hit-count: " + user.getNumberOfHits());
-//			System.out.println("User health: " + user.getHealth());
 		}
 	}
 
@@ -267,7 +290,6 @@ public abstract class LevelParent extends Observable {
 		levelView.removeHearts(user.getHealth());
 		levelView.updateKills(user.getNumberOfHits());
 	}
-
 
 	// Static method to set the Controller
 	public static void setController(Controller gameController) {

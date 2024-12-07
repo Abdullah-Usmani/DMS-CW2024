@@ -53,6 +53,7 @@ public class UserPlane extends FighterPlane {
 		long currentTime = System.currentTimeMillis();
 		if (currentTime - lastFiredTime >= FIRE_RATE_COOLDOWN) { // Check cooldown
 			lastFiredTime = currentTime; // Update last fired time
+			playFiringSound("/com/example/demo/audio/single-shot.mp3"); // Play user-specific sound
 			return new UserProjectile(getProjectileXPosition(), getProjectileYPosition());
 		} else {
 			// Cooldown active, no projectile fired
@@ -65,6 +66,7 @@ public class UserPlane extends FighterPlane {
 		long currentTime = System.currentTimeMillis();
 		if (currentTime - lastFiredTime >= MISSILE_COOLDOWN) { // Check cooldown
 			lastFiredTime = currentTime; // Update last fired time
+			playFiringSound("/com/example/demo/audio/fortnite-rpg.mp3"); // Play enemy-specific sound
 			return new UserMissile(getProjectileXPosition(), getProjectileYPosition());
 		} else {
 			// Cooldown active, no projectile fired

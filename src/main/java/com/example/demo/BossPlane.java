@@ -64,7 +64,13 @@ public class BossPlane extends FighterPlane {
 
 	@Override
 	public ActiveActorDestructible fireProjectile() {
-		return bossFiresInCurrentFrame() ? new BossProjectile(getProjectileXPosition(), getProjectileYPosition()) : null;
+		if (bossFiresInCurrentFrame()) {
+			playFiringSound("/com/example/demo/audio/fortnite-rpg.mp3"); // Play enemy-specific sound
+			return new BossProjectile(getProjectileXPosition(), getProjectileYPosition());
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override

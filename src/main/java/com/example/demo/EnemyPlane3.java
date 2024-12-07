@@ -30,9 +30,8 @@ public class EnemyPlane3 extends FighterPlane {
 	@Override
 	public ActiveActorDestructible fireProjectile() {
 		if (Math.random() < FIRE_RATE) {
-			double projectileXPosition = getProjectileXPosition();
-			double projectileYPosition = getProjectileYPosition();
-			return new EnemyProjectile2(projectileXPosition, projectileYPosition);
+			playFiringSound("/com/example/demo/audio/fortnite-rpg.mp3"); // Play enemy-specific sound
+			return new EnemyProjectile2(getProjectileXPosition(), getProjectileYPosition());
 		}
 		return null;
 	}

@@ -30,9 +30,8 @@ public class EnemyPlane2 extends FighterPlane {
 	@Override
 	public ActiveActorDestructible fireProjectile() {
 		if (Math.random() < FIRE_RATE) {
-			double projectileXPosition = getProjectileXPosition();
-			double projectileYPosition = getProjectileYPosition();
-			return new EnemyProjectile(projectileXPosition, projectileYPosition);
+			playFiringSound("/com/example/demo/audio/ricochet-1.mp3"); // Play enemy-specific sound
+			return new EnemyProjectile(getProjectileXPosition(), getProjectileYPosition());
 		}
 		return null;
 	}

@@ -13,6 +13,8 @@ public class LevelOne extends LevelParent {
 		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
 	}
 
+
+
 	@Override
 	protected void checkIfGameOver() {
 		if (userIsDestroyed()) {
