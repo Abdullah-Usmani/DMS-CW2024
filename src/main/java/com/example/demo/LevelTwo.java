@@ -11,8 +11,8 @@ public class LevelTwo extends LevelParent {
 	private static final int PLAYER_INITIAL_HEALTH = 10;
 
 	public LevelTwo(double screenHeight, double screenWidth) {
-		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
-		showLevelOverlay("Two", "Enemy Planes, Boss", KILLS_TO_ADVANCE); // Call overlay
+		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, "Two", "F-16s: 1 hit, MiG-29s: 2 hits", 15);
+//		showLevelOverlay("Two", "Enemy Planes, Boss", KILLS_TO_ADVANCE); // Call overlay
 	}
 
 
@@ -50,7 +50,9 @@ public class LevelTwo extends LevelParent {
 
 	@Override
 	protected LevelView instantiateLevelView() {
-		return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
+		LevelView levelView = new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
+//		levelView.showLevelOverlay("Two", "Enemy Planes", 15, this::startGame); // Callback triggers game start
+		return levelView;
 	}
 
 	private boolean userHasReachedKillTarget() {

@@ -15,7 +15,7 @@ import com.example.demo.LevelParent;
 
 public class Controller implements Observer {
 
-	public static final String LEVEL_ONE_CLASS_NAME = "com.example.demo.LevelOne";
+	public static final String LEVEL_ONE_CLASS_NAME = "com.example.demo.LevelThree";
 	private final Stage stage;
 	private PauseMenu pauseMenu;
 	private LevelParent currentLevel;
@@ -44,6 +44,7 @@ public class Controller implements Observer {
 	public void goToLevel(String className) throws ClassNotFoundException, NoSuchMethodException, SecurityException,
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		// Reflectively create the new level instance
+		System.out.println("Transitioning to level: " + className);
 		Class<?> myClass = Class.forName(className);
 		Constructor<?> constructor = myClass.getConstructor(double.class, double.class);
 		LevelParent myLevel = (LevelParent) constructor.newInstance(stage.getHeight(), stage.getWidth());
@@ -52,10 +53,13 @@ public class Controller implements Observer {
 		myLevel.addObserver(this); // Observe for level changes
 		Scene scene = myLevel.initializeScene();
 		scene.addEventHandler(KeyEvent.KEY_PRESSED, this::handleKeyPress);
-		stage.setScene(scene);
 
-		// The level handles its own overlay and game start
+		stage.setScene(scene);
 		currentLevel = myLevel; // Set the current level reference
+		myLevel.initializeLevel();
+
+		// LevelParent handles its own start (e.g., showLevelOverlay or startGame)
+		System.out.println("Level set. Overlay should display.");
 	}
 
 	// Pause the game

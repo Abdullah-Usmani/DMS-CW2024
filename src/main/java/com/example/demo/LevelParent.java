@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import com.example.demo.controller.Controller;
 import javafx.animation.*;
+import javafx.beans.binding.Bindings;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -23,6 +24,10 @@ public abstract class LevelParent extends Observable {
 	private final double screenHeight;
 	private final double screenWidth;
 	private final double enemyMaximumYPosition;
+//	private final String entryMessage;
+	private final String levelName;
+	private final String enemyDetails;
+	private final int killsNeeded;
 	private boolean isPaused;
 
 	private static Controller controller; // Reference to Controller
@@ -40,7 +45,7 @@ public abstract class LevelParent extends Observable {
 	protected final LevelView levelView;
 
 
-	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
+	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth, String levelName, String enemyDetails, int killsNeeded) {
 		this.root = new Group();
 		this.scene = new Scene(root, screenWidth, screenHeight);
 		this.timeline = new Timeline();
@@ -51,6 +56,10 @@ public abstract class LevelParent extends Observable {
 		this.screenWidth = screenWidth;
 		this.enemyMaximumYPosition = screenHeight - SCREEN_HEIGHT_ADJUSTMENT;
 		this.levelView = instantiateLevelView();
+//		this.entryMessage = entryMessage; // Store entry message for use later
+		this.levelName = levelName; // Store entry message for use later
+		this.enemyDetails = enemyDetails; // Store entry message for use later
+		this.killsNeeded = killsNeeded; // Store entry message for use later
 		this.currentNumberOfEnemies = 0;
 		initializeTimeline();
 		friendlyUnits.add(user);
@@ -125,69 +134,72 @@ public abstract class LevelParent extends Observable {
 		});
 	}
 
-//	public void startLevel(String levelName, String enemyDetails, int killsNeeded) {
-//		showLevelOverlay(levelName, enemyDetails, killsNeeded);
-//		PauseTransition delay = new PauseTransition(Duration.seconds(3));
-//		delay.setOnFinished(e -> {
-//			background.requestFocus(); // Sets focus on the game background
-//			timeline.play();          // Starts the game timeline
-//		});
-//		delay.play();
-//	}
+	// New method to initialize level after construction
+	public void initializeLevel() {
+		// Show the entry message and start the game after it disappears
+		showLevelOverlay(levelName, enemyDetails, killsNeeded);
+	}
 
-//	public void startGame() {
-//		background.requestFocus(); // Sets focus on the game background
-//		timeline.play();          // Starts the game timeline
-//	}
-
-	void showLevelOverlay(String levelName, String enemyDetails, int killsNeeded) {
-		timeline.pause(); // Pause the timeline during overlay
-
-		// Create overlay
-		StackPane overlay = new StackPane();
-		overlay.setStyle("-fx-background-color: black;"); // Black background
-		overlay.setPrefSize(screenWidth, screenHeight);
-
-		Label overlayText = new Label(
+	public void showLevelOverlay(String levelName, String enemyDetails, int killsNeeded) {
+		// Create the overlay text
+		Label overlayLabel = new Label(
 				"Level: " + levelName + "\n" +
 						"Enemies: " + enemyDetails + "\n" +
 						"Kills Needed: " + killsNeeded
 		);
-		overlayText.setFont(Font.font("Arial", 36));
-		overlayText.setStyle(
-				"-fx-text-fill: #00ffff; " +
-						"-fx-effect: dropshadow(gaussian, #00ffff, 15, 0.5, 0, 0);"
+		overlayLabel.setStyle("-fx-font-family: 'Arial'; " +
+				"-fx-font-size: 36px; " +
+				"-fx-text-fill: #00ffff; " + // Neon blue color
+				"-fx-effect: dropshadow(gaussian, #00ffff, 15, 0.5, 0, 0);");
+
+		// Make the label initially invisible
+		overlayLabel.setOpacity(0.0);
+
+		// Add the label to the root
+		root.getChildren().add(overlayLabel);
+
+		// Center the label on the screen
+		overlayLabel.layoutXProperty().bind(
+				Bindings.createDoubleBinding(() -> (root.getScene().getWidth() - overlayLabel.getWidth()) / 2,
+						overlayLabel.widthProperty())
 		);
 
-		overlay.getChildren().add(overlayText);
-		root.getChildren().add(overlay);
+		overlayLabel.layoutYProperty().bind(
+				Bindings.createDoubleBinding(() -> (root.getScene().getHeight() - overlayLabel.getHeight()) / 2,
+						overlayLabel.heightProperty())
+		);
 
-		// Debugging overlay visibility
-		System.out.println("Overlay added to root: " + root.getChildren());
-		System.out.println("Overlay opacity (initial): " + overlay.getOpacity());
+		// Create fade-in transition
+		FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), overlayLabel);
+		fadeIn.setFromValue(0.0);
+		fadeIn.setToValue(1.0);
 
-		// Fade-out transition
-		FadeTransition fadeOut = new FadeTransition(Duration.seconds(2), overlay);
-		fadeOut.setFromValue(1.0);
-		fadeOut.setToValue(0.0);
-		fadeOut.setOnFinished(e -> {
-			System.out.println("Removing overlay...");
-			System.out.println("Root children before removal: " + root.getChildren());
-			root.getChildren().remove(overlay);
-			System.out.println("Overlay removed");
-			timeline.play(); // Resume game timeline
+		// Add a pause before fading out
+		fadeIn.setOnFinished(e -> {
+			PauseTransition pause = new PauseTransition(Duration.seconds(1.5));
+			pause.setOnFinished(ev -> {
+				// Create fade-out transition
+				FadeTransition fadeOut = new FadeTransition(Duration.seconds(2), overlayLabel);
+				fadeOut.setFromValue(1.0);
+				fadeOut.setToValue(0.0);
+
+				// Remove the label and start the game after fading out
+				fadeOut.setOnFinished(fadeEvent -> {
+					root.getChildren().remove(overlayLabel);
+					startGame(); // Start the game after the overlay fades out
+				});
+				fadeOut.play();
+			});
+			pause.play();
 		});
 
-		PauseTransition delay = new PauseTransition(Duration.seconds(3));
-		delay.setOnFinished(e -> {
-			System.out.println("Fade-out starting...");
-			fadeOut.play();
-		});
-
-		delay.play();
+		fadeIn.play(); // Start the fade-in animation
 	}
 
-
+	public void startGame() {
+		background.requestFocus(); // Sets focus on the game background
+		timeline.play();          // Starts the game timeline
+	}
 
 	public void goToNextLevel(String levelName) {
 		timeline.stop();

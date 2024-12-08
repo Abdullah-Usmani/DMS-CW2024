@@ -2,7 +2,7 @@ package com.example.demo;
 
 public class LevelThree extends LevelParent {
 
-	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background1.jpg";
+	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background8.jpg";
 	private static final String NEXT_LEVEL = "com.example.demo.LevelBoss";
 	private static final int TOTAL_ENEMIES = 10;
 	private static final int KILLS_TO_ADVANCE = 20;
@@ -12,8 +12,8 @@ public class LevelThree extends LevelParent {
 	private static final int PLAYER_INITIAL_HEALTH = 15;
 
 	public LevelThree(double screenHeight, double screenWidth) {
-		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
-		showLevelOverlay("Three", "Enemy Planes, Boss", KILLS_TO_ADVANCE); // Call overlay
+		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, "Three", "F-16s: 1 hit, MiG-29s: 2 hits, A-10s: 3 hits", 20);
+//		showLevelOverlay("Three", "Enemy Planes, Boss", KILLS_TO_ADVANCE); // Call overlay
 	}
 
 
@@ -56,6 +56,7 @@ public class LevelThree extends LevelParent {
 
 	@Override
 	protected LevelView instantiateLevelView() {
+        //		levelView.showLevelOverlay("Three", "Enemy Planes", 20, this::startGame); // Callback triggers game start
 		return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
 	}
 

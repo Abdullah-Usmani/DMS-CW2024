@@ -10,8 +10,8 @@ public class LevelOne extends LevelParent {
 	private static final int PLAYER_INITIAL_HEALTH = 5;
 
 	public LevelOne(double screenHeight, double screenWidth) {
-		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
-		showLevelOverlay("One", "Enemy Planes, Boss", KILLS_TO_ADVANCE); // Call overlay
+		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, "One", "F-16s: 1 hit", 10);
+//		showLevelOverlay("One", "Enemy Planes, Boss", KILLS_TO_ADVANCE); // Call overlay
 	}
 
 	@Override
@@ -41,8 +41,15 @@ public class LevelOne extends LevelParent {
 		}
 	}
 
+//	@Override
+//	public void initializeLevel() {
+//		// Defer the overlay display until everything is initialized
+//		levelView.showLevelOverlay("One", "Enemy Planes, Boss", KILLS_TO_ADVANCE, this::startGame);
+//	}
+
 	@Override
 	protected LevelView instantiateLevelView() {
+//		levelView.showLevelOverlay("One", "Enemy Planes, Boss", 10, this::startGame);
 		return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
 	}
 

@@ -1,6 +1,12 @@
 package com.example.demo;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.PauseTransition;
 import javafx.scene.Group;
+import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
+import javafx.util.Duration;
 
 public class LevelView {
 

@@ -8,7 +8,7 @@ public class LevelBoss extends LevelParent {
 	private final BossHealthDisplay bossHealthDisplay;
 
     public LevelBoss(double screenHeight, double screenWidth) {
-		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
+		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, "Boss", "C-17: 15 hits", 15);
 		this.bossPlane = new BossPlane();
 		this.bossPlane.setLevelView(levelView);
 
@@ -46,6 +46,7 @@ public class LevelBoss extends LevelParent {
 
 	@Override
 	protected LevelView instantiateLevelView() {
+        //		levelView.showLevelOverlay("Boss", "Boss", 15, this::startGame); // Callback triggers game start
 		return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
 	}
 }
