@@ -1,8 +1,10 @@
 package com.example.demo;
 
+import java.util.List;
+
 public class LevelThree extends LevelParent {
 
-	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background8.jpg";
+	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background5.jpg";
 	private static final String NEXT_LEVEL = "com.example.demo.LevelBoss";
 	private static final int TOTAL_ENEMIES = 10;
 	private static final int KILLS_TO_ADVANCE = 20;
@@ -12,10 +14,31 @@ public class LevelThree extends LevelParent {
 	private static final int PLAYER_INITIAL_HEALTH = 15;
 
 	public LevelThree(double screenHeight, double screenWidth) {
-		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, "Three", "F-16s: 1 hit, MiG-29s: 2 hits, A-10s: 3 hits", 20);
-//		showLevelOverlay("Three", "Enemy Planes, Boss", KILLS_TO_ADVANCE); // Call overlay
+		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
 	}
 
+	@Override
+	protected String getLevelName() {
+		return "Three";
+	}
+
+	@Override
+	protected int getKillsNeeded() {
+		return 15;
+	}
+
+	@Override
+	protected List<ActorInfo> getActorsInfo() {
+		return List.of(
+			new ActorInfo("F-16", "/com/example/demo/images/enemyplane.png", 1, true),
+			new ActorInfo("MiG-29", "/com/example/demo/images/mig-29.png", 2, true),
+			new ActorInfo("A-10c", "/com/example/demo/images/a10c.png", 3, true),
+			new ActorInfo("Enemy Guns", "/com/example/demo/images/enemyFire.png", 1, false),
+			new ActorInfo("R-33", "/com/example/demo/images/enemymissiler33.png", 3, false),
+			new ActorInfo("Guns", "/com/example/demo/images/userfire.png", 1, false),
+			new ActorInfo("Sidewinder", "/com/example/demo/images/sidewinder.png", 3, false)
+		);
+	}
 
 	protected void checkIfGameOver() {
 		if (userIsDestroyed()) {

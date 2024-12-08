@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import java.util.List;
+
 public class LevelBoss extends LevelParent {
 
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background7.jpg";
@@ -8,14 +10,32 @@ public class LevelBoss extends LevelParent {
 	private final BossHealthDisplay bossHealthDisplay;
 
     public LevelBoss(double screenHeight, double screenWidth) {
-		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, "Boss", "C-17: 15 hits", 15);
+		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
+
 		this.bossPlane = new BossPlane();
 		this.bossPlane.setLevelView(levelView);
-
-		// Initialize BossHealthDisplay
 		this.bossHealthDisplay = new BossHealthDisplay(850, 25, bossPlane.getHealth());
 	}
 
+	@Override
+	protected String getLevelName() {
+		return "Boss";
+	}
+
+	@Override
+	protected int getKillsNeeded() {
+		return 15;
+	}
+
+	@Override
+	protected List<ActorInfo> getActorsInfo() {
+		return List.of(
+				new ActorInfo("C-17", "/com/example/demo/images/c17.png", 1, true),
+				new ActorInfo("R-33", "/com/example/demo/images/enemymissiler33.png", 3, false),
+				new ActorInfo("Guns", "/com/example/demo/images/userfire.png", 1, false),
+				new ActorInfo("Sidewinder", "/com/example/demo/images/sidewinder.png", 3, false)
+		);
+	}
 
 	@Override
 	protected void initializeFriendlyUnits() {

@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import java.util.*;
+
 public class LevelTwo extends LevelParent {
 
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background3.jpg";
@@ -11,8 +13,28 @@ public class LevelTwo extends LevelParent {
 	private static final int PLAYER_INITIAL_HEALTH = 10;
 
 	public LevelTwo(double screenHeight, double screenWidth) {
-		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, "Two", "F-16s: 1 hit, MiG-29s: 2 hits", 15);
-//		showLevelOverlay("Two", "Enemy Planes, Boss", KILLS_TO_ADVANCE); // Call overlay
+			super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
+	}
+
+	@Override
+	protected String getLevelName() {
+		return "Two";
+	}
+
+	@Override
+	protected int getKillsNeeded() {
+		return 15;
+	}
+
+	@Override
+	protected List<ActorInfo> getActorsInfo() {
+		return List.of(
+				new ActorInfo("F-16", "/com/example/demo/images/enemyplane.png", 1, true),
+				new ActorInfo("MiG-29", "/com/example/demo/images/mig-29.png", 2, true),
+				new ActorInfo("Enemy Guns", "/com/example/demo/images/enemyFire.png", 1, false),
+				new ActorInfo("Guns", "/com/example/demo/images/userfire.png", 1, false),
+				new ActorInfo("Sidewinder", "/com/example/demo/images/sidewinder.png", 3, false)
+		);
 	}
 
 

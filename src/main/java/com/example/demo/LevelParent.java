@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -7,11 +8,14 @@ import com.example.demo.controller.Controller;
 import javafx.animation.*;
 import javafx.beans.binding.Bindings;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import javafx.animation.PauseTransition;
 import javafx.scene.control.Label;
@@ -25,9 +29,9 @@ public abstract class LevelParent extends Observable {
 	private final double screenWidth;
 	private final double enemyMaximumYPosition;
 //	private final String entryMessage;
-	private final String levelName;
-	private final String enemyDetails;
-	private final int killsNeeded;
+//	private final String levelName;
+//	private final String enemyDetails;
+//	private final int killsNeeded;
 	private boolean isPaused;
 
 	private static Controller controller; // Reference to Controller
@@ -41,11 +45,12 @@ public abstract class LevelParent extends Observable {
 	private final List<ActiveActorDestructible> enemyUnits = new ArrayList<>();
 	private final List<ActiveActorDestructible> friendlyProjectiles = new ArrayList<>();
 	private final List<ActiveActorDestructible> enemyProjectiles = new ArrayList<>();
+//	private final List<ActorInfo> actorInfo = new ArrayList<>();
 	private int currentNumberOfEnemies;
 	protected final LevelView levelView;
 
 
-	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth, String levelName, String enemyDetails, int killsNeeded) {
+	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
 		this.root = new Group();
 		this.scene = new Scene(root, screenWidth, screenHeight);
 		this.timeline = new Timeline();
@@ -57,9 +62,9 @@ public abstract class LevelParent extends Observable {
 		this.enemyMaximumYPosition = screenHeight - SCREEN_HEIGHT_ADJUSTMENT;
 		this.levelView = instantiateLevelView();
 //		this.entryMessage = entryMessage; // Store entry message for use later
-		this.levelName = levelName; // Store entry message for use later
-		this.enemyDetails = enemyDetails; // Store entry message for use later
-		this.killsNeeded = killsNeeded; // Store entry message for use later
+//		this.levelName = levelName; // Store entry message for use later
+//		this.enemyDetails = enemyDetails; // Store entry message for use later
+//		this.killsNeeded = killsNeeded; // Store entry message for use later
 		this.currentNumberOfEnemies = 0;
 		initializeTimeline();
 		friendlyUnits.add(user);
@@ -74,7 +79,6 @@ public abstract class LevelParent extends Observable {
 	protected abstract void spawnEnemyUnits();
 
 	private void updateScene() {
-		System.out.println("updateScene is running..."); // Debug
 		spawnEnemyUnits();                // Spawns enemies
 		updateActors();                   // Updates all actor positions
 		generateEnemyFire();
@@ -136,65 +140,86 @@ public abstract class LevelParent extends Observable {
 
 	// New method to initialize level after construction
 	public void initializeLevel() {
-		// Show the entry message and start the game after it disappears
-		showLevelOverlay(levelName, enemyDetails, killsNeeded);
+		List<ActorInfo> actorsInfo = getActorsInfo(); // Abstract method to get level-specific actor info
+		int killsNeeded = getKillsNeeded();           // Abstract method for kills needed in the level
+
+		// Show the level overlay
+		showLevelOverlay(getLevelName(), actorsInfo, killsNeeded);
 	}
 
-	public void showLevelOverlay(String levelName, String enemyDetails, int killsNeeded) {
-		// Create the overlay text
-		Label overlayLabel = new Label(
+	public void showLevelOverlay(String levelName, List<ActorInfo> actorsInfo, int killsNeeded) {
+		// Create the overlay container
+		StackPane overlay = new StackPane();
+		overlay.setStyle("-fx-background-color: black;"); // Black background
+		overlay.setPrefSize(root.getScene().getWidth(), root.getScene().getHeight());
+
+		// Main overlay label for the level info
+		Label overlayText = new Label(
 				"Level: " + levelName + "\n" +
-						"Enemies: " + enemyDetails + "\n" +
 						"Kills Needed: " + killsNeeded
 		);
-		overlayLabel.setStyle("-fx-font-family: 'Arial'; " +
+		overlayText.setStyle("-fx-font-family: 'Arial'; " +
 				"-fx-font-size: 36px; " +
 				"-fx-text-fill: #00ffff; " + // Neon blue color
 				"-fx-effect: dropshadow(gaussian, #00ffff, 15, 0.5, 0, 0);");
 
-		// Make the label initially invisible
-		overlayLabel.setOpacity(0.0);
+		// Create a vertical layout for displaying actor info (planes and projectiles)
+		VBox actorInfoBox = new VBox(10); // Spacing of 10 between rows
+		actorInfoBox.setAlignment(Pos.CENTER);
 
-		// Add the label to the root
-		root.getChildren().add(overlayLabel);
+		for (ActorInfo info : actorsInfo) {
+			// Create a horizontal row for each actor
+			HBox actorRow = new HBox(10); // Spacing of 10 between elements
+			actorRow.setAlignment(Pos.CENTER);
 
-		// Center the label on the screen
-		overlayLabel.layoutXProperty().bind(
-				Bindings.createDoubleBinding(() -> (root.getScene().getWidth() - overlayLabel.getWidth()) / 2,
-						overlayLabel.widthProperty())
-		);
+			ImageView actorImage = new ImageView(getClass().getResource(info.imagePath).toExternalForm());
 
-		overlayLabel.layoutYProperty().bind(
-				Bindings.createDoubleBinding(() -> (root.getScene().getHeight() - overlayLabel.getHeight()) / 2,
-						overlayLabel.heightProperty())
-		);
+			actorImage.setFitWidth(200); // Adjust size
+			actorImage.setFitHeight(60);
 
-		// Create fade-in transition
-		FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), overlayLabel);
-		fadeIn.setFromValue(0.0);
-		fadeIn.setToValue(1.0);
+			// Labels for the actor's name and damage
+			Label actorName = new Label(info.name);
+			actorName.setStyle("-fx-font-family: 'Arial'; -fx-font-size: 20px; -fx-text-fill: white;");
 
-		// Add a pause before fading out
-		fadeIn.setOnFinished(e -> {
-			PauseTransition pause = new PauseTransition(Duration.seconds(1.5));
-			pause.setOnFinished(ev -> {
-				// Create fade-out transition
-				FadeTransition fadeOut = new FadeTransition(Duration.seconds(2), overlayLabel);
-				fadeOut.setFromValue(1.0);
-				fadeOut.setToValue(0.0);
+			String typeText = info.isPlane ? "Health: " : "Damage: ";
+			Label actorDamage = new Label(typeText + info.statValue);
+			actorDamage.setStyle("-fx-font-family: 'Arial'; -fx-font-size: 20px; -fx-text-fill: white;");
 
-				// Remove the label and start the game after fading out
-				fadeOut.setOnFinished(fadeEvent -> {
-					root.getChildren().remove(overlayLabel);
-					startGame(); // Start the game after the overlay fades out
-				});
-				fadeOut.play();
-			});
-			pause.play();
+			// Add the image and labels to the row
+			actorRow.getChildren().addAll(actorImage, actorName, actorDamage);
+
+			// Add the row to the VBox
+			actorInfoBox.getChildren().add(actorRow);
+		}
+
+		// Add the main overlay text and actor info to the overlay
+		VBox overlayContent = new VBox(20, overlayText, actorInfoBox); // Spacing of 20
+		overlayContent.setAlignment(Pos.CENTER);
+
+		overlay.getChildren().add(overlayContent);
+		root.getChildren().add(overlay);
+
+		// Fade-out transition for the overlay
+		FadeTransition fadeOut = new FadeTransition(Duration.seconds(2), overlay);
+		fadeOut.setFromValue(1.0);
+		fadeOut.setToValue(0.0);
+
+		// Remove overlay and start the game after fade-out
+		fadeOut.setOnFinished(e -> {
+			root.getChildren().remove(overlay);
+			startGame(); // Start the game
 		});
 
-		fadeIn.play(); // Start the fade-in animation
+		// Pause before fade-out
+		PauseTransition delay = new PauseTransition(Duration.seconds(3));
+		delay.setOnFinished(e -> fadeOut.play());
+
+		delay.play(); // Begin the delay
 	}
+
+	protected abstract String getLevelName();
+	protected abstract int getKillsNeeded();
+	protected abstract List<ActorInfo> getActorsInfo();
 
 	public void startGame() {
 		background.requestFocus(); // Sets focus on the game background
@@ -274,14 +299,14 @@ public abstract class LevelParent extends Observable {
 				explosionEffect = new ExplosionEffect(
 						"/com/example/demo/images/explosion1.png",
 						100, 100, 1.5,
-						"/com/example/demo/audio/roblox-explosion-sound.mp3"
+						"/com/example/demo/audio/roblox-explosion.mp3"
 				);
 				break;
 			default:
 				explosionEffect = new ExplosionEffect(
 						"/com/example/demo/images/explosion1.png",
 						50, 50, 1.0,
-						"/com/example/demo/audio/roblox-explosion-sound.mp3"
+						"/com/example/demo/audio/roblox-explosion.mp3"
 				);
 		}
 
