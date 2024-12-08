@@ -29,17 +29,33 @@ public class Controller implements Observer {
 		LevelParent.setController(this);
 	}
 
+	// Launch the first level explicitly
 	public void launchGame() {
 		try {
 			stage.show();
 			goToLevel(LEVEL_ONE_CLASS_NAME);
-		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException |
-				 InstantiationException | IllegalAccessException | IllegalArgumentException |
-				 InvocationTargetException e) {
-			// Handle exceptions gracefully, log, or show an error to the user
+		} catch (Exception e) {
 			System.err.println("Error launching the game: " + e.getMessage());
 			e.printStackTrace();
 		}
+	}
+
+	// Transition to a new level
+	public void goToLevel(String className) throws ClassNotFoundException, NoSuchMethodException, SecurityException,
+			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		// Reflectively create the new level instance
+		Class<?> myClass = Class.forName(className);
+		Constructor<?> constructor = myClass.getConstructor(double.class, double.class);
+		LevelParent myLevel = (LevelParent) constructor.newInstance(stage.getHeight(), stage.getWidth());
+
+		// Configure the new level
+		myLevel.addObserver(this); // Observe for level changes
+		Scene scene = myLevel.initializeScene();
+		scene.addEventHandler(KeyEvent.KEY_PRESSED, this::handleKeyPress);
+		stage.setScene(scene);
+
+		// The level handles its own overlay and game start
+		currentLevel = myLevel; // Set the current level reference
 	}
 
 	// Pause the game
@@ -62,12 +78,12 @@ public class Controller implements Observer {
 		pauseMenu.hide();  // Hide pause menu
 	}
 
-	// Handle restarting the game
-    public void restartGame() {
-		System.out.println("Game Restarting...");
-		timeline.play();
-		launchGame();  // Re-launch the game
-	}
+//	// Handle restarting the game
+//    public void restartGame() {
+//		System.out.println("Game Restarting...");
+//		timeline.play();
+//		launchGame();  // Re-launch the game
+//	}
 
 	// Handle closing the game
 	private void closeGame() {
@@ -90,20 +106,6 @@ public class Controller implements Observer {
 				this::resumeGame,  // Resume game logic
 				() -> System.exit(0), // Exit game logic
 				() -> System.out.println("Settings Opened")); // Placeholder for settings logic
-	}
-
-	// Transition to a new level
-	public void goToLevel(String className) throws ClassNotFoundException, NoSuchMethodException, SecurityException,
-			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		Class<?> myClass = Class.forName(className);
-		Constructor<?> constructor = myClass.getConstructor(double.class, double.class);
-		LevelParent myLevel = (LevelParent) constructor.newInstance(stage.getHeight(), stage.getWidth());
-		myLevel.addObserver(this);
-		Scene scene = myLevel.initializeScene();
-		scene.addEventHandler(KeyEvent.KEY_PRESSED, this::handleKeyPress);
-		stage.setScene(scene);
-		myLevel.startGame();
-		currentLevel = myLevel; // Set the current level reference
 	}
 
 	// Observer update logic for transitions and game end states

@@ -64,55 +64,8 @@ public abstract class LevelParent extends Observable {
 
 	protected abstract void spawnEnemyUnits();
 
-	public Scene initializeScene() {
-		initializeBackground();
-		initializeKeyListeners();
-		initializeFriendlyUnits();
-		levelView.showHeartDisplay();
-		levelView.showKillDisplay();
-		return scene;
-	}
-
-	public void startGame() {
-		background.requestFocus();
-		timeline.play();
-	}
-
-//	public void startLevel(String levelName, String enemyDetails, int killsNeeded) {
-//		showLevelOverlay(levelName, enemyDetails, killsNeeded);
-//
-//		// Delay starting the game until the overlay is shown
-//		PauseTransition delay = new PauseTransition(Duration.seconds(5));
-//		delay.setOnFinished(e -> {
-//			background.requestFocus(); // Sets focus on the game background
-//			timeline.play();          // Starts the game timeline
-//		});
-//		delay.play();
-//	}
-//
-//	void showLevelOverlay(String levelName, String enemyDetails, int killsNeeded) {
-//		StackPane overlay = new StackPane();
-//		Label overlayText = new Label("Level: " + levelName + "\n" +
-//				"Enemies: " + enemyDetails + "\n" +
-//				"Kills Needed: " + killsNeeded + "\n");
-//
-//		overlayText.setFont(new Font("Arial", 24));
-//		overlay.getChildren().add(overlayText);
-//		root.getChildren().add(overlay);
-//
-//		PauseTransition delay = new PauseTransition(Duration.seconds(5));
-//		delay.setOnFinished(e -> root.getChildren().remove(overlay));
-//		delay.play();
-//	}
-
-
-	public void goToNextLevel(String levelName) {
-		timeline.stop();
-		setChanged();
-		notifyObservers(levelName);
-	}
-
 	private void updateScene() {
+		System.out.println("updateScene is running..."); // Debug
 		spawnEnemyUnits();                // Spawns enemies
 		updateActors();                   // Updates all actor positions
 		generateEnemyFire();
@@ -130,6 +83,15 @@ public abstract class LevelParent extends Observable {
 		removeAllDestroyedActors();       // Removes destroyed actors after collision checks
 		updateLevelView();                // Update health, kills, etc.
 		checkIfGameOver();                // Check game-over conditions
+	}
+
+	public Scene initializeScene() {
+		initializeBackground();
+		initializeKeyListeners();
+		initializeFriendlyUnits();
+		levelView.showHeartDisplay();
+		levelView.showKillDisplay();
+		return scene;
 	}
 
 	private void initializeTimeline() {
@@ -161,6 +123,76 @@ public abstract class LevelParent extends Observable {
 				if (kc == KeyCode.UP || kc == KeyCode.DOWN) user.stop();
 			}
 		});
+	}
+
+//	public void startLevel(String levelName, String enemyDetails, int killsNeeded) {
+//		showLevelOverlay(levelName, enemyDetails, killsNeeded);
+//		PauseTransition delay = new PauseTransition(Duration.seconds(3));
+//		delay.setOnFinished(e -> {
+//			background.requestFocus(); // Sets focus on the game background
+//			timeline.play();          // Starts the game timeline
+//		});
+//		delay.play();
+//	}
+
+//	public void startGame() {
+//		background.requestFocus(); // Sets focus on the game background
+//		timeline.play();          // Starts the game timeline
+//	}
+
+	void showLevelOverlay(String levelName, String enemyDetails, int killsNeeded) {
+		timeline.pause(); // Pause the timeline during overlay
+
+		// Create overlay
+		StackPane overlay = new StackPane();
+		overlay.setStyle("-fx-background-color: black;"); // Black background
+		overlay.setPrefSize(screenWidth, screenHeight);
+
+		Label overlayText = new Label(
+				"Level: " + levelName + "\n" +
+						"Enemies: " + enemyDetails + "\n" +
+						"Kills Needed: " + killsNeeded
+		);
+		overlayText.setFont(Font.font("Arial", 36));
+		overlayText.setStyle(
+				"-fx-text-fill: #00ffff; " +
+						"-fx-effect: dropshadow(gaussian, #00ffff, 15, 0.5, 0, 0);"
+		);
+
+		overlay.getChildren().add(overlayText);
+		root.getChildren().add(overlay);
+
+		// Debugging overlay visibility
+		System.out.println("Overlay added to root: " + root.getChildren());
+		System.out.println("Overlay opacity (initial): " + overlay.getOpacity());
+
+		// Fade-out transition
+		FadeTransition fadeOut = new FadeTransition(Duration.seconds(2), overlay);
+		fadeOut.setFromValue(1.0);
+		fadeOut.setToValue(0.0);
+		fadeOut.setOnFinished(e -> {
+			System.out.println("Removing overlay...");
+			System.out.println("Root children before removal: " + root.getChildren());
+			root.getChildren().remove(overlay);
+			System.out.println("Overlay removed");
+			timeline.play(); // Resume game timeline
+		});
+
+		PauseTransition delay = new PauseTransition(Duration.seconds(3));
+		delay.setOnFinished(e -> {
+			System.out.println("Fade-out starting...");
+			fadeOut.play();
+		});
+
+		delay.play();
+	}
+
+
+
+	public void goToNextLevel(String levelName) {
+		timeline.stop();
+		setChanged();
+		notifyObservers(levelName);
 	}
 
 	private void fireProjectile() {
@@ -244,7 +276,6 @@ public abstract class LevelParent extends Observable {
 		// Trigger the effect
 		explosionEffect.createEffect(x, y, root);
 	}
-
 
 	private void updateActors() {
 		friendlyUnits.forEach(ActiveActorDestructible::updateActor);
