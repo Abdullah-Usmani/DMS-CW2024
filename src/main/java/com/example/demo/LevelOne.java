@@ -13,8 +13,6 @@ public class LevelOne extends LevelParent {
 		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
 	}
 
-
-
 	@Override
 	protected void checkIfGameOver() {
 		if (userIsDestroyed()) {
@@ -45,6 +43,7 @@ public class LevelOne extends LevelParent {
 
 	@Override
 	protected LevelView instantiateLevelView() {
+//		startLevel("Level One", "Enemy Planes, Boss", 10);
 		return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
 	}
 

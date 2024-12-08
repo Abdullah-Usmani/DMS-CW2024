@@ -1,42 +1,83 @@
-package com.example.demo;
-
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-
-public class SettingsMenu {
-    private final Stage stage;
-
-    public SettingsMenu(Stage stage) {
-        this.stage = stage;
-    }
-
-    public void show() {
-        ChoiceBox<String> resolutionChoiceBox = new ChoiceBox<>();
-        resolutionChoiceBox.getItems().addAll("800x600", "1024x768", "1366x768", "1280x720", "1920x1080");
-        resolutionChoiceBox.setValue("1024x768");
-
-        Button applyButton = new Button("Apply");
-        applyButton.setOnAction(e -> {
-            String resolution = resolutionChoiceBox.getValue();
-            applyResolution(resolution);
-            stage.setScene(new StartMenu().startScene(stage)); // Go back to start menu
-        });
-
-        VBox layout = new VBox(20);
-        layout.getChildren().addAll(resolutionChoiceBox, applyButton);
-
-        Scene settingsScene = new Scene(layout, 400, 300);
-        stage.setScene(settingsScene);
-    }
-
-    private void applyResolution(String resolution) {
-        String[] dimensions = resolution.split("x");
-        int width = Integer.parseInt(dimensions[0]);
-        int height = Integer.parseInt(dimensions[1]);
-        stage.setWidth(width);
-        stage.setHeight(height);
-    }
-}
+//package com.example.demo;
+//
+//import javafx.application.Application;
+//import javafx.scene.Scene;
+//import javafx.scene.control.Button;
+//import javafx.scene.layout.VBox;
+//import javafx.stage.Stage;
+//
+//public class SettingsMenu extends Application {
+//
+//    @Override
+//    public void start(Stage primaryStage) {
+//        primaryStage.setTitle("Game Menu");
+//
+//        // Buttons
+//        Button startButton = new Button("Start Game");
+//        Button settingsButton = new Button("Settings");
+//        Button helpButton = new Button("Help");
+//        Button exitButton = new Button("Exit Game");
+//
+//        // Button Actions
+//        startButton.setOnAction(e -> goToLevelOne(primaryStage));
+//        settingsButton.setOnAction(e -> showSettingsMenu(primaryStage));
+//        helpButton.setOnAction(e -> showHelpMenu(primaryStage));
+//        exitButton.setOnAction(e -> System.exit(0));
+//
+//        // Layout
+//        VBox layout = new VBox(20);
+//        layout.getChildren().addAll(startButton, settingsButton, helpButton, exitButton);
+//
+//        // Scene
+//        Scene startScene = new Scene(layout, 400, 300);
+//        primaryStage.setScene(startScene);
+//        primaryStage.show();
+//    }
+//
+//    private void goToLevelOne(Stage stage) {
+//        LevelOne levelOne = new LevelOne();
+//        Scene levelScene = levelOne.initializeScene();
+//        stage.setScene(levelScene);
+//        levelOne.startGame();
+//    }
+//
+//    private void showSettingsMenu(Stage stage) {
+//        VBox settingsLayout = new VBox(20);
+//
+//        Button resolutionButton = new Button("Set Resolution");
+//        Button backButton = new Button("Back");
+//
+//        resolutionButton.setOnAction(e -> {
+//            // Handle resolution change logic here
+//            System.out.println("Resolution changed!");
+//        });
+//
+//        backButton.setOnAction(e -> start(stage)); // Return to main menu
+//
+//        settingsLayout.getChildren().addAll(resolutionButton, backButton);
+//        Scene settingsScene = new Scene(settingsLayout, 400, 300);
+//        stage.setScene(settingsScene);
+//    }
+//
+//    private void showHelpMenu(Stage stage) {
+//        VBox helpLayout = new VBox(20);
+//
+//        Button backButton = new Button("Back");
+//        backButton.setOnAction(e -> start(stage)); // Return to main menu
+//
+//        helpLayout.getChildren().addAll(
+//                new javafx.scene.control.Label("Controls:"),
+//                new javafx.scene.control.Label("Arrow Keys: Move"),
+//                new javafx.scene.control.Label("Space: Fire"),
+//                new javafx.scene.control.Label("M: Fire Missile"),
+//                backButton
+//        );
+//
+//        Scene helpScene = new Scene(helpLayout, 400, 300);
+//        stage.setScene(helpScene);
+//    }
+//
+//    public static void main(String[] args) {
+//        launch(args);
+//    }
+//}

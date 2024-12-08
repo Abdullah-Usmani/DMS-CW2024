@@ -42,38 +42,6 @@ public class Controller implements Observer {
 		}
 	}
 
-	// Initialize the pause menu
-	private void initializePauseMenu() {
-		pauseMenu = new PauseMenu(stage,
-				this::resumeGame,  // Resume game logic
-				() -> System.exit(0), // Exit game logic
-				() -> System.out.println("Settings Opened")); // Placeholder for settings logic
-	}
-
-	// Transition to a new level
-	public void goToLevel(String className) throws ClassNotFoundException, NoSuchMethodException, SecurityException,
-			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		Class<?> myClass = Class.forName(className);
-		Constructor<?> constructor = myClass.getConstructor(double.class, double.class);
-		LevelParent myLevel = (LevelParent) constructor.newInstance(stage.getHeight(), stage.getWidth());
-		myLevel.addObserver(this);
-		Scene scene = myLevel.initializeScene();
-		scene.addEventHandler(KeyEvent.KEY_PRESSED, this::handleKeyPress);
-		stage.setScene(scene);
-		myLevel.startGame();
-		currentLevel = myLevel; // Set the current level reference
-	}
-
-	private void handleKeyPress(KeyEvent event) {
-		if (event.getCode() == KeyCode.P) {  // Pause/Unpause on pressing 'P'
-			if (isPaused) {
-				resumeGame();
-			} else {
-				pauseGame();
-			}
-		}
-	}
-
 	// Pause the game
 	private void pauseGame() {
 		System.out.println("Game Paused");
@@ -104,6 +72,38 @@ public class Controller implements Observer {
 	// Handle closing the game
 	private void closeGame() {
 		System.exit(0);  // Exit the game
+	}
+
+	private void handleKeyPress(KeyEvent event) {
+		if (event.getCode() == KeyCode.P) {  // Pause/Unpause on pressing 'P'
+			if (isPaused) {
+				resumeGame();
+			} else {
+				pauseGame();
+			}
+		}
+	}
+
+	// Initialize the pause menu
+	private void initializePauseMenu() {
+		pauseMenu = new PauseMenu(stage,
+				this::resumeGame,  // Resume game logic
+				() -> System.exit(0), // Exit game logic
+				() -> System.out.println("Settings Opened")); // Placeholder for settings logic
+	}
+
+	// Transition to a new level
+	public void goToLevel(String className) throws ClassNotFoundException, NoSuchMethodException, SecurityException,
+			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		Class<?> myClass = Class.forName(className);
+		Constructor<?> constructor = myClass.getConstructor(double.class, double.class);
+		LevelParent myLevel = (LevelParent) constructor.newInstance(stage.getHeight(), stage.getWidth());
+		myLevel.addObserver(this);
+		Scene scene = myLevel.initializeScene();
+		scene.addEventHandler(KeyEvent.KEY_PRESSED, this::handleKeyPress);
+		stage.setScene(scene);
+		myLevel.startGame();
+		currentLevel = myLevel; // Set the current level reference
 	}
 
 	// Observer update logic for transitions and game end states

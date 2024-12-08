@@ -34,13 +34,14 @@ public abstract class LevelParent extends Observable {
 
 	private final List<ActiveActorDestructible> friendlyUnits = new ArrayList<>();
 	private final List<ActiveActorDestructible> enemyUnits = new ArrayList<>();
-	private final List<ActiveActorDestructible> projectiles = new ArrayList<>();
+	private final List<ActiveActorDestructible> friendlyProjectiles = new ArrayList<>();
+	private final List<ActiveActorDestructible> enemyProjectiles = new ArrayList<>();
 	private int currentNumberOfEnemies;
 	protected final LevelView levelView;
 
 
 	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
-        this.root = new Group();
+		this.root = new Group();
 		this.scene = new Scene(root, screenWidth, screenHeight);
 		this.timeline = new Timeline();
 		this.user = new UserPlane(playerInitialHealth);
@@ -77,33 +78,32 @@ public abstract class LevelParent extends Observable {
 		timeline.play();
 	}
 
-	public void startLevel(String levelName, String enemyDetails, int killsNeeded, String controls) {
-		showLevelOverlay(levelName, enemyDetails, killsNeeded, controls);
-
-		// Delay starting the game until the overlay is shown
-		PauseTransition delay = new PauseTransition(Duration.seconds(5));
-		delay.setOnFinished(e -> {
-			background.requestFocus(); // Sets focus on the game background
-			timeline.play();          // Starts the game timeline
-		});
-		delay.play();
-	}
-
-	private void showLevelOverlay(String levelName, String enemyDetails, int killsNeeded, String controls) {
-		StackPane overlay = new StackPane();
-		Label overlayText = new Label("Level: " + levelName + "\n" +
-				"Enemies: " + enemyDetails + "\n" +
-				"Kills Needed: " + killsNeeded + "\n" +
-				"Controls: " + controls);
-
-		overlayText.setFont(new Font("Arial", 24));
-		overlay.getChildren().add(overlayText);
-		root.getChildren().add(overlay);
-
-		PauseTransition delay = new PauseTransition(Duration.seconds(5));
-		delay.setOnFinished(e -> root.getChildren().remove(overlay));
-		delay.play();
-	}
+//	public void startLevel(String levelName, String enemyDetails, int killsNeeded) {
+//		showLevelOverlay(levelName, enemyDetails, killsNeeded);
+//
+//		// Delay starting the game until the overlay is shown
+//		PauseTransition delay = new PauseTransition(Duration.seconds(5));
+//		delay.setOnFinished(e -> {
+//			background.requestFocus(); // Sets focus on the game background
+//			timeline.play();          // Starts the game timeline
+//		});
+//		delay.play();
+//	}
+//
+//	void showLevelOverlay(String levelName, String enemyDetails, int killsNeeded) {
+//		StackPane overlay = new StackPane();
+//		Label overlayText = new Label("Level: " + levelName + "\n" +
+//				"Enemies: " + enemyDetails + "\n" +
+//				"Kills Needed: " + killsNeeded + "\n");
+//
+//		overlayText.setFont(new Font("Arial", 24));
+//		overlay.getChildren().add(overlayText);
+//		root.getChildren().add(overlay);
+//
+//		PauseTransition delay = new PauseTransition(Duration.seconds(5));
+//		delay.setOnFinished(e -> root.getChildren().remove(overlay));
+//		delay.play();
+//	}
 
 
 	public void goToNextLevel(String levelName) {
@@ -118,8 +118,8 @@ public abstract class LevelParent extends Observable {
 		generateEnemyFire();
 		updateNumberOfEnemies();
 		handleEnemyPenetration();         // Check for enemies penetrating defenses
-		handleCollisions(projectiles, friendlyUnits);
-		boolean userProjectileCollision = handleCollisions(projectiles, enemyUnits); 		// Process all collisions in a single pass
+		handleCollisions(enemyProjectiles, friendlyUnits);
+		boolean userProjectileCollision = handleCollisions(friendlyProjectiles, enemyUnits); 		// Process all collisions in a single pass
 		boolean planeCollision = handleCollisions(enemyUnits, friendlyUnits);
 		if (userProjectileCollision) {
 			updateHitCount(true); 		// Update hit count only if user projectile hits an enemy
@@ -166,22 +166,22 @@ public abstract class LevelParent extends Observable {
 	private void fireProjectile() {
 		Projectile userprojectile = (Projectile) user.fireProjectile();
 		root.getChildren().add(userprojectile);
-		projectiles.add(userprojectile);
+		friendlyProjectiles.add(userprojectile);
 	}
 	private void fireMissile() {
 		Projectile missile = (Projectile) user.fireMissile();
-        root.getChildren().add(missile);
-        projectiles.add(missile);
-    }
+		root.getChildren().add(missile);
+		friendlyProjectiles.add(missile);
+	}
 
 	private void generateEnemyFire() {
 		for (ActiveActorDestructible enemy : enemyUnits) {
 			if (enemy instanceof FighterPlane fighter) { // Check if the unit is a FighterPlane
-                // Safe casting
-                ActiveActorDestructible enemyProjectile = fighter.fireProjectile(); // Call fireProjectile method
+				// Safe casting
+				ActiveActorDestructible enemyProjectile = fighter.fireProjectile(); // Call fireProjectile method
 				if (enemyProjectile != null) { // Ensure a projectile was created
 					root.getChildren().add(enemyProjectile);
-					projectiles.add((Projectile) enemyProjectile); // Add to projectiles list
+					enemyProjectiles.add(enemyProjectile); // Add to projectiles list
 				}
 			}
 		}
@@ -218,7 +218,7 @@ public abstract class LevelParent extends Observable {
 						50, 50, 1.0,
 						"/com/example/demo/audio/ricochet-1.mp3"
 				);
-			break;
+				break;
 			case "userplane1.png":
 				explosionEffect = new ExplosionEffect(
 						"/com/example/demo/images/explosion1.png",
@@ -249,13 +249,15 @@ public abstract class LevelParent extends Observable {
 	private void updateActors() {
 		friendlyUnits.forEach(ActiveActorDestructible::updateActor);
 		enemyUnits.forEach(ActiveActorDestructible::updateActor);
-		projectiles.forEach(ActiveActorDestructible::updateActor);
+		friendlyProjectiles.forEach(ActiveActorDestructible::updateActor);
+		enemyProjectiles.forEach(ActiveActorDestructible::updateActor);
 	}
 
 	private void removeAllDestroyedActors() {
 		removeDestroyedActors(friendlyUnits);
 		removeDestroyedActors(enemyUnits);
-		removeDestroyedActors(projectiles);
+		removeDestroyedActors(friendlyProjectiles);
+		removeDestroyedActors(enemyProjectiles);
 	}
 
 	private void removeDestroyedActors(List<? extends ActiveActorDestructible> actors) {
@@ -299,8 +301,6 @@ public abstract class LevelParent extends Observable {
 	protected void winGame() {
 		timeline.stop();
 		levelView.showWinImage();
-
-		// Show EndGameMenu with "You Win" message
 		EndGameMenu endGameMenu = new EndGameMenu("You Win!", screenWidth, screenHeight);
 		setupEndGameMenuActions(endGameMenu);
 		root.getChildren().add(endGameMenu);
@@ -309,8 +309,6 @@ public abstract class LevelParent extends Observable {
 	protected void loseGame() {
 		timeline.stop();
 		levelView.showGameOverImage();
-
-		// Show EndGameMenu with "Game Over" message
 		EndGameMenu endGameMenu = new EndGameMenu("Game Over", screenWidth, screenHeight);
 		setupEndGameMenuActions(endGameMenu);
 		root.getChildren().add(endGameMenu);
