@@ -75,6 +75,6 @@ public class LevelOne extends LevelParent {
 	}
 
 	private boolean userHasReachedKillTarget() {
-		return getUser().getNumberOfHits() >= KILLS_TO_ADVANCE;
+		return getUser().getNumberOfKills() >= KILLS_TO_ADVANCE;
 	}
 }

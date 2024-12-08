@@ -267,6 +267,17 @@ public abstract class LevelParent extends Observable {
 					double collisionX = projectile.getLayoutX() + projectile.getTranslateX();
 					double collisionY = projectile.getLayoutY() + projectile.getTranslateY();
 					handleCollisionEffects(collisionX, collisionY, projectile.getImageName());
+
+					// Specific logic for enemy planes
+					if (target instanceof EnemyPlane ||
+							target instanceof EnemyPlane2 ||
+							target instanceof EnemyPlane3 ||
+							target instanceof BossPlane) {
+
+						if (target.isDestroyed()) { // Check if the enemy unit is destroyed
+							updateKillCount(true); // Increment the kill count
+						}
+					}
 					projectileIterator.remove();
 					root.getChildren().remove(projectile);
 					collisionOccurred = true;
@@ -339,7 +350,14 @@ public abstract class LevelParent extends Observable {
 	private void updateHitCount(boolean collisionDetected) {
 		if (collisionDetected) {
 			user.incrementHitCount(); // Update hit count if a collision occurred
-			System.out.println("User hit-count: " + user.getNumberOfHits());
+//			System.out.println("User hit-count: " + user.getNumberOfHits());
+		}
+	}
+
+	private void updateKillCount(boolean killDetected) {
+		if (killDetected) {
+			user.incrementKillCount(); // Update hit count if a collision occurred
+			System.out.println("User kill-count: " + user.getNumberOfKills());
 		}
 	}
 
@@ -358,7 +376,7 @@ public abstract class LevelParent extends Observable {
 
 	private void updateLevelView() {
 		levelView.removeHearts(user.getHealth());
-		levelView.updateKills(user.getNumberOfHits());
+		levelView.updateKills(user.getNumberOfKills());
 	}
 
 	// Static method to set the Controller

@@ -23,6 +23,7 @@ public class UserPlane extends FighterPlane {
 	private static final long MISSILE_COOLDOWN = 1000; // Cooldown in milliseconds
 	private int velocityMultiplier;
 	private int numberOfHits;
+	private int numberOfKills;
 	private long lastFiredTime; // Tracks the last projectile fire time
 
 	public UserPlane(int initialHealth) {
@@ -101,7 +102,11 @@ public class UserPlane extends FighterPlane {
 
 	}
 
-//	public void incrementKillCount() {
-//		numberOfKills++;
-//	}
+	public int getNumberOfKills() {
+		return numberOfKills;
+	}
+
+	public void incrementKillCount() {
+		numberOfKills++;
+	}
 }

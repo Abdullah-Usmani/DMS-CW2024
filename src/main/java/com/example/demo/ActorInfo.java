@@ -12,14 +12,4 @@ public class ActorInfo {
         this.statValue = statValue;
         this.isPlane = isPlane;
     }
-
-//    @Override
-//    public String toString() {
-//        return "ActorInfo{" +
-//                "name='" + name + '\'' +
-//                ", imagePath='" + imagePath +
-//                ", statValue=" + statValue +
-//                ", isPlane=" + isPlane +
-//                '}';
-//    }
 }
