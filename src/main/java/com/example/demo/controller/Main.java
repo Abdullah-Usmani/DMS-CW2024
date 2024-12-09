@@ -1,36 +1,81 @@
 package com.example.demo.controller;
 
-import java.lang.reflect.InvocationTargetException;
 import javafx.application.Application;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import com.example.demo.menus.StartMenu;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class Main extends Application {
+	private Stage primaryStage;
+	private final Map<String, int[]> resolutionMap = new HashMap<>();
+	private static int currentWidth = 800;  // Default width
+	private static int currentHeight = 600; // Default height
 
-	private static final int SCREEN_WIDTH = 1280;
-	private static final int SCREEN_HEIGHT = 720;
-	private static final String TITLE = "Sky Battle";
+	@Override
+	public void start(Stage primaryStage) {
+		this.primaryStage = primaryStage;
 
-    @Override
-	public void start(Stage stage) throws ClassNotFoundException, NoSuchMethodException, SecurityException,
-			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		stage.setTitle(TITLE);
-		stage.setResizable(false);
-		stage.setHeight(SCREEN_HEIGHT);
-		stage.setWidth(SCREEN_WIDTH);
-        Controller myController = new Controller(stage);
-		myController.launchGame();
+		// Populate resolution map
+		resolutionMap.put("800x600", new int[]{800, 600});
+		resolutionMap.put("1024x768", new int[]{1024, 768});
+		resolutionMap.put("1280x720", new int[]{1280, 720});
+		resolutionMap.put("1920x1080", new int[]{1920, 1080});
+
+		// Initialize StartMenu with a callback to update resolution
+		StartMenu startMenu = new StartMenu(primaryStage, this::updateResolution);
+		startMenu.showMenu();
 	}
 
+	// Method to update the resolution dynamically
+	public void updateResolution(String resolution) {
+		int[] dimensions = resolutionMap.get(resolution);
+		if (dimensions != null) {
+			currentWidth = dimensions[0];
+			currentHeight = dimensions[1];
+
+			// Set new width and height
+			primaryStage.setWidth(currentWidth);
+			primaryStage.setHeight(currentHeight);
+
+			// Center the stage on the screen
+			centerStage();
+
+			System.out.println("Resolution updated to: " + resolution);
+		} else {
+			System.err.println("Invalid resolution: " + resolution);
+		}
+	}
+
+	// Center the stage on the screen
+	private void centerStage() {
+		Screen screen = Screen.getPrimary();
+		int screenWidth = (int) screen.getVisualBounds().getWidth();
+		int screenHeight = (int) screen.getVisualBounds().getHeight();
+
+		int newX = (screenWidth - currentWidth) / 2;
+		int newY = (screenHeight - currentHeight) / 2;
+
+		primaryStage.setX(newX);
+		primaryStage.setY(newY);
+
+		System.out.println("Window centered at X: " + newX + ", Y: " + newY);
+	}
+
+	// Get current screen width
 	public static int getScreenWidth() {
-		return SCREEN_WIDTH;
+		return currentWidth;
 	}
 
+	// Get current screen height
 	public static int getScreenHeight() {
-		return SCREEN_HEIGHT;
+		return currentHeight;
 	}
-
 
 	public static void main(String[] args) {
-		launch();
+		launch(args);
 	}
 }

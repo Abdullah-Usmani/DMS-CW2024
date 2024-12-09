@@ -5,17 +5,17 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Observable;
 import java.util.Observer;
 
-import com.example.demo.*;
+import com.example.demo.menus.*;
 import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import com.example.demo.LevelParent;
+import com.example.demo.levels.LevelParent;
 
 public class Controller implements Observer {
 
-	public static final String LEVEL_ONE_CLASS_NAME = "com.example.demo.LevelOne";
+	public static final String LEVEL_ONE_CLASS_NAME = "com.example.demo.levels.LevelOne";
 	private final Stage stage;
 	private PauseMenu pauseMenu;
 	private LevelParent currentLevel;
@@ -81,13 +81,6 @@ public class Controller implements Observer {
 		}
 		pauseMenu.hide();  // Hide pause menu
 	}
-
-//	// Handle restarting the game
-//    public void restartGame() {
-//		System.out.println("Game Restarting...");
-//		timeline.play();
-//		launchGame();  // Re-launch the game
-//	}
 
 	// Handle closing the game
 	private void closeGame() {
