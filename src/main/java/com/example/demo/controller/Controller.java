@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Observable;
 import java.util.Observer;
 
+import com.example.demo.Config;
 import com.example.demo.menus.*;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -15,7 +16,7 @@ import com.example.demo.levels.LevelParent;
 
 public class Controller implements Observer {
 
-	public static final String LEVEL_ONE_CLASS_NAME = "com.example.demo.levels.LevelOne";
+	public static final String LEVEL_ONE_CLASS_NAME = "com.example.demo.levels.LevelBoss";
 	private final Stage stage;
 	private PauseMenu pauseMenu;
 	private LevelParent currentLevel;
@@ -45,7 +46,7 @@ public class Controller implements Observer {
 		System.out.println("Transitioning to level: " + className);
 		Class<?> myClass = Class.forName(className);
 		Constructor<?> constructor = myClass.getConstructor(double.class, double.class);
-		LevelParent myLevel = (LevelParent) constructor.newInstance(stage.getHeight(), stage.getWidth());
+		LevelParent myLevel = (LevelParent) constructor.newInstance(Config.getScreenHeight(), Config.getScreenWidth());
 
 		// Configure the new level
 		myLevel.addObserver(this); // Observe for level changes

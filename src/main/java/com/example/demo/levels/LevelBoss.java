@@ -28,7 +28,7 @@ public class LevelBoss extends LevelParent {
 
 	@Override
 	protected int getKillsNeeded() {
-		return 15;
+		return 1;
 	}
 
 	@Override

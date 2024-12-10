@@ -33,16 +33,13 @@ public abstract class FighterPlane extends ActiveActorDestructible {
 	// Method to determine X offset dynamically
 	protected double getProjectileXOffset() {
 		if (this instanceof UserPlane) {
-//			System.out.println("UserPlane x offset:" + imageWidth);
-			return (2*imageWidth); // Positive offset for user
+			return (imageWidth); // Positive offset for user
 		}
 		if (this instanceof BossPlane) {
-//			System.out.println("BossPlane x offset:" + imageWidth);
-			return -(1.2*imageWidth); // Negative
+			return -(.5*imageWidth); // Negative
 		}
 		else {
-//			System.out.println("EnemyPlane x offset:" + imageWidth);
-			return -(2*imageWidth); // Negative offset for enemy
+			return -(imageWidth); // Negative offset for enemy
 		}
 	}
 }

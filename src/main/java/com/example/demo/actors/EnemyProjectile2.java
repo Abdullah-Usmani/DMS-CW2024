@@ -7,7 +7,7 @@ public class EnemyProjectile2 extends Projectile {
 	private static final int SCREEN_HEIGHT = Config.getScreenHeight();
 	private static final int SCREEN_WIDTH = Config.getScreenWidth();
 	private static final String IMAGE_NAME = "enemymissiler33.png";
-	private static final Image PLANE_IMAGE = new Image(UserPlane.class.getResource(IMAGE_LOCATION+IMAGE_NAME).toExternalForm());
+
 	private static final int IMAGE_HEIGHT =  (int) (SCREEN_HEIGHT * .03);
 
 	private static final int IMAGE_WIDTH = (int) (SCREEN_WIDTH * .03);   // Dynamically get width

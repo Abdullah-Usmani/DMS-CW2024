@@ -12,7 +12,7 @@ public class LevelTwo extends LevelParent {
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background3.jpg";
 	private static final String NEXT_LEVEL = "com.example.demo.levels.LevelThree";
 	private static final int TOTAL_ENEMIES = 10;
-	private static final int KILLS_TO_ADVANCE = 20;
+	private static final int KILLS_TO_ADVANCE = 15;
 	private static final double ENEMY_SPAWN_PROBABILITY = .20;
 	private static final double ENEMY2_SPAWN_PROBABILITY = .10;
 	private static final int PLAYER_INITIAL_HEALTH = 10;
@@ -28,7 +28,7 @@ public class LevelTwo extends LevelParent {
 
 	@Override
 	protected int getKillsNeeded() {
-		return 15;
+		return KILLS_TO_ADVANCE;
 	}
 
 	@Override

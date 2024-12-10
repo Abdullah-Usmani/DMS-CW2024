@@ -5,41 +5,33 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
 public class EndMenu extends StackPane {
 
-    private final Button exitButton;
-    private final Button restartButton;
-    private final Button restartLevelButton;
-
-    public EndMenu(String message, double screenWidth, double screenHeight, Runnable onExitToMainMenu, Runnable onRestartLevel) {
-        // Background
-        Rectangle background = new Rectangle(screenWidth, screenHeight);
-        background.setFill(Color.color(0, 0, 0, 0.8)); // Grayish-black background
-
-        // End game message
-        Text endGameText = new Text(message);
-        endGameText.setFont(Font.loadFont(getClass().getResourceAsStream("/com/example/demo/fonts/Roboto-Regular.ttf"), 50));
-        endGameText.setFill(Color.CYAN); // Neon blue text
-
+    public EndMenu(double screenWidth, double screenHeight, Runnable onExitToMainMenu, Runnable onRestartLevel) {
         // Buttons
-        exitButton = createStyledButton("Exit to Main Menu");
+        Button exitButton = createStyledButton("Exit to Main Menu");
         exitButton.setOnAction(event -> onExitToMainMenu.run());
 
-        restartButton = createStyledButton("Restart Game");
+        Button restartButton = createStyledButton("Restart Game");
 
-        restartLevelButton = createStyledButton("Restart Level");
+        Button restartLevelButton = createStyledButton("Restart Level");
         restartLevelButton.setOnAction(event -> onRestartLevel.run());
 
-        // Layout
-        VBox menu = new VBox(20, endGameText, restartLevelButton, restartButton, exitButton);
-        menu.setAlignment(Pos.CENTER);
+        // Button layout
+        VBox menu = new VBox(20, restartLevelButton, restartButton, exitButton);
+        menu.setAlignment(Pos.TOP_CENTER);
 
-        // Add background and menu to the root
-        this.getChildren().addAll(background, menu);
+        // Spacer for 3/4 positioning
+        StackPane spacer = new StackPane();
+        spacer.setPrefHeight(screenHeight * 0.6); // Pushes buttons downward (adjust to 0.5-0.75 for exact position)
+
+        // Root layout
+        VBox rootLayout = new VBox(spacer, menu);
+        rootLayout.setAlignment(Pos.TOP_CENTER); // Ensures buttons remain centered horizontally
+        this.getChildren().addAll(rootLayout);
+
         this.setPrefSize(screenWidth, screenHeight); // Ensure it covers the screen
     }
 
@@ -80,17 +72,5 @@ public class EndMenu extends StackPane {
 
         button.setPrefWidth(200); // Ensure all buttons are the same width
         return button;
-    }
-
-    public Button getExitButton() {
-        return exitButton;
-    }
-
-    public Button getRestartButton() {
-        return restartButton;
-    }
-
-    public Button getRestartLevelButton() {
-        return restartLevelButton;
     }
 }

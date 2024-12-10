@@ -30,7 +30,7 @@ public class LevelThree extends LevelParent {
 
 	@Override
 	protected int getKillsNeeded() {
-		return 15;
+		return KILLS_TO_ADVANCE;
 	}
 
 	@Override

@@ -380,7 +380,6 @@ public abstract class LevelParent extends Observable {
 		timeline.stop();
 		levelView.showWinImage();
 		EndMenu endMenu = new EndMenu(
-				"You Win!",
 				screenWidth,
 				screenHeight,
 				() -> controller.goToMainMenu(),       // Exit to main menu logic
@@ -393,7 +392,6 @@ public abstract class LevelParent extends Observable {
 		timeline.stop();
 		levelView.showGameOverImage();
 		EndMenu endMenu = new EndMenu(
-				"Game Over",
 				screenWidth,
 				screenHeight,
 				() -> controller.goToMainMenu(),       // Exit to main menu logic

@@ -16,8 +16,6 @@ public class EnemyPlane extends FighterPlane {
 
 	public EnemyPlane(double initialXPos, double initialYPos) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, IMAGE_WIDTH, initialXPos, initialYPos, INITIAL_HEALTH);
-		System.out.println("initial X: " + initialXPos + "initial Y: " + initialYPos);
-		System.out.println("Horizontal Velocity " + HORIZONTAL_VELOCITY);
 	}
 
 	@Override
