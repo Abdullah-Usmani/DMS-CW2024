@@ -1,14 +1,19 @@
 package com.example.demo.menus;
 
 import com.example.demo.Config;
+import com.example.demo.controller.Main;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class SettingsMenu {
+import java.util.Optional;
 
+public class SettingsMenu {
     private final Stage stage;
 
     public SettingsMenu(Stage stage) {
@@ -16,36 +21,51 @@ public class SettingsMenu {
     }
 
     public Scene initializeMenu() {
-        // Create resolution dropdown
+        // Resolution dropdown
         ComboBox<String> resolutionDropdown = new ComboBox<>();
-        resolutionDropdown.getItems().addAll("800x600", "1024x768", "1280x720", "1920x1080");
+        resolutionDropdown.getItems().addAll(
+                "800x600",
+                "1024x768",
+                "1280x720",
+                "1920x1080"
+        );
         resolutionDropdown.setValue(getCurrentResolution());
 
-        // Apply resolution change
-        Button applyButton = new Button("Apply");
-        applyButton.setOnAction(e -> {
+        // Apply Settings button
+        Button applySettingsButton = new Button("Apply Settings");
+        applySettingsButton.setOnAction(event -> {
             String selectedResolution = resolutionDropdown.getValue();
-            applyResolution(selectedResolution);
+            if (selectedResolution != null) {
+                String[] dimensions = selectedResolution.split("x");
+                int width = Integer.parseInt(dimensions[0]);
+                int height = Integer.parseInt(dimensions[1]);
+
+                // Confirm restart for resolution change
+                Alert confirmationDialog = new Alert(Alert.AlertType.CONFIRMATION);
+                confirmationDialog.setTitle("Confirm Restart");
+                confirmationDialog.setHeaderText("Restart Required");
+                confirmationDialog.setContentText("Do you want to restart the game to apply the new resolution?");
+                Optional<ButtonType> result = confirmationDialog.showAndWait();
+
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+                    // Save resolution in Config
+                    Config.setResolution(width, height);
+
+                    // Restart the game
+                    Main.restartGame();
+                }
+            }
         });
 
-        // Back to start menu
+        // Back to Main Menu button
         Button backButton = new Button("Back");
         backButton.setOnAction(e -> goToStartMenu());
 
-        // Arrange controls in a vertical layout
-        VBox layout = new VBox(20, resolutionDropdown, applyButton, backButton);
-        layout.setStyle("-fx-alignment: center; -fx-padding: 20;");
+        // Layout
+        VBox layout = new VBox(20, resolutionDropdown, applySettingsButton, backButton);
+        layout.setAlignment(Pos.CENTER);
 
         return new Scene(layout, Config.getScreenWidth(), Config.getScreenHeight());
-    }
-
-    private void applyResolution(String resolution) {
-        String[] dimensions = resolution.split("x");
-        Config.setScreenWidth(Integer.parseInt(dimensions[0]));
-        Config.setScreenHeight(Integer.parseInt(dimensions[1]));
-        stage.setWidth(Config.getScreenWidth());
-        stage.setHeight(Config.getScreenHeight());
-        stage.centerOnScreen();
     }
 
     private String getCurrentResolution() {
@@ -53,6 +73,7 @@ public class SettingsMenu {
     }
 
     private void goToStartMenu() {
+        // Load StartMenu without resizing the stage
         StartMenu startMenu = new StartMenu(stage);
         Scene menuScene = startMenu.initializeMenu();
         stage.setScene(menuScene);

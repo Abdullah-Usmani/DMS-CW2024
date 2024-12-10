@@ -2,6 +2,7 @@ package com.example.demo.menus;
 
 import com.example.demo.Config;
 import com.example.demo.controller.Controller;
+import com.example.demo.controller.Main;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -41,10 +42,13 @@ public class StartMenu {
             stage.setScene(helpScene);
         });
 
+        Button restartGameButton = new Button("Restart Game");
+        restartGameButton.setOnAction(event -> Main.restartGame());
+
         Button exitButton = new Button("Exit");
         exitButton.setOnAction(e -> System.exit(0));
 
-        layout.getChildren().addAll(startGameButton, settingsButton, helpButton, exitButton);
+        layout.getChildren().addAll(startGameButton, settingsButton, helpButton, restartGameButton, exitButton);
 
         return new Scene(layout, Config.getScreenWidth(), Config.getScreenHeight());
     }

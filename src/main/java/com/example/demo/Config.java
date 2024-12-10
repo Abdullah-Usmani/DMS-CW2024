@@ -8,15 +8,12 @@ public class Config {
         return screenWidth;
     }
 
-    public static void setScreenWidth(int width) {
-        screenWidth = width;
-    }
-
     public static int getScreenHeight() {
         return screenHeight;
     }
 
-    public static void setScreenHeight(int height) {
+    public static void setResolution(int width, int height) {
+        screenWidth = width;
         screenHeight = height;
     }
 }
