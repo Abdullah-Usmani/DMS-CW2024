@@ -13,8 +13,7 @@ public class BossPlane extends FighterPlane {
 	private static final String IMAGE_NAME = "c17.png";
 	private static final Image PLANE_IMAGE = new Image(UserPlane.class.getResource(IMAGE_LOCATION+IMAGE_NAME).toExternalForm());
 	private static final int IMAGE_HEIGHT =  (int) (SCREEN_HEIGHT * .2);
-	private static final int src_IMAGE_HEIGHT = (int) PLANE_IMAGE.getHeight(); // Dynamically get height
-	private static final int src_IMAGE_WIDTH = (int) PLANE_IMAGE.getWidth();  // Dynamically get width
+
 	private static final int IMAGE_WIDTH =  (int) (SCREEN_WIDTH * .2);   // Dynamically get width
 	private static final double INITIAL_X_POSITION = SCREEN_WIDTH - (SCREEN_WIDTH * .3);
 	private static final double INITIAL_Y_POSITION = SCREEN_HEIGHT * .5;

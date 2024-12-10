@@ -1,5 +1,6 @@
 package com.example.demo.levels;
 
+import com.example.demo.Config;
 import com.example.demo.actors.EnemyPlane;
 import com.example.demo.displays.ActorInfo;
 
@@ -59,7 +60,7 @@ public class LevelOne extends LevelParent {
 		for (int i = 0; i < TOTAL_ENEMIES - currentNumberOfEnemies; i++) {
 			if (Math.random() < ENEMY_SPAWN_PROBABILITY) {
 				double newEnemyInitialYPosition = Math.random() * getEnemyMaximumYPosition();
-				EnemyPlane newEnemy = new EnemyPlane(getScreenWidth(), newEnemyInitialYPosition);
+				EnemyPlane newEnemy = new EnemyPlane(Config.getScreenWidth(), newEnemyInitialYPosition);
 				addEnemyUnit(newEnemy);
 			}
 		}

@@ -6,7 +6,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import com.example.demo.menus.*;
-import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -21,12 +20,10 @@ public class Controller implements Observer {
 	private PauseMenu pauseMenu;
 	private LevelParent currentLevel;
 	private boolean isPaused = false; // Track pause state
-	private final Timeline timeline;
 
-	public Controller(Stage stage) {
+    public Controller(Stage stage) {
 		this.stage = stage;
 		initializePauseMenu();
-		this.timeline = new Timeline();
 		LevelParent.setController(this);
 	}
 

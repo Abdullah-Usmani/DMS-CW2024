@@ -38,7 +38,7 @@ public abstract class FighterPlane extends ActiveActorDestructible {
 		}
 		if (this instanceof BossPlane) {
 //			System.out.println("BossPlane x offset:" + imageWidth);
-			return -(2*imageWidth); // Negative
+			return -(1.2*imageWidth); // Negative
 		}
 		else {
 //			System.out.println("EnemyPlane x offset:" + imageWidth);

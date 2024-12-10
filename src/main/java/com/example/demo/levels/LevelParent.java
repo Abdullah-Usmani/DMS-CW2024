@@ -42,7 +42,6 @@ public abstract class LevelParent extends Observable {
 	private final List<ActiveActorDestructible> enemyUnits = new ArrayList<>();
 	private final List<ActiveActorDestructible> friendlyProjectiles = new ArrayList<>();
 	private final List<ActiveActorDestructible> enemyProjectiles = new ArrayList<>();
-//	private final List<ActorInfo> actorInfo = new ArrayList<>();
 	private int currentNumberOfEnemies;
 	protected final LevelView levelView;
 
@@ -438,10 +437,6 @@ public abstract class LevelParent extends Observable {
 
 	protected double getEnemyMaximumYPosition() {
 		return enemyMaximumYPosition;
-	}
-
-	protected double getScreenWidth() {
-		return screenWidth;
 	}
 
 	protected boolean userIsDestroyed() {

@@ -6,7 +6,7 @@ import javafx.scene.image.ImageView;
 
 public class GameOverImage extends ImageView {
 	
-	private static final String IMAGE_NAME = "/com/example/demo/images/gameover.png";
+	private static final String IMAGE_NAME = "/com/example/demo/images/game-over.jpg";
 	private static final int HEIGHT = Config.getScreenHeight(); // Use centralized height
 	private static final int WIDTH = Config.getScreenWidth();  // Use centralized width
 

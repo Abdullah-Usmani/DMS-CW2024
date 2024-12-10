@@ -25,6 +25,7 @@ public abstract class ActiveActorDestructible extends ActiveActor {
 		double x = getLayoutX() + getTranslateX();
 		double y = getLayoutY() + getTranslateY();
 		if (isOutOfBounds(x, Config.getScreenWidth())) {
+			System.out.println("Out of bounds!");
 			this.destroy();
 		}
 	}
