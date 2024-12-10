@@ -155,37 +155,40 @@ public abstract class LevelParent extends Observable {
 				"-fx-text-fill: #00ffff; " + // Neon blue color
 				"-fx-effect: dropshadow(gaussian, #00ffff, 15, 0.5, 0, 0);");
 
-		// Create a vertical layout for displaying actor info (planes and projectiles)
-		VBox actorInfoBox = new VBox(10); // Spacing of 10 between rows
-		actorInfoBox.setAlignment(Pos.CENTER);
+		// Create separate lists for each category
+		List<ActorInfo> userPlanes = new ArrayList<>();
+		List<ActorInfo> userProjectiles = new ArrayList<>();
+		List<ActorInfo> enemyPlanes = new ArrayList<>();
+		List<ActorInfo> enemyProjectiles = new ArrayList<>();
 
+		// Categorize actors
 		for (ActorInfo info : actorsInfo) {
-			// Create a horizontal row for each actor
-			HBox actorRow = new HBox(10); // Spacing of 10 between elements
-			actorRow.setAlignment(Pos.CENTER);
-
-			ImageView actorImage = new ImageView(getClass().getResource(info.imagePath).toExternalForm());
-
-			actorImage.setFitWidth(200); // Adjust size
-			actorImage.setFitHeight(60);
-
-			// Labels for the actor's name and damage
-			Label actorName = new Label(info.name);
-			actorName.setStyle("-fx-font-family: 'Arial'; -fx-font-size: 20px; -fx-text-fill: white;");
-
-			String typeText = info.isPlane ? "Health: " : "Damage: ";
-			Label actorDamage = new Label(typeText + info.statValue);
-			actorDamage.setStyle("-fx-font-family: 'Arial'; -fx-font-size: 20px; -fx-text-fill: white;");
-
-			// Add the image and labels to the row
-			actorRow.getChildren().addAll(actorImage, actorName, actorDamage);
-
-			// Add the row to the VBox
-			actorInfoBox.getChildren().add(actorRow);
+			if (info.isPlane) {
+				if (info.isFriendly) {
+					userPlanes.add(info);
+				} else {
+					enemyPlanes.add(info);
+				}
+			} else {
+				if (info.isFriendly) {
+					userProjectiles.add(info);
+				} else {
+					enemyProjectiles.add(info);
+				}
+			}
 		}
+		// Create boxes for each category
+		VBox userPlanesBox = createCategoryBox("User Planes", userPlanes);
+		VBox userProjectilesBox = createCategoryBox("User Projectiles", userProjectiles);
+		VBox enemyPlanesBox = createCategoryBox("Enemy Planes", enemyPlanes);
+		VBox enemyProjectilesBox = createCategoryBox("Enemy Projectiles", enemyProjectiles);
 
-		// Add the main overlay text and actor info to the overlay
-		VBox overlayContent = new VBox(20, overlayText, actorInfoBox); // Spacing of 20
+		// Layout the categories in an HBox
+		HBox categoriesBox = new HBox(20, userPlanesBox, userProjectilesBox, enemyPlanesBox, enemyProjectilesBox);
+		categoriesBox.setAlignment(Pos.TOP_CENTER);
+
+		// Combine everything into the overlay
+		VBox overlayContent = new VBox(20, overlayText, categoriesBox); // Spacing of 20
 		overlayContent.setAlignment(Pos.CENTER);
 
 		overlay.getChildren().add(overlayContent);
@@ -207,6 +210,35 @@ public abstract class LevelParent extends Observable {
 		delay.setOnFinished(e -> fadeOut.play());
 
 		delay.play(); // Begin the delay
+	}
+
+
+	// Create a function to generate a VBox for each category
+	public VBox createCategoryBox(String title, List<ActorInfo> actors) {
+		Label titleLabel = new Label(title);
+		titleLabel.setStyle("-fx-font-family: 'Arial'; -fx-font-size: 24px; -fx-text-fill: white;");
+		VBox categoryBox = new VBox(10, titleLabel); // Spacing of 10
+		categoryBox.setAlignment(Pos.TOP_CENTER);
+
+		for (ActorInfo info : actors) {
+			HBox actorRow = new HBox(10);
+			actorRow.setAlignment(Pos.CENTER_LEFT);
+
+			ImageView actorImage = new ImageView(getClass().getResource(info.imagePath).toExternalForm());
+			actorImage.setFitWidth(50);
+			actorImage.setFitHeight(50);
+
+			Label actorName = new Label(info.name);
+			actorName.setStyle("-fx-font-family: 'Arial'; -fx-font-size: 16px; -fx-text-fill: white;");
+
+			String typeText = info.isPlane ? "Health: " : "Damage: ";
+			Label actorStat = new Label(typeText + info.statValue);
+			actorStat.setStyle("-fx-font-family: 'Arial'; -fx-font-size: 16px; -fx-text-fill: white;");
+
+			actorRow.getChildren().addAll(actorImage, actorName, actorStat);
+			categoryBox.getChildren().add(actorRow);
+		}
+		return categoryBox;
 	}
 
 	protected abstract String getLevelName();
@@ -291,14 +323,14 @@ public abstract class LevelParent extends Observable {
 						"/com/example/demo/audio/ricochet-1.mp3"
 				);
 				break;
-			case "userplane1.png":
+			case "userplane.png":
 				explosionEffect = new ExplosionEffect(
 						"/com/example/demo/images/explosion1.png",
 						75, 75, 1.5,
 						"/com/example/demo/audio/fortnite-pump.mp3"
 				);
 				break;
-			case "sidewinder.png":
+			case "usersidewinder.png":
 				explosionEffect = new ExplosionEffect(
 						"/com/example/demo/images/explosion1.png",
 						100, 100, 1.5,

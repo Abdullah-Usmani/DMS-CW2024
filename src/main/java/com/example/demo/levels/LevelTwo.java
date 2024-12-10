@@ -34,11 +34,11 @@ public class LevelTwo extends LevelParent {
 	@Override
 	protected List<ActorInfo> getActorsInfo() {
 		return List.of(
-				new ActorInfo("F-16", "/com/example/demo/images/enemyplane.png", 1, true),
-				new ActorInfo("MiG-29", "/com/example/demo/images/mig-29.png", 2, true),
-				new ActorInfo("Enemy Guns", "/com/example/demo/images/enemyFire.png", 1, false),
-				new ActorInfo("Guns", "/com/example/demo/images/userfire.png", 1, false),
-				new ActorInfo("Sidewinder", "/com/example/demo/images/sidewinder.png", 3, false)
+				new ActorInfo("F-16", "/com/example/demo/images/enemyplane.png", 1, false, true),
+				new ActorInfo("MiG-29", "/com/example/demo/images/enemymig-29.png", 2, false, true),
+				new ActorInfo("Enemy Guns", "/com/example/demo/images/enemyfire.png", 1, false, false),
+				new ActorInfo("Guns", "/com/example/demo/images/userfire.png", 1, true, false),
+				new ActorInfo("Sidewinder", "/com/example/demo/images/usersidewinder.png", 3, true,false)
 		);
 	}
 

@@ -34,10 +34,10 @@ public class LevelBoss extends LevelParent {
 	@Override
 	protected List<ActorInfo> getActorsInfo() {
 		return List.of(
-				new ActorInfo("C-17", "/com/example/demo/images/c17.png", 1, true),
-				new ActorInfo("R-33", "/com/example/demo/images/enemymissiler33.png", 3, false),
-				new ActorInfo("Guns", "/com/example/demo/images/userfire.png", 1, false),
-				new ActorInfo("Sidewinder", "/com/example/demo/images/sidewinder.png", 3, false)
+				new ActorInfo("C-17", "/com/example/demo/images/enemyc17.png", 1, false,true),
+				new ActorInfo("R-33", "/com/example/demo/images/enemymissiler33.png", 3, false, false),
+				new ActorInfo("Guns", "/com/example/demo/images/userfire.png", 1, true, false),
+				new ActorInfo("Sidewinder", "/com/example/demo/images/usersidewinder.png", 3, true, false)
 		);
 	}
 

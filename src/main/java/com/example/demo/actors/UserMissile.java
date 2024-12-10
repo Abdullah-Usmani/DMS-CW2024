@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 public class UserMissile extends Projectile {
     private static final int SCREEN_HEIGHT = Config.getScreenHeight();
     private static final int SCREEN_WIDTH = Config.getScreenWidth();
-    private static final String IMAGE_NAME = "sidewinder.png";
+    private static final String IMAGE_NAME = "usersidewinder.png";
     private static final Image PLANE_IMAGE = new Image(UserPlane.class.getResource(IMAGE_LOCATION+IMAGE_NAME).toExternalForm());
     private static final int IMAGE_HEIGHT =  (int) (SCREEN_HEIGHT * .01);
     private static final int src_IMAGE_HEIGHT = (int) PLANE_IMAGE.getHeight(); // Dynamically get height

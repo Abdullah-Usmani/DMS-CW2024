@@ -28,7 +28,7 @@ public class ProjectileFactory {
 
     public static Projectile createEnemyProjectile(double initialXPos, double initialYPos) {
         return new Projectile(
-                "enemyFire.png",
+                "enemyfire.png",
                 (int) (SCREEN_HEIGHT * 0.03),
                 (int) (SCREEN_WIDTH * 0.03),
                 initialXPos,
@@ -40,7 +40,7 @@ public class ProjectileFactory {
 
     public static Projectile createUserMissile(double initialXPos, double initialYPos) {
         return new Projectile(
-                "sidewinder.png",
+                "usersidewinder.png",
                 (int) (SCREEN_HEIGHT * 0.015),
                 (int) (SCREEN_WIDTH * 0.015),
                 initialXPos,

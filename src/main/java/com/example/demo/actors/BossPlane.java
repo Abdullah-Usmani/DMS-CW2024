@@ -10,7 +10,7 @@ public class BossPlane extends FighterPlane {
 
 	private static final int SCREEN_HEIGHT = Config.getScreenHeight();
 	private static final int SCREEN_WIDTH = Config.getScreenWidth();
-	private static final String IMAGE_NAME = "c17.png";
+	private static final String IMAGE_NAME = "enemyc17.png";
 	private static final int IMAGE_HEIGHT =  (int) (SCREEN_HEIGHT * .2);
 	private static final int IMAGE_WIDTH =  (int) (SCREEN_WIDTH * .2);   // Dynamically get width
 	private static final double INITIAL_X_POSITION = SCREEN_WIDTH - (SCREEN_WIDTH * .3);

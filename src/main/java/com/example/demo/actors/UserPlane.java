@@ -7,7 +7,7 @@ public class UserPlane extends FighterPlane {
 
 	private static final int SCREEN_HEIGHT = Config.getScreenHeight();
 	private static final int SCREEN_WIDTH = Config.getScreenWidth();
-	private static final String IMAGE_NAME = "userplane1.png";
+	private static final String IMAGE_NAME = "userplane.png";
 	private static final int IMAGE_HEIGHT =  (int) (SCREEN_HEIGHT * .05);
 	private static final int IMAGE_WIDTH =  (int) (SCREEN_WIDTH * .05);  // Dynamically get width
 	private static final double INITIAL_X_POSITION = SCREEN_WIDTH * .01;
