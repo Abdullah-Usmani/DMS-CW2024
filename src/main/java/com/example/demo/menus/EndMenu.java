@@ -9,12 +9,13 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class EndGameMenu extends StackPane {
+public class EndMenu extends StackPane {
 
     private final Button exitButton;
     private final Button restartButton;
+    private final Button restartLevelButton;
 
-    public EndGameMenu(String message, double screenWidth, double screenHeight) {
+    public EndMenu(String message, double screenWidth, double screenHeight, Runnable onExitToMainMenu, Runnable onRestartLevel) {
         // Background
         Rectangle background = new Rectangle(screenWidth, screenHeight);
         background.setFill(Color.color(0, 0, 0, 0.8)); // Grayish-black background
@@ -25,11 +26,16 @@ public class EndGameMenu extends StackPane {
         endGameText.setFill(Color.CYAN); // Neon blue text
 
         // Buttons
-        exitButton = createStyledButton("Exit");
-        restartButton = createStyledButton("Restart");
+        exitButton = createStyledButton("Exit to Main Menu");
+        exitButton.setOnAction(event -> onExitToMainMenu.run());
+
+        restartButton = createStyledButton("Restart Game");
+
+        restartLevelButton = createStyledButton("Restart Level");
+        restartLevelButton.setOnAction(event -> onRestartLevel.run());
 
         // Layout
-        VBox menu = new VBox(20, endGameText, restartButton, exitButton);
+        VBox menu = new VBox(20, endGameText, restartLevelButton, restartButton, exitButton);
         menu.setAlignment(Pos.CENTER);
 
         // Add background and menu to the root
@@ -82,5 +88,9 @@ public class EndGameMenu extends StackPane {
 
     public Button getRestartButton() {
         return restartButton;
+    }
+
+    public Button getRestartLevelButton() {
+        return restartLevelButton;
     }
 }

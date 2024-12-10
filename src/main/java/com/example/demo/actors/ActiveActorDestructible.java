@@ -1,6 +1,6 @@
 package com.example.demo.actors;
 
-import com.example.demo.controller.Main;
+import com.example.demo.Config;
 
 public abstract class ActiveActorDestructible extends ActiveActor {
 
@@ -24,7 +24,7 @@ public abstract class ActiveActorDestructible extends ActiveActor {
 	public void updatePosition() {
 		double x = getLayoutX() + getTranslateX();
 		double y = getLayoutY() + getTranslateY();
-		if (isOutOfBounds(x, Main.getScreenWidth())) {
+		if (isOutOfBounds(x, Config.getScreenWidth())) {
 			this.destroy();
 		}
 	}

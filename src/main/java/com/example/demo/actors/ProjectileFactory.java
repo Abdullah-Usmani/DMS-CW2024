@@ -1,12 +1,12 @@
 package com.example.demo.actors;
 
-import com.example.demo.controller.Main;
+import com.example.demo.Config;
 import javafx.scene.image.Image;
 
 public class ProjectileFactory {
     public static final String IMAGE_LOCATION = "/com/example/demo/images/";
-    private static final int SCREEN_HEIGHT = Main.getScreenHeight();
-    private static final int SCREEN_WIDTH = Main.getScreenWidth();
+    private static final int SCREEN_HEIGHT = Config.getScreenHeight();
+    private static final int SCREEN_WIDTH = Config.getScreenWidth();
 //    private static final String IMAGE_NAME;
     private static final Image PLANE_IMAGE = new Image(UserPlane.class.getResource(IMAGE_LOCATION + "userfire.png").toExternalForm());
     private static final int IMAGE_HEIGHT =  (int) (SCREEN_HEIGHT * .01);

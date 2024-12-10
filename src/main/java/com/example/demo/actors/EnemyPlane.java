@@ -1,12 +1,12 @@
 package com.example.demo.actors;
 
-import com.example.demo.controller.Main;
+import com.example.demo.Config;
 import javafx.scene.image.Image;
 
 public class EnemyPlane extends FighterPlane {
 
-	private static final int SCREEN_HEIGHT = Main.getScreenHeight();
-	private static final int SCREEN_WIDTH = Main.getScreenWidth();
+	private static final int SCREEN_HEIGHT = Config.getScreenHeight();
+	private static final int SCREEN_WIDTH = Config.getScreenWidth();
 	private static final String IMAGE_NAME = "enemyplane.png";
 	private static final Image PLANE_IMAGE = new Image(UserPlane.class.getResource(IMAGE_LOCATION+IMAGE_NAME).toExternalForm());
 	private static final int IMAGE_HEIGHT =  (int) (SCREEN_HEIGHT * .05);

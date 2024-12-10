@@ -1,23 +1,23 @@
 package com.example.demo.menus;
 
+import com.example.demo.Config;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import java.util.function.Consumer;
 
 public class HelpMenu {
-    private final Stage stage;
-    private final Consumer<String> resolutionCallback;
 
-    public HelpMenu(Stage stage, Consumer<String> resolutionCallback) {
+    private final Stage stage;
+
+    public HelpMenu(Stage stage) {
         this.stage = stage;
-        this.resolutionCallback = resolutionCallback;
     }
 
-    public void showMenu() {
+    public Scene initializeMenu() {
+
         VBox layout = new VBox(20);
         layout.setAlignment(Pos.CENTER);
 
@@ -29,17 +29,16 @@ public class HelpMenu {
         helpLabel.setStyle("-fx-font-family: 'Arial'; -fx-font-size: 18px; -fx-text-fill: black;");
 
         Button backButton = new Button("Back");
-        backButton.setOnAction(e -> backToStartMenu());
+        backButton.setOnAction(e -> goToStartMenu());
 
         layout.getChildren().addAll(helpLabel, backButton);
 
-        Scene scene = new Scene(layout, 400, 300);
-        stage.setScene(scene);
-        stage.show();
+        return new Scene(layout, Config.getScreenWidth(), Config.getScreenHeight());
     }
 
-    private void backToStartMenu() {
-        StartMenu startMenu = new StartMenu(stage, resolutionCallback);
-        startMenu.showMenu();
+    private void goToStartMenu() {
+        StartMenu startMenu = new StartMenu(stage);
+        Scene menuScene = startMenu.initializeMenu();
+        stage.setScene(menuScene);
     }
 }

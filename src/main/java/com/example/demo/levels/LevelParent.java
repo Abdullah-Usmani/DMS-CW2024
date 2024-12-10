@@ -7,7 +7,7 @@ import com.example.demo.actors.*;
 import com.example.demo.controller.Controller;
 import com.example.demo.displays.ActorInfo;
 import com.example.demo.displays.ExplosionEffect;
-import com.example.demo.menus.EndGameMenu;
+import com.example.demo.menus.EndMenu;
 import javafx.animation.*;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -380,38 +380,27 @@ public abstract class LevelParent extends Observable {
 	protected void winGame() {
 		timeline.stop();
 		levelView.showWinImage();
-		EndGameMenu endGameMenu = new EndGameMenu("You Win!", screenWidth, screenHeight);
-		setupEndGameMenuActions(endGameMenu);
-		root.getChildren().add(endGameMenu);
+		EndMenu endMenu = new EndMenu(
+				"You Win!",
+				screenWidth,
+				screenHeight,
+				() -> controller.goToMainMenu(),       // Exit to main menu logic
+				() -> controller.restartCurrentLevel() // Restart level logic
+		);
+		root.getChildren().add(endMenu);
 	}
 
 	protected void loseGame() {
 		timeline.stop();
 		levelView.showGameOverImage();
-		EndGameMenu endGameMenu = new EndGameMenu("Game Over", screenWidth, screenHeight);
-		setupEndGameMenuActions(endGameMenu);
-		root.getChildren().add(endGameMenu);
-	}
-
-	private void setupEndGameMenuActions(EndGameMenu endGameMenu) {
-		endGameMenu.getExitButton().setOnAction(event -> {
-			System.out.println("Exiting game...");
-			System.exit(0); // Exit the application
-		});
-
-		endGameMenu.getRestartButton().setOnAction(event -> {
-			System.out.println("Restarting game...");
-			restartGame();
-		});
-	}
-
-	private void restartGame() {
-		try {
-			controller.goToLevel(Controller.LEVEL_ONE_CLASS_NAME); // Call Controller to restart the game
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.err.println("Failed to restart the game.");
-		}
+		EndMenu endMenu = new EndMenu(
+				"Game Over",
+				screenWidth,
+				screenHeight,
+				() -> controller.goToMainMenu(),       // Exit to main menu logic
+				() -> controller.restartCurrentLevel() // Restart level logic
+		);
+		root.getChildren().add(endMenu);
 	}
 
 	public void pauseGame() {

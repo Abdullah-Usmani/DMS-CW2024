@@ -1,14 +1,14 @@
 package com.example.demo.displays;
 
-import com.example.demo.controller.Main;
+import com.example.demo.Config;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class WinImage extends ImageView {
 	
 	private static final String IMAGE_NAME = "/com/example/demo/images/youwin.png";
-	private static final int HEIGHT = Main.getScreenHeight(); // Use centralized height
-	private static final int WIDTH = Main.getScreenWidth();  // Use centralized width
+	private static final int HEIGHT = Config.getScreenHeight(); // Use centralized height
+	private static final int WIDTH = Config.getScreenWidth();  // Use centralized width
 	
 	public WinImage(double xPosition, double yPosition) {
 		this.setImage(new Image(getClass().getResource(IMAGE_NAME).toExternalForm()));

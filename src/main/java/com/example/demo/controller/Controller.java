@@ -13,6 +13,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import com.example.demo.levels.LevelParent;
 
+
 public class Controller implements Observer {
 
 	public static final String LEVEL_ONE_CLASS_NAME = "com.example.demo.levels.LevelOne";
@@ -82,11 +83,6 @@ public class Controller implements Observer {
 		pauseMenu.hide();  // Hide pause menu
 	}
 
-	// Handle closing the game
-	private void closeGame() {
-		System.exit(0);  // Exit the game
-	}
-
 	private void handleKeyPress(KeyEvent event) {
 		if (event.getCode() == KeyCode.P) {  // Pause/Unpause on pressing 'P'
 			if (isPaused) {
@@ -99,10 +95,43 @@ public class Controller implements Observer {
 
 	// Initialize the pause menu
 	private void initializePauseMenu() {
-		pauseMenu = new PauseMenu(stage,
-				this::resumeGame,  // Resume game logic
-				() -> System.exit(0), // Exit game logic
-				() -> System.out.println("Settings Opened")); // Placeholder for settings logic
+		pauseMenu = new PauseMenu(
+				stage,
+				this::resumeGame,            // Resume game logic
+                this::goToMainMenu,        // Exit to main menu logic
+				this::openSettingsMenu,      // Open settings menu logic
+				this::restartCurrentLevel    // Restart level logic
+		);
+	}
+
+	public void goToMainMenu() {
+		StartMenu startMenu = new StartMenu(stage); // Pass the controller's launchGame method
+		Scene menuScene = startMenu.initializeMenu();
+		stage.setScene(menuScene);
+	}
+
+	// Method to open settings menu
+	private void openSettingsMenu() {
+		if (currentLevel != null) {
+			currentLevel.pauseGame();
+		}
+
+		try {
+			goToLevel("com.example.demo.menus.SettingsMenu");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// Method to restart the current level
+    public void restartCurrentLevel() {
+		if (currentLevel != null) {
+			try {
+				goToLevel(currentLevel.getClass().getName());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	// Observer update logic for transitions and game end states
