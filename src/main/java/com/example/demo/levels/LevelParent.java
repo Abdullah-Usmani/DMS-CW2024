@@ -448,7 +448,7 @@ public abstract class LevelParent extends Observable {
 		return user;
 	}
 
-	protected Group getRoot() {
+	public Group getRoot() {
 		return root;
 	}
 

@@ -1,6 +1,7 @@
 package com.example.demo.menus;
 
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
@@ -14,7 +15,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class PauseMenu {
+public class PauseMenu extends Parent {
 
     private final Stage pauseStage;
     private final Runnable onResume;
@@ -61,13 +62,6 @@ public class PauseMenu {
 
         Scene pauseScene = new Scene(root, 400, 300);
         pauseStage.setScene(pauseScene);
-//
-//        // Add key press handler to resume on 'P'
-//        pauseScene.setOnKeyPressed(event -> {
-//            if (event.getCode() == KeyCode.P) {
-//                resumeGame();
-//            }
-//        });
     }
 
     public void show() {
