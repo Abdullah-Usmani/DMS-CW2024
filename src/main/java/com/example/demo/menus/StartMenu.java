@@ -2,7 +2,6 @@ package com.example.demo.menus;
 
 import com.example.demo.Config;
 import com.example.demo.controller.Controller;
-import com.example.demo.controller.Main;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

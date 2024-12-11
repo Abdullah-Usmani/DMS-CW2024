@@ -13,7 +13,7 @@ public class UserPlane extends FighterPlane {
 	private static final double INITIAL_X_POSITION = SCREEN_WIDTH * .01;
 	private static final double INITIAL_Y_POSITION = SCREEN_HEIGHT * .5;
 	private static final double Y_UPPER_BOUND = 0;
-	private static final double Y_LOWER_BOUND = (double) SCREEN_HEIGHT - IMAGE_HEIGHT;
+	private static final double Y_LOWER_BOUND = (double) SCREEN_HEIGHT - 2*IMAGE_HEIGHT;
 	private static final int VERTICAL_VELOCITY = (int) (SCREEN_HEIGHT * .015);
 	private static final long FIRE_RATE_COOLDOWN = 150; // Cooldown in milliseconds
 	private static final long MISSILE_COOLDOWN = 1000; // Cooldown in milliseconds
@@ -53,8 +53,6 @@ public class UserPlane extends FighterPlane {
 			playFiringSound("/com/example/demo/audio/single-shot.mp3"); // Play user-specific sound
 			return new UserProjectile(getProjectileXPosition(), getProjectileYPosition());
 		} else {
-			// Cooldown active, no projectile fired
-			System.out.println("Cooldown active, cannot fire yet!");
 			return null;
 		}
 	}
@@ -66,12 +64,9 @@ public class UserPlane extends FighterPlane {
 			playFiringSound("/com/example/demo/audio/fortnite-rpg.mp3"); // Play enemy-specific sound
 			return new UserMissile(getProjectileXPosition(), getProjectileYPosition());
 		} else {
-			// Cooldown active, no projectile fired
-			System.out.println("Cooldown active, cannot fire yet!");
 			return null;
 		}
 	}
-
 
 	private boolean isMoving() {
 		return velocityMultiplier != 0;
@@ -95,7 +90,6 @@ public class UserPlane extends FighterPlane {
 
 	public void incrementHitCount() {
 		numberOfHits++;
-
 	}
 
 	public int getNumberOfKills() {

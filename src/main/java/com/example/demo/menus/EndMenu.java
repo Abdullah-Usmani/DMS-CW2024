@@ -9,12 +9,14 @@ import javafx.scene.text.Font;
 
 public class EndMenu extends StackPane {
 
-    public EndMenu(double screenWidth, double screenHeight, Runnable onExitToMainMenu, Runnable onRestartLevel) {
+    public EndMenu(double screenWidth, double screenHeight, Runnable onExitToMainMenu, Runnable onRestartGame, Runnable onRestartLevel) {
         // Buttons
+
         Button exitButton = createStyledButton("Exit to Main Menu");
         exitButton.setOnAction(event -> onExitToMainMenu.run());
 
         Button restartButton = createStyledButton("Restart Game");
+        restartButton.setOnAction(event -> onRestartGame.run());
 
         Button restartLevelButton = createStyledButton("Restart Level");
         restartLevelButton.setOnAction(event -> onRestartLevel.run());

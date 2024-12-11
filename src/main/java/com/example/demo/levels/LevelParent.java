@@ -415,6 +415,7 @@ public abstract class LevelParent extends Observable {
 				screenWidth,
 				screenHeight,
 				() -> controller.goToMainMenu(),       // Exit to main menu logic
+				() -> controller.restartGame(),       // Exit to main menu logic
 				() -> controller.restartCurrentLevel() // Restart level logic
 		);
 		root.getChildren().add(endMenu);
@@ -427,21 +428,20 @@ public abstract class LevelParent extends Observable {
 				screenWidth,
 				screenHeight,
 				() -> controller.goToMainMenu(),       // Exit to main menu logic
+				() -> controller.restartGame(),       // Exit to main menu logic
 				() -> controller.restartCurrentLevel() // Restart level logic
 		);
 		root.getChildren().add(endMenu);
 	}
 
 	public void pauseGame() {
-		System.out.println("Pausing game...");
+		System.out.println("Level PARENT - Pausing");
 		timeline.pause(); // Pauses the main game loop
-//		isPaused = true;
 	}
 
 	public void resumeGame() {
-		System.out.println("Resuming game...");
+		System.out.println("Level PARENT - Resuming");
 		timeline.play(); // Resumes the main game loop
-//		isPaused = false;
 	}
 
 	protected UserPlane getUser() {

@@ -3,7 +3,6 @@ package com.example.demo.controller;
 import com.example.demo.Config;
 import com.example.demo.menus.StartMenu;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -12,8 +11,8 @@ public class Main extends Application {
 
 	public void start(Stage stage) {
 		primaryStage = stage;
-		primaryStage.setTitle("2042");
-
+		primaryStage.setTitle("F-15 Strike Eagle");
+		primaryStage.setResizable(false);
 		// Load the Start Menu
 		StartMenu startMenu = new StartMenu(primaryStage);
 		Scene startScene = startMenu.initializeMenu();

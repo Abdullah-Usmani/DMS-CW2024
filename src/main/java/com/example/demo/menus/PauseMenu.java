@@ -19,13 +19,15 @@ public class PauseMenu extends Parent {
 
     private final Stage pauseStage;
     private final Runnable onResume;
-    private final Runnable onExitToMainMenu;
     private final Runnable onRestartLevel;
+    private final Runnable onRestartGame;
+    private final Runnable onExitToMainMenu;
 
-    public PauseMenu(Stage primaryStage, Runnable onResume, Runnable onExitToMainMenu, Runnable onRestartLevel) {
+    public PauseMenu(Stage primaryStage, Runnable onResume, Runnable onRestartLevel, Runnable onRestartGame, Runnable onExitToMainMenu) {
         this.onResume = onResume;
-        this.onExitToMainMenu = onExitToMainMenu;
         this.onRestartLevel = onRestartLevel;
+        this.onRestartGame = onRestartGame;
+        this.onExitToMainMenu = onExitToMainMenu;
 
         // Create the pause stage
         pauseStage = new Stage();
@@ -52,16 +54,26 @@ public class PauseMenu extends Parent {
         Button restartLevelButton = createStyledButton("Restart Level");
         restartLevelButton.setOnAction(event -> restartLevel());
 
+        Button restartGameButton = createStyledButton("Restart Game");
+        restartGameButton.setOnAction(event -> restartGame());
+
         Button exitToMainMenuButton = createStyledButton("Exit to Main Menu");
         exitToMainMenuButton.setOnAction(event -> exitToMainMenu());
 
         // Layout
-        VBox menu = new VBox(20, title, playButton, restartLevelButton, exitToMainMenuButton);
+        VBox menu = new VBox(20, title, playButton, restartLevelButton, restartGameButton, exitToMainMenuButton);
         menu.setAlignment(Pos.CENTER);
         root.getChildren().add(menu);
 
-        Scene pauseScene = new Scene(root, 400, 300);
+        Scene pauseScene = new Scene(root, 400, 600);
         pauseStage.setScene(pauseScene);
+
+        // Add key press handler to resume on 'P'
+        pauseScene.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.P) {
+                resumeGame();
+            }
+        });
     }
 
     public void show() {
@@ -83,6 +95,13 @@ public class PauseMenu extends Parent {
         hide();
         if (onRestartLevel != null) {
             onRestartLevel.run();
+        }
+    }
+
+    private void restartGame() {
+        hide();
+        if (onRestartGame != null) {
+            onRestartGame.run();
         }
     }
 

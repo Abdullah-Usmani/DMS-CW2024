@@ -5,15 +5,15 @@ import com.example.demo.menus.PauseMenu;
 import javafx.stage.Stage;
 
 public class PauseMenuController {
-    private final Stage stage;
     private final PauseMenu pauseMenu;
     private LevelParent currentLevel;
+    private final Controller controller;
     private boolean isPaused;
 
     public PauseMenuController(Stage stage, Controller controller) {
-        this.stage = stage;
         this.isPaused = false;
-        this.pauseMenu = new PauseMenu(stage, this::resumeGame, controller::goToMainMenu, controller::restartCurrentLevel);
+        this.controller = controller;
+        this.pauseMenu = new PauseMenu(stage, this::resumeGame, this::restartCurrentLevel, this::restartGame, this::goToMainMenu);
     }
 
     public void setCurrentLevel(LevelParent level) {
@@ -33,7 +33,7 @@ public class PauseMenuController {
             System.err.println("No level is currently active.");
             return;
         }
-
+        System.out.println("Pausemenucontroller toggle - PAUSE");
         isPaused = true;
         currentLevel.pauseGame(); // Pause the level logic
         pauseMenu.show(); // Display the pause menu
@@ -44,8 +44,23 @@ public class PauseMenuController {
             System.err.println("No level is currently active.");
             return;
         }
-
+        System.out.println("Pausemenucontroller toggle - RESUME");
         isPaused = false;
         currentLevel.resumeGame(); // Resume the level logic
+    }
+
+    private void restartCurrentLevel() {
+        isPaused = false;
+        controller.restartCurrentLevel();
+    }
+
+    private void restartGame() {
+        isPaused = false;
+        controller.restartGame();
+    }
+
+    private void goToMainMenu() {
+        isPaused = false;
+        controller.goToMainMenu();
     }
 }
