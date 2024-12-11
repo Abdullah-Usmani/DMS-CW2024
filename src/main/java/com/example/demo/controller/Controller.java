@@ -13,7 +13,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import com.example.demo.levels.LevelParent;
 
-
 public class Controller implements Observer {
 
 	public static final String LEVEL_ONE_CLASS_NAME = "com.example.demo.levels.LevelOne";

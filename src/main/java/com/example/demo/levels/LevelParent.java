@@ -49,7 +49,7 @@ public abstract class LevelParent extends Observable {
 		this.startOverlay = new StartOverlay(root, this::startGame);
 		this.scene = new Scene(root, screenWidth, screenHeight);
 		this.user = new UserPlane(playerInitialHealth);
-		this.collisionManager = new CollisionManager(root);
+		this.collisionManager = new CollisionManager(root, this::updateHitCount, this::updateKillCount);
 		this.soundManager = new SoundManager();
 
 		this.background = new ImageView(new Image(getClass().getResource(backgroundImageName).toExternalForm()));
@@ -79,14 +79,7 @@ public abstract class LevelParent extends Observable {
 		updateActors();                   // Updates all actor positions
 		generateEnemyFire();
 		updateNumberOfEnemies();
-		handleEnemyPenetration();         // Check for enemies penetrating defenses
-		collisionManager.handleCollisions(enemyProjectiles, friendlyUnits);
-		if (collisionManager.handleCollisions(friendlyProjectiles, enemyUnits)) {
-			updateHitCount(true); 		// Update hit count only if user projectile hits an enemy
-		}
-		if (collisionManager.handleCollisions(enemyUnits, friendlyUnits)) {
-			user.takeDamage(1);		// Update hit count only if user projectile hits an enemy
-		}
+		collisionManager.handleAllCollisions(friendlyUnits, enemyUnits, friendlyProjectiles, enemyProjectiles);
 		removeActors();       // Removes destroyed actors after collision checks
 		updateLevelView();                // Update health, kills, etc.
 		checkIfGameOver();                // Check game-over conditions
@@ -105,8 +98,6 @@ public abstract class LevelParent extends Observable {
 		levelView.removeHearts(user.getHealth());
 		levelView.updateKills(user.getNumberOfKills());
 	}
-
-
 
 	private void initializeBackground() {
 		background.setFocusTraversable(true);
@@ -207,31 +198,12 @@ public abstract class LevelParent extends Observable {
 		actors.removeAll(destroyedActors);
 	}
 
-	private void updateHitCount(boolean collisionDetected) {
-		if (collisionDetected) {
-			user.incrementHitCount(); // Update hit count if a collision occurred
-//			System.out.println("User hit-count: " + user.getNumberOfHits());
-		}
+	private void updateHitCount() {
+		user.incrementHitCount(); // Update hit count if a collision occurred
 	}
 
-	private void updateKillCount(boolean killDetected) {
-		if (killDetected) {
-			user.incrementKillCount(); // Update hit count if a collision occurred
-//			System.out.println("User kill-count: " + user.getNumberOfKills());
-		}
-	}
-
-	private boolean enemyHasPenetratedDefenses(ActiveActorDestructible enemy) {
-		return Math.abs(enemy.getTranslateX()) > screenWidth;
-	}
-
-	private void handleEnemyPenetration() {
-		for (ActiveActorDestructible enemy : enemyUnits) {
-			if (enemyHasPenetratedDefenses(enemy)) {
-				user.takeDamage(1);
-				enemy.destroy();
-			}
-		}
+	private void updateKillCount() {
+		user.incrementKillCount(); // Update hit count if a collision occurred
 	}
 
 	public void stopGame() {
