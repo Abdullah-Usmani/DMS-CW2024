@@ -60,13 +60,13 @@ public class Controller implements Observer {
 
 	private void handleKeyPress(KeyEvent event) {
 		if (event.getCode() == KeyCode.P) {
-			System.out.println("Handle P Press");
+//			System.out.println("Handle P Press");
 			pauseMenuController.togglePauseMenu();
 		}
 	}
 
 	public void goToMainMenu() {
-		System.out.println("Main Menu Called");
+//		System.out.println("Main Menu Called");
 		StartMenu startMenu = new StartMenu(stage); // Pass the controller's launchGame method
 		Scene menuScene = startMenu.initializeMenu();
 		stage.setScene(menuScene);
@@ -74,7 +74,7 @@ public class Controller implements Observer {
 
 	// Method to restart the current level
 	public void restartGame() {
-		System.out.println("Restart Game called");
+//		System.out.println("Restart Game called");
 		try {
 			goToLevel(LEVEL_ONE_CLASS_NAME);
 		} catch (Exception e) {

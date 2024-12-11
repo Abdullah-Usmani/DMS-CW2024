@@ -1,5 +1,6 @@
 package com.example.demo.displays;
 
+import com.example.demo.managers.SoundManager;
 import javafx.animation.FadeTransition;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
@@ -9,11 +10,11 @@ import javafx.util.Duration;
 
 public class ExplosionEffect {
 
-    private String imagePath;
-    private double width;
-    private double height;
-    private double fadeDuration;
-    private String soundPath; // Path to the sound effect
+    private final String imagePath;
+    private final double width;
+    private final double height;
+    private final double fadeDuration;
+    private final String soundPath;
 
     public ExplosionEffect(String imagePath, double width, double height, double fadeDuration, String soundPath) {
         this.imagePath = imagePath;
@@ -24,26 +25,19 @@ public class ExplosionEffect {
     }
 
     public void createEffect(double x, double y, Group root) {
-        // Create the explosion ImageView
         ImageView explosion = new ImageView(new Image(getClass().getResource(imagePath).toExternalForm()));
         explosion.setFitWidth(width);
         explosion.setFitHeight(height);
         explosion.setLayoutX(x);
         explosion.setLayoutY(y);
-
-        // Add the explosion to the scene
         root.getChildren().add(explosion);
 
-        // Play the sound effect
         playSoundEffect();
 
-        // Create a fade-out animation
         FadeTransition fadeOut = new FadeTransition(Duration.seconds(fadeDuration), explosion);
         fadeOut.setFromValue(1.0);
         fadeOut.setToValue(0.0);
-        fadeOut.setOnFinished(event -> root.getChildren().remove(explosion)); // Remove explosion after fade-out
-
-        // Play the animation
+        fadeOut.setOnFinished(event -> root.getChildren().remove(explosion));
         fadeOut.play();
     }
 

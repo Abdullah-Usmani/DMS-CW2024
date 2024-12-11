@@ -14,7 +14,7 @@ public class UserPlane extends FighterPlane {
 	private static final double INITIAL_Y_POSITION = SCREEN_HEIGHT * .5;
 	private static final double Y_UPPER_BOUND = 0;
 	private static final double Y_LOWER_BOUND = (double) SCREEN_HEIGHT - 2*IMAGE_HEIGHT;
-	private static final int VERTICAL_VELOCITY = (int) (SCREEN_HEIGHT * .015);
+	private static final double VERTICAL_VELOCITY = SCREEN_HEIGHT * .015;
 	private static final long FIRE_RATE_COOLDOWN = 150; // Cooldown in milliseconds
 	private static final long MISSILE_COOLDOWN = 1000; // Cooldown in milliseconds
 	private int velocityMultiplier;

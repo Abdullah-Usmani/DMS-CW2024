@@ -33,7 +33,6 @@ public class PauseMenuController {
             System.err.println("No level is currently active.");
             return;
         }
-        System.out.println("Pausemenucontroller toggle - PAUSE");
         isPaused = true;
         currentLevel.pauseGame(); // Pause the level logic
         pauseMenu.show(); // Display the pause menu
@@ -44,7 +43,6 @@ public class PauseMenuController {
             System.err.println("No level is currently active.");
             return;
         }
-        System.out.println("Pausemenucontroller toggle - RESUME");
         isPaused = false;
         currentLevel.resumeGame(); // Resume the level logic
     }
