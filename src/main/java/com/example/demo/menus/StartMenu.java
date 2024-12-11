@@ -42,13 +42,10 @@ public class StartMenu {
             stage.setScene(helpScene);
         });
 
-        Button restartGameButton = new Button("Restart Game");
-        restartGameButton.setOnAction(event -> Main.restartGame());
-
         Button exitButton = new Button("Exit");
         exitButton.setOnAction(e -> System.exit(0));
 
-        layout.getChildren().addAll(startGameButton, settingsButton, helpButton, restartGameButton, exitButton);
+        layout.getChildren().addAll(startGameButton, settingsButton, helpButton, exitButton);
 
         return new Scene(layout, Config.getScreenWidth(), Config.getScreenHeight());
     }

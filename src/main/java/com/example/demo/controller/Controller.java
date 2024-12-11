@@ -83,10 +83,10 @@ public class Controller implements Observer {
 
 	private void handleKeyPress(KeyEvent event) {
 		if (event.getCode() == KeyCode.P) {  // Pause/Unpause on pressing 'P'
-			if (isPaused) {
-				resumeGame();
-			} else {
+			if (!isPaused) {
 				pauseGame();
+			} else {
+				resumeGame();
 			}
 		}
 	}
@@ -97,7 +97,6 @@ public class Controller implements Observer {
 				stage,
 				this::resumeGame,            // Resume game logic
                 this::goToMainMenu,        // Exit to main menu logic
-				this::openSettingsMenu,      // Open settings menu logic
 				this::restartCurrentLevel    // Restart level logic
 		);
 	}
@@ -106,19 +105,6 @@ public class Controller implements Observer {
 		StartMenu startMenu = new StartMenu(stage); // Pass the controller's launchGame method
 		Scene menuScene = startMenu.initializeMenu();
 		stage.setScene(menuScene);
-	}
-
-	// Method to open settings menu
-	private void openSettingsMenu() {
-		if (currentLevel != null) {
-			currentLevel.pauseGame();
-		}
-
-		try {
-			goToLevel("com.example.demo.menus.SettingsMenu");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	// Method to restart the current level

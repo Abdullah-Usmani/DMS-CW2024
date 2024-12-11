@@ -4,14 +4,11 @@ import com.example.demo.Config;
 import com.example.demo.controller.Main;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.util.Optional;
 
 public class SettingsMenu {
     private final Stage stage;
@@ -21,6 +18,10 @@ public class SettingsMenu {
     }
 
     public Scene initializeMenu() {
+        // Message for disabled dropdown
+        Label messageLabel = new Label();
+        messageLabel.setVisible(false); // Initially hidden
+
         // Resolution dropdown
         ComboBox<String> resolutionDropdown = new ComboBox<>();
         resolutionDropdown.getItems().addAll(
@@ -40,20 +41,16 @@ public class SettingsMenu {
                 int width = Integer.parseInt(dimensions[0]);
                 int height = Integer.parseInt(dimensions[1]);
 
-                // Confirm restart for resolution change
-                Alert confirmationDialog = new Alert(Alert.AlertType.CONFIRMATION);
-                confirmationDialog.setTitle("Confirm Restart");
-                confirmationDialog.setHeaderText("Restart Required");
-                confirmationDialog.setContentText("Do you want to restart the game to apply the new resolution?");
-                Optional<ButtonType> result = confirmationDialog.showAndWait();
+                // Save resolution and mark as not first run
+                Config.setResolution(width, height);
+                Config.setFirstRun(false);
+                Main.restartGame();
 
-                if (result.isPresent() && result.get() == ButtonType.OK) {
-                    // Save resolution in Config
-                    Config.setResolution(width, height);
-
-                    // Restart the game
-                    Main.restartGame();
-                }
+                // Disable resolution changes
+                resolutionDropdown.setDisable(true);
+                applySettingsButton.setDisable(true);
+                messageLabel.setText("Resolution changes can only be made on the first run.");
+                messageLabel.setVisible(true);
             }
         });
 
@@ -61,8 +58,16 @@ public class SettingsMenu {
         Button backButton = new Button("Back");
         backButton.setOnAction(e -> goToStartMenu());
 
+        // Check if it's the first run
+        if (!Config.isFirstRun()) {
+            resolutionDropdown.setDisable(true);
+            messageLabel.setText("Resolution changes can only be made on the first run.");
+            messageLabel.setVisible(true);
+            applySettingsButton.setDisable(true);
+        }
+
         // Layout
-        VBox layout = new VBox(20, resolutionDropdown, applySettingsButton, backButton);
+        VBox layout = new VBox(20, messageLabel, resolutionDropdown, applySettingsButton, backButton);
         layout.setAlignment(Pos.CENTER);
 
         return new Scene(layout, Config.getScreenWidth(), Config.getScreenHeight());
@@ -73,7 +78,6 @@ public class SettingsMenu {
     }
 
     private void goToStartMenu() {
-        // Load StartMenu without resizing the stage
         StartMenu startMenu = new StartMenu(stage);
         Scene menuScene = startMenu.initializeMenu();
         stage.setScene(menuScene);

@@ -19,13 +19,11 @@ public class PauseMenu {
     private final Stage pauseStage;
     private final Runnable onResume;
     private final Runnable onExitToMainMenu;
-    private final Runnable onSettings;
     private final Runnable onRestartLevel;
 
-    public PauseMenu(Stage primaryStage, Runnable onResume, Runnable onExitToMainMenu, Runnable onSettings, Runnable onRestartLevel) {
+    public PauseMenu(Stage primaryStage, Runnable onResume, Runnable onExitToMainMenu, Runnable onRestartLevel) {
         this.onResume = onResume;
         this.onExitToMainMenu = onExitToMainMenu;
-        this.onSettings = onSettings;
         this.onRestartLevel = onRestartLevel;
 
         // Create the pause stage
@@ -50,10 +48,6 @@ public class PauseMenu {
         Button playButton = createStyledButton("Continue");
         playButton.setOnAction(event -> resumeGame());
 
-
-        Button settingsButton = createStyledButton("Settings");
-        settingsButton.setOnAction(event -> openSettings());
-
         Button restartLevelButton = createStyledButton("Restart Level");
         restartLevelButton.setOnAction(event -> restartLevel());
 
@@ -61,19 +55,19 @@ public class PauseMenu {
         exitToMainMenuButton.setOnAction(event -> exitToMainMenu());
 
         // Layout
-        VBox menu = new VBox(20, title, playButton, restartLevelButton, settingsButton, exitToMainMenuButton);
+        VBox menu = new VBox(20, title, playButton, restartLevelButton, exitToMainMenuButton);
         menu.setAlignment(Pos.CENTER);
         root.getChildren().add(menu);
 
         Scene pauseScene = new Scene(root, 400, 300);
         pauseStage.setScene(pauseScene);
-
-        // Add key press handler to resume on 'P'
-        pauseScene.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.P) {
-                resumeGame();
-            }
-        });
+//
+//        // Add key press handler to resume on 'P'
+//        pauseScene.setOnKeyPressed(event -> {
+//            if (event.getCode() == KeyCode.P) {
+//                resumeGame();
+//            }
+//        });
     }
 
     public void show() {
@@ -95,13 +89,6 @@ public class PauseMenu {
         hide();
         if (onRestartLevel != null) {
             onRestartLevel.run();
-        }
-    }
-
-    private void openSettings() {
-        hide();
-        if (onSettings != null) {
-            onSettings.run();
         }
     }
 

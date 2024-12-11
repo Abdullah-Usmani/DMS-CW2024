@@ -433,19 +433,15 @@ public abstract class LevelParent extends Observable {
 	}
 
 	public void pauseGame() {
-		if (!isPaused) {
-			System.out.println("Pausing game...");
-			timeline.pause(); // Pauses the main game loop
-			isPaused = true;
-		}
+		System.out.println("Pausing game...");
+		timeline.pause(); // Pauses the main game loop
+//		isPaused = true;
 	}
 
 	public void resumeGame() {
-		if (isPaused) {
-			System.out.println("Resuming game...");
-			timeline.play(); // Resumes the main game loop
-			isPaused = false;
-		}
+		System.out.println("Resuming game...");
+		timeline.play(); // Resumes the main game loop
+//		isPaused = false;
 	}
 
 	protected UserPlane getUser() {
