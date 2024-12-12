@@ -61,6 +61,11 @@ public class Config {
 // initialize all VERTICAL_VELOCITIES
 // initialize all HORIZONTAL_VELOCITIES
 // initialize all HEALTH
+
+    public static final int SPARK_SIZE = 50;
+    public static final int EXPLOSION_SIZE = 75;
+    public static final int SPARK_DURATION = 1;
+    public static final int EXPLOSION_DURATION = 2;
 // initialize all FIRE_RATES
 
     public static int getScreenWidth() {

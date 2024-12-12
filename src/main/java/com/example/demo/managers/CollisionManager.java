@@ -13,16 +13,20 @@ public class CollisionManager {
     private final Group root;
     private final Runnable updateHitCount;
     private final Runnable updateKillCount;
+    private final EffectManager effectManager;
+    private final SoundManager soundManager;
 
     private List<ActiveActorDestructible> friendlyUnits;
     private List<ActiveActorDestructible> enemyUnits;
     private List<ActiveActorDestructible> friendlyProjectiles;
     private List<ActiveActorDestructible> enemyProjectiles;
 
-    public CollisionManager(Group root, Runnable updateHitCount, Runnable updateKillCount) {
+    public CollisionManager(Group root, Runnable updateHitCount, Runnable updateKillCount, EffectManager effectManager, SoundManager soundManager) {
         this.root = root;
         this.updateHitCount = updateHitCount;
         this.updateKillCount = updateKillCount;
+        this.effectManager = effectManager;
+        this.soundManager = soundManager;
     }
 
     public void handleAllCollisions( List<ActiveActorDestructible> friendlyUnits, List<ActiveActorDestructible> enemyUnits, List<ActiveActorDestructible> friendlyProjectiles, List<ActiveActorDestructible> enemyProjectiles) {
@@ -40,8 +44,8 @@ public class CollisionManager {
         List<CollisionResult> results = detectCollisions(enemyProjectiles, friendlyUnits);
         for (CollisionResult result : results) {
             result.target.takeDamage(result.projectile.getDamage());
-            ExplosionEffect effect = new ExplosionEffect(Config.SPARK_IMAGE, 50, 50, 1.0, Config.FRIENDLY_TAKE_DAMAGE_AUDIO);
-            effect.createEffect(result.collisionX, result.collisionY, root);
+            effectManager.createSparkEffect(result.collisionX, result.collisionY, root);
+            soundManager.playTakeDamageSound();
         }
     }
 
@@ -50,12 +54,12 @@ public class CollisionManager {
         for (CollisionResult result : results) {
             result.target.takeDamage(result.projectile.getDamage());
             if (result.target.isDestroyed()) {
-                ExplosionEffect effect = new ExplosionEffect(Config.EXPLOSION_IMAGE, 50, 50, 1.0, Config.DESTRUCTION_AUDIO);
-                effect.createEffect(result.collisionX, result.collisionY, root);
+                effectManager.createDestructionEffect(result.collisionX, result.collisionY, root);
+                soundManager.playDestructionSound();
                 updateKillCount.run();
             } else {
-                ExplosionEffect effect = new ExplosionEffect(Config.SPARK_IMAGE, 50, 50, 1.0, Config.ENEMY_TAKE_DAMAGE_AUDIO);
-                effect.createEffect(result.collisionX, result.collisionY, root);
+                effectManager.createSparkEffect(result.collisionX, result.collisionY, root);
+                soundManager.playSparkSound();
             }
             updateHitCount.run();
         }
@@ -65,8 +69,8 @@ public class CollisionManager {
         List<CollisionResult> results = detectCollisions(enemyUnits, friendlyUnits);
         for (CollisionResult result : results) {
             result.target.takeDamage(1);
-            ExplosionEffect effect = new ExplosionEffect(Config.EXPLOSION_IMAGE, 50, 50, 1.0, Config.PLANE_COLLISION_AUDIO);
-            effect.createEffect(result.collisionX, result.collisionY, root);
+            effectManager.createDestructionEffect(result.collisionX, result.collisionY, root);
+            soundManager.playCollisionSound();
         }
     }
 
@@ -75,6 +79,7 @@ public class CollisionManager {
             if (enemyHasPenetratedDefenses(enemy)) {
                 for (ActiveActorDestructible friend : friendlyUnits) {
                     friend.takeDamage(1);
+                    soundManager.playTakeDamageSound();
                 }
                 enemy.destroy();
             }
@@ -104,8 +109,6 @@ public class CollisionManager {
         return collisions;
     }
 
-
-//    maybe return coordinates in collisionresult instead of just projectile itself.
     private static class CollisionResult {
         final ActiveActorDestructible projectile;
         final ActiveActorDestructible target;

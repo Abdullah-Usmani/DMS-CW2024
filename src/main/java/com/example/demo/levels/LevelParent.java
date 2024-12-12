@@ -9,6 +9,7 @@ import com.example.demo.controller.Controller;
 import com.example.demo.displays.ActorInfo;
 import com.example.demo.displays.StartOverlay;
 import com.example.demo.managers.CollisionManager;
+import com.example.demo.managers.EffectManager;
 import com.example.demo.managers.SoundManager;
 import com.example.demo.menus.EndMenu;
 import javafx.event.EventHandler;
@@ -31,9 +32,8 @@ public abstract class LevelParent extends Observable {
 	private final ImageView background;
 	private final StartOverlay startOverlay;
 	private final CollisionManager collisionManager;
-	private final SoundManager soundManager;
 
-	private final List<ActiveActorDestructible> friendlyUnits = new ArrayList<>();
+    private final List<ActiveActorDestructible> friendlyUnits = new ArrayList<>();
 	private final List<ActiveActorDestructible> enemyUnits = new ArrayList<>();
 	private final List<ActiveActorDestructible> friendlyProjectiles = new ArrayList<>();
 	private final List<ActiveActorDestructible> enemyProjectiles = new ArrayList<>();
@@ -47,8 +47,9 @@ public abstract class LevelParent extends Observable {
 		this.startOverlay = new StartOverlay(root, this::startGame);
 		this.scene = new Scene(root, screenWidth, screenHeight);
 		this.user = new UserPlane(playerInitialHealth);
-		this.collisionManager = new CollisionManager(root, this::updateHitCount, this::updateKillCount);
-		this.soundManager = new SoundManager();
+        SoundManager soundManager = new SoundManager();
+        EffectManager effectManager = new EffectManager();
+		this.collisionManager = new CollisionManager(root, this::updateHitCount, this::updateKillCount, effectManager, soundManager);
 
 		this.background = new ImageView(new Image(getClass().getResource(backgroundImageName).toExternalForm()));
 		this.screenHeight = screenHeight;

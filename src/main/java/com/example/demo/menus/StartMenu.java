@@ -24,6 +24,7 @@ public class StartMenu {
         startGameButton.setOnAction(e -> {
             Controller controller = new Controller(stage);
             controller.launchGame(); // Launch the game
+            Config.setFirstRun(false); // Turn on the resolution lock, even if resolution wasn't changed because it would no longer be the first run
         });
 
         Button settingsButton = new Button("Settings");
