@@ -4,6 +4,7 @@
  */
 package com.example.demo.levels;
 
+import java.time.Duration;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -16,6 +17,7 @@ import com.example.demo.managers.CollisionManager;
 import com.example.demo.managers.EffectManager;
 import com.example.demo.managers.AudioManager;
 import com.example.demo.menus.EndMenu;
+import javafx.animation.PauseTransition;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -23,6 +25,8 @@ import javafx.scene.image.*;
 import javafx.scene.input.*;
 
 public abstract class LevelParent extends Observable {
+
+	private boolean isGameOver = false;
 
 	/**
 	 * The screen height of the game.
@@ -238,6 +242,7 @@ public abstract class LevelParent extends Observable {
 	 * Initializes the level.
 	 */
 	public void initializeLevel() {
+		resetGameState(); // Reset the game state
 		List<ActorInfo> actorsInfo = getActorsInfo();
 		int killsNeeded = getKillsNeeded();
 		startOverlay.showLevelOverlay(getLevelName(), actorsInfo, killsNeeded);
@@ -385,35 +390,53 @@ public abstract class LevelParent extends Observable {
 	 *
 	 * @param isWin true if the user wins the game, false otherwise.
 	 */
+
 	protected void endGame(boolean isWin) {
+		if (isGameOver) {
+			return; // Prevent duplicate execution
+		}
+
+		isGameOver = true; // Set the flag to true
+
 		// Stop the game loop
+		PauseTransition transition = new PauseTransition();
+		transition.setOnFinished(event -> {
+
+			// Play the appropriate audio for win or lose
+			if (isWin) {
+				AudioManager.winAudio(); // Play win audio
+			} else {
+				AudioManager.loseAudio(); // Play lose audio
+			}
+
+			// Show the corresponding image for win or lose
+			if (isWin) {
+				levelView.showWinImage(); // Display win image
+			} else {
+				levelView.showLoseImage(); // Display lose image
+			}
+
+			// Create the EndMenu with logic for main menu, restart, and restart level options
+			EndMenu endMenu = new EndMenu(
+					screenWidth,
+					screenHeight,
+					() -> controller.goToMainMenu(),       // Logic to exit to main menu
+					() -> controller.restartGame(),       // Logic to restart the game
+					() -> controller.restartCurrentLevel() // Logic to restart the current level
+			);
+			// Add the EndMenu to the root node
+			root.getChildren().add(endMenu);
+			endGame(isWin);
+		});
+		transition.play();
 		stopGame();
+	}
 
-		// Play the appropriate audio for win or lose
-		if (isWin) {
-			AudioManager.winAudio(); // Play win audio
-		} else {
-			AudioManager.loseAudio(); // Play lose audio
-		}
-
-		// Show the corresponding image for win or lose
-		if (isWin) {
-			levelView.showWinImage(); // Display win image
-		} else {
-			levelView.showLoseImage(); // Display lose image
-		}
-
-		// Create the EndMenu with logic for main menu, restart, and restart level options
-		EndMenu endMenu = new EndMenu(
-				screenWidth,
-				screenHeight,
-				() -> controller.goToMainMenu(),       // Logic to exit to main menu
-				() -> controller.restartGame(),       // Logic to restart the game
-				() -> controller.restartCurrentLevel() // Logic to restart the current level
-		);
-
-		// Add the EndMenu to the root node
-		root.getChildren().add(endMenu);
+	/**
+	 * Resets the game state. Called when the level or game is restarted.
+	 */
+	public void resetGameState() {
+		isGameOver = false; // Reset the game-over flag
 	}
 
 	/**
