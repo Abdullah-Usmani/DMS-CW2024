@@ -4,8 +4,10 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Logger;
 
 import com.example.demo.Config;
+import com.example.demo.managers.AudioManager;
 import com.example.demo.menus.*;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -20,6 +22,8 @@ public class Controller implements Observer {
 	private final PauseMenuController pauseMenuController;
 	private LevelParent currentLevel;
 
+	Logger logger = Logger.getLogger(getClass().getName());
+
 	public Controller(Stage stage) {
 		this.stage = stage;
         this.pauseMenuController = new PauseMenuController(stage,this);
@@ -32,7 +36,7 @@ public class Controller implements Observer {
 			stage.show();
 			goToLevel(LEVEL_ONE_CLASS_NAME);
 		} catch (Exception e) {
-			System.err.println("Error launching the game: " + e.getMessage());
+			logger.info("Error launching the game: " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -41,7 +45,6 @@ public class Controller implements Observer {
 	public void goToLevel(String className) throws ClassNotFoundException, NoSuchMethodException, SecurityException,
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		// Reflectively create the new level instance
-		System.out.println("Transitioning to level: " + className);
 		Class<?> myClass = Class.forName(className);
 		Constructor<?> constructor = myClass.getConstructor(double.class, double.class);
 		LevelParent myLevel = (LevelParent) constructor.newInstance(Config.getScreenHeight(), Config.getScreenWidth());
@@ -54,6 +57,7 @@ public class Controller implements Observer {
 		stage.setScene(scene);
 		currentLevel = myLevel; // Set the current level reference
 		myLevel.initializeLevel();
+		AudioManager.transitionAudio();
 		this.pauseMenuController.setCurrentLevel(currentLevel);
 	}
 

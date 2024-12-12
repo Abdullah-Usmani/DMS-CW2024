@@ -4,11 +4,15 @@ import com.example.demo.levels.LevelParent;
 import com.example.demo.menus.PauseMenu;
 import javafx.stage.Stage;
 
+import java.util.logging.Logger;
+
 public class PauseMenuController {
     private final PauseMenu pauseMenu;
     private LevelParent currentLevel;
     private final Controller controller;
     private boolean isPaused;
+
+    Logger logger = Logger.getLogger(getClass().getName());
 
     public PauseMenuController(Stage stage, Controller controller) {
         this.isPaused = false;
@@ -30,7 +34,7 @@ public class PauseMenuController {
 
     private void pauseGame() {
         if (currentLevel == null) {
-            System.err.println("No level is currently active.");
+            logger.info("No level is currently active.");
             return;
         }
         isPaused = true;
@@ -40,7 +44,7 @@ public class PauseMenuController {
 
     private void resumeGame() {
         if (currentLevel == null) {
-            System.err.println("No level is currently active.");
+            logger.info("No level is currently active.");
             return;
         }
         isPaused = false;

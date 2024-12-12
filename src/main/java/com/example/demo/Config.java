@@ -1,6 +1,11 @@
 package com.example.demo;
 
 public class Config {
+
+    private Config() {
+        throw new IllegalStateException("Config class");
+    }
+
     public static final int MILLISECOND_DELAY = 30;
 
     private static int screenWidth = 1280; // Default Screen Width
@@ -8,58 +13,59 @@ public class Config {
     private static boolean isFirstRun = true; // Flag to track first run
     public static double SCREEN_HEIGHT_ADJUSTMENT = screenHeight * .1;
 
-    public static final String LevelsPath = "com.example.demo.levels.";
-    public static final String ImagePath = "/com/example/demo/images/";
-    public static final String AudioPath = "/com/example/demo/audio/";
-    public static final String FontPath = "/com/example/demo/fonts/";
+    public static final String LEVEL_PATH = "com.example.demo.levels.";
+    public static final String IMAGE_PATH = "/com/example/demo/images/";
+    public static final String AUDIO_PATH = "/com/example/demo/audio/";
+    public static final String FONT_PATH = "/com/example/demo/fonts/";
 
-    public static final String EXPLOSION_IMAGE = ImagePath + "explosion.png";
-    public static final String SPARK_IMAGE = ImagePath + "sparks.png";
+    public static final String EXPLOSION_IMAGE = IMAGE_PATH + "explosion.png";
+    public static final String SPARK_IMAGE = IMAGE_PATH + "sparks.png";
 
-    public static final String USER_IMAGE = ImagePath + "userplane.png";
-    public static final String ENEMY1_IMAGE = ImagePath + "enemyplane.png";
-    public static final String ENEMY2_IMAGE = ImagePath + "enemymig-29.png";
-    public static final String ENEMY3_IMAGE = ImagePath + "enemya-10c.png";
-    public static final String BOSS_IMAGE = ImagePath + "enemyc-17.png";
+    public static final String USER_IMAGE = IMAGE_PATH + "userplane.png";
+    public static final String ENEMY1_IMAGE = IMAGE_PATH + "enemyplane.png";
+    public static final String ENEMY2_IMAGE = IMAGE_PATH + "enemymig-29.png";
+    public static final String ENEMY3_IMAGE = IMAGE_PATH + "enemya-10c.png";
+    public static final String BOSS_IMAGE = IMAGE_PATH + "enemyc-17.png";
 
-    public static final String FRIENDLY_GUN = ImagePath + "userfire.png";
-    public static final String FRIENDLY_MISSILE = ImagePath + "usersidewinder.png";
-    public static final String ENEMY_GUN = ImagePath + "enemyfire.png";
-    public static final String ENEMY_MISSILE = ImagePath + "enemymissiler-33.png";
-    public static final String BOSS_MISSILE = ImagePath + "bossfire.png";
+    public static final String FRIENDLY_GUN = IMAGE_PATH + "userfire.png";
+    public static final String FRIENDLY_MISSILE = IMAGE_PATH + "usersidewinder.png";
+    public static final String ENEMY_GUN = IMAGE_PATH + "enemyfire.png";
+    public static final String ENEMY_MISSILE = IMAGE_PATH + "enemymissiler-33.png";
+    public static final String BOSS_MISSILE = IMAGE_PATH + "bossfire.png";
 
-    public static final String HEART_IMAGE = ImagePath + "heart.png";
-    public static final String SHIELD_IMAGE = ImagePath + "shield.png";
-    public static final String KILL_IMAGE = ImagePath + "killcount.png";
+    public static final String HEART_IMAGE = IMAGE_PATH + "heart.png";
+    public static final String SHIELD_IMAGE = IMAGE_PATH + "shield.png";
+    public static final String KILL_IMAGE = IMAGE_PATH + "killcount.png";
 
-    public static final String LEVEL1_BACKGROUND = ImagePath + "background9.jpg";
-    public static final String LEVEL2_BACKGROUND = ImagePath + "background4.jpg";
-    public static final String LEVEL3_BACKGROUND = ImagePath + "background1.jpg";
-    public static final String LEVELBOSS_BACKGROUND = ImagePath + "background10.jpg";
+    public static final String LEVEL1_BACKGROUND = IMAGE_PATH + "background9.jpg";
+    public static final String LEVEL2_BACKGROUND = IMAGE_PATH + "background4.jpg";
+    public static final String LEVEL3_BACKGROUND = IMAGE_PATH + "background1.jpg";
+    public static final String LEVELBOSS_BACKGROUND = IMAGE_PATH + "background10.jpg";
 
-    public static final String LEVEL_ONE_CLASS_NAME = LevelsPath + "LevelOne";
-    public static final String LEVEL_TWO_CLASS_NAME = LevelsPath + "LevelTwo";
-    public static final String LEVEL_THREE_CLASS_NAME = LevelsPath + "LevelThree";
-    public static final String LEVEL_BOSS_CLASS_NAME = LevelsPath + "LevelBoss";
+    public static final String LEVEL_ONE_CLASS_NAME = LEVEL_PATH + "LevelOne";
+    public static final String LEVEL_TWO_CLASS_NAME = LEVEL_PATH + "LevelTwo";
+    public static final String LEVEL_THREE_CLASS_NAME = LEVEL_PATH + "LevelThree";
+    public static final String LEVEL_BOSS_CLASS_NAME = LEVEL_PATH + "LevelBoss";
 
-    public static final String START_IMAGE = ImagePath + "background10.jpg";
-    public static final String WIN_IMAGE = ImagePath + "you-win.jpg";
-    public static final String LOSE_IMAGE = ImagePath + "game-over.jpg";
+    public static final String START_IMAGE = IMAGE_PATH + "background10.jpg";
+    public static final String WIN_IMAGE = IMAGE_PATH + "you-win.jpg";
+    public static final String LOSE_IMAGE = IMAGE_PATH + "game-over.jpg";
 
-    public static final String BACKGROUND_AUDIO = AudioPath + "backgroundOST.mp3";
+    public static final String BACKGROUND_AUDIO = AUDIO_PATH + "backgroundOST.mp3";
 
-    public static final String FRIENDLY_TAKE_DAMAGE_AUDIO = AudioPath + "userhit.mp3";
-    public static final String ENEMY_TAKE_DAMAGE_AUDIO = AudioPath + "spark.mp3";
-    public static final String PLANE_COLLISION_AUDIO = AudioPath + "collision.mp3";
-    public static final String DESTRUCTION_AUDIO = AudioPath + "roblox-explosion.mp3";
+    public static final String FRIENDLY_TAKE_DAMAGE_AUDIO = AUDIO_PATH + "userhit.mp3";
+    public static final String ENEMY_TAKE_DAMAGE_AUDIO = AUDIO_PATH + "spark.mp3";
+    public static final String PLANE_COLLISION_AUDIO = AUDIO_PATH + "collision.mp3";
+    public static final String DESTRUCTION_AUDIO = AUDIO_PATH + "roblox-explosion.mp3";
 
-    public static final String FRIENDLY_GUN_AUDIO = AudioPath + "single-shot.mp3";
-    public static final String FRIENDLY_MISSILE_AUDIO = AudioPath + "fortnite-rpg-shoot.mp3";
-    public static final String ENEMY_GUN_AUDIO = AudioPath + "enemyfire.mp3";
-    public static final String ENEMY_MISSILE_AUDIO = AudioPath + "enemymissile.mp3";
+    public static final String FRIENDLY_GUN_AUDIO = AUDIO_PATH + "single-shot.mp3";
+    public static final String FRIENDLY_MISSILE_AUDIO = AUDIO_PATH + "fortnite-rpg-shoot.mp3";
+    public static final String ENEMY_GUN_AUDIO = AUDIO_PATH + "enemyfire.mp3";
+    public static final String ENEMY_MISSILE_AUDIO = AUDIO_PATH + "enemymissile.mp3";
 
-    public static final String WIN_AUDIO = AudioPath + "tf2-win.mp3";
-    public static final String LOSE_AUDIO = AudioPath + "tf2-lose.mp3";
+    public static final String WIN_AUDIO = AUDIO_PATH + "tf2-win.mp3";
+    public static final String LOSE_AUDIO = AUDIO_PATH + "tf2-lose.mp3";
+    public static final String TRANSITION_AUDIO = AUDIO_PATH + "nextlevel.mp3";
 
     public static final int LEVEL_ONE_TOTAL_ENEMIES = 5;
     public static final int LEVEL_TWO_TOTAL_ENEMIES = 10;

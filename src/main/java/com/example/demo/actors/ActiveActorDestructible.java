@@ -9,7 +9,7 @@ public abstract class ActiveActorDestructible extends ActiveActor {
 	private final String imageName;
 	private boolean isDestroyed;
 
-	public ActiveActorDestructible(String imageName, int imageHeight, int imageWidth, double initialXPos, double initialYPos, int health) {
+	protected ActiveActorDestructible(String imageName, int imageHeight, int imageWidth, double initialXPos, double initialYPos, int health) {
 		super(imageName, imageHeight, imageWidth, initialXPos, initialYPos);
 		this.health = health; // Set health via constructor
         this.imageName = imageName;
@@ -52,7 +52,6 @@ public abstract class ActiveActorDestructible extends ActiveActor {
 		if (shouldTakeDamage()) {
 			int newHealth = getHealth() - damage;
 			setHealth(newHealth);
-//			System.out.println(this.getClass().getSimpleName() + " took damage: " + damage + ", Health: " + getHealth());
 			if (getHealth() <= 0) {
 				destroy();
 			}
@@ -71,10 +70,7 @@ public abstract class ActiveActorDestructible extends ActiveActor {
 		return health;
 	}
 
-	public void setHealth(int health) {
-		this.health = health;
-//		System.out.println("Updated health for " + this.getClass().getSimpleName() + ": " + this.health);
-	}
+	public void setHealth(int health) { this.health = health; }
 
 	public int getDamage() {
 		return damage;

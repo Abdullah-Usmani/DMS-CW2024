@@ -21,11 +21,12 @@ public class HelpMenu {
         VBox layout = new VBox(20);
         layout.setAlignment(Pos.CENTER);
 
-        Label helpLabel = new Label("Game Controls:\n" +
-                "- Arrow Keys: Move Up/Down\n" +
-                "- Space: Fire Projectile\n" +
-                "- M: Fire Missile\n" +
-                "- P: Pause Game");
+        Label helpLabel = new Label("""
+                Game Controls:
+                - Arrow Keys: Move Up/Down
+                - Space: Fire Projectile
+                - M: Fire Missile
+                - P: Pause Game""");
         helpLabel.setStyle("-fx-font-family: 'Arial'; -fx-font-size: 18px; -fx-text-fill: black;");
 
         Button backButton = new Button("Back");

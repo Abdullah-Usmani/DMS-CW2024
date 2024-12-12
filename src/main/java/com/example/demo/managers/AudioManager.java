@@ -29,6 +29,10 @@ public class AudioManager {
         playAudio(Config.LOSE_AUDIO);
     }
 
+    public static void transitionAudio() {
+        playAudio(Config.LOSE_AUDIO);
+    }
+
     public static void backgroundOST() {
         playAudio(Config.BACKGROUND_AUDIO);
     }

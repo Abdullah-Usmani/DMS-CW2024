@@ -7,6 +7,7 @@ import com.example.demo.actors.EnemyPlane3;
 import com.example.demo.displays.ActorInfo;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 public class LevelThree extends LevelParent {
 
@@ -18,6 +19,8 @@ public class LevelThree extends LevelParent {
 	private static final double ENEMY2_SPAWN_PROBABILITY = Config.ENEMY2_SPAWN_PROBABILITY;
 	private static final double ENEMY3_SPAWN_PROBABILITY = Config.ENEMY3_SPAWN_PROBABILITY;
 	private static final int PLAYER_INITIAL_HEALTH = Config.LEVEL_THREE_INITIAL_HEALTH;
+
+	Logger logger = Logger.getLogger(getClass().getName());
 
 	public LevelThree(double screenHeight, double screenWidth) {
 		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
@@ -53,7 +56,7 @@ public class LevelThree extends LevelParent {
 		}
 		else if (userHasReachedKillTarget()) {
 			goToNextLevel(NEXT_LEVEL);
-			System.out.println("Going to next level");
+			logger.info("Going to next level");
 		}
 	}
 

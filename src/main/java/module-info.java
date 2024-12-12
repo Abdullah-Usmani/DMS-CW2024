@@ -5,7 +5,8 @@ module com.example.demo {
     requires javafx.media;
 
     // Other modules
-    requires java.desktop; // If you're using AWT/Swing
+    requires java.desktop;
+    requires java.logging; // If you're using AWT/Swing
 
     // Opens for reflection (JavaFX)
     opens com.example.demo to javafx.fxml;

@@ -8,7 +8,7 @@ public abstract class FighterPlane extends ActiveActorDestructible {
 	private final int imageHeight;
 	private final int imageWidth;
 
-    public FighterPlane(String imageName, int imageHeight, int imageWidth, double initialXPos, double initialYPos, int health) {
+    protected FighterPlane(String imageName, int imageHeight, int imageWidth, double initialXPos, double initialYPos, int health) {
 		super(imageName, imageHeight, imageWidth, initialXPos, initialYPos, health);
 		this.imageHeight = imageHeight;
 		this.imageWidth = imageWidth;

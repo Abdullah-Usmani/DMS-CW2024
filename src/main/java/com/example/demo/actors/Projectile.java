@@ -23,10 +23,10 @@ public class Projectile extends ActiveActorDestructible {
 		updatePosition();
 	}
 
-	public int getDamage() {
-        return damageMultiplier;
-	}
+	@Override
+	public int getDamage() { return damageMultiplier; }
 
+	@Override
 	public String getImageName() {
         return imageName;
 	}

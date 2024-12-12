@@ -52,7 +52,6 @@ public class LevelBoss extends LevelParent {
 	@Override
 	protected void spawnEnemyUnits() {
 		if (getCurrentNumberOfEnemies() == 0 && !bossPlane.isDestroyed()) {
-			System.out.println("SPAWNING BOSS");
 			addEnemyUnit(bossPlane);
 			getRoot().getChildren().add(bossHealthDisplay.getContainer());
 		}
