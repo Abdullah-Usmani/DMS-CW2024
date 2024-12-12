@@ -9,7 +9,7 @@ import java.util.*;
 
 public class LevelTwo extends LevelParent {
 
-	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background3.jpg";
+	private static final String BACKGROUND_IMAGE_NAME = Config.LEVEL2_BACKGROUND;
 	private static final String NEXT_LEVEL = "com.example.demo.levels.LevelThree";
 	private static final int TOTAL_ENEMIES = 10;
 	private static final int KILLS_TO_ADVANCE = 15;
@@ -34,11 +34,11 @@ public class LevelTwo extends LevelParent {
 	@Override
 	protected List<ActorInfo> getActorsInfo() {
 		return List.of(
-				new ActorInfo("F-16", "/com/example/demo/images/enemyplane.png", 1, false, true),
-				new ActorInfo("MiG-29", "/com/example/demo/images/enemymig-29.png", 2, false, true),
-				new ActorInfo("Enemy Guns", "/com/example/demo/images/enemyfire.png", 1, false, false),
-				new ActorInfo("Guns", "/com/example/demo/images/userfire.png", 1, true, false),
-				new ActorInfo("Sidewinder", "/com/example/demo/images/usersidewinder.png", 3, true,false)
+				new ActorInfo("F-16", Config.ENEMY1_IMAGE, 1, false, true),
+				new ActorInfo("MiG-29", Config.ENEMY2_IMAGE, 2, false, true),
+				new ActorInfo("Enemy Guns", Config.ENEMY_GUN, 1, false, false),
+				new ActorInfo("Guns", Config.FRIENDLY_GUN, 1, true, false),
+				new ActorInfo("Sidewinder", Config.FRIENDLY_MISSILE, 3, true,false)
 		);
 	}
 

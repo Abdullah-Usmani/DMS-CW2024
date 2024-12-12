@@ -17,4 +17,5 @@ module com.example.demo {
     // Exports for external access
     exports com.example.demo.controller;
     exports com.example.demo;
+    opens com.example.demo.managers to javafx.fxml;
 }

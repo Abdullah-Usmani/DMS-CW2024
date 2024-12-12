@@ -7,7 +7,7 @@ public class EnemyPlane extends FighterPlane {
 
 	private static final int SCREEN_HEIGHT = Config.getScreenHeight();
 	private static final int SCREEN_WIDTH = Config.getScreenWidth();
-	private static final String IMAGE_NAME = "enemyplane.png";
+	private static final String IMAGE_NAME = Config.ENEMY1_IMAGE;
 	private static final int IMAGE_HEIGHT =  (int) (SCREEN_HEIGHT * .05);
 	private static final int IMAGE_WIDTH =  (int) (SCREEN_WIDTH * .05);  // Dynamically get width
 	private static final int HORIZONTAL_VELOCITY = (int) -(SCREEN_WIDTH * .0025);;

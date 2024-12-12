@@ -1,5 +1,6 @@
 package com.example.demo.displays;
 
+import com.example.demo.Config;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -7,7 +8,7 @@ import javafx.scene.layout.HBox;
 
 public class BossHealthDisplay {
 
-    private static final String HEART_IMAGE_NAME = "/com/example/demo/images/heart.png";
+    private static final String HEART_IMAGE_NAME = Config.HEART_IMAGE;
     private static final int HEART_SIZE = 30;
     private static final double SPACING = 5;
 

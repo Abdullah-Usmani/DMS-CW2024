@@ -10,7 +10,8 @@ public class BossPlane extends FighterPlane {
 
 	private static final int SCREEN_HEIGHT = Config.getScreenHeight();
 	private static final int SCREEN_WIDTH = Config.getScreenWidth();
-	private static final String IMAGE_NAME = "enemyc17.png";
+	private static final String IMAGE_NAME = Config.BOSS_IMAGE;
+	private static final String FIRE_SOUND = Config.ENEMY_MISSILE_AUDIO;
 	private static final int IMAGE_HEIGHT =  (int) (SCREEN_HEIGHT * .2);
 	private static final int IMAGE_WIDTH =  (int) (SCREEN_WIDTH * .2);   // Dynamically get width
 	private static final double INITIAL_X_POSITION = SCREEN_WIDTH - (SCREEN_WIDTH * .3);
@@ -63,7 +64,7 @@ public class BossPlane extends FighterPlane {
 	@Override
 	public ActiveActorDestructible fireProjectile() {
 		if (bossFiresInCurrentFrame()) {
-			playFiringSound("/com/example/demo/audio/fortnite-rpg.mp3"); // Play enemy-specific sound
+			playFiringSound(FIRE_SOUND); // Play enemy-specific sound
 			return new BossProjectile(getProjectileXPosition(), getProjectileYPosition());
 		}
 		else {

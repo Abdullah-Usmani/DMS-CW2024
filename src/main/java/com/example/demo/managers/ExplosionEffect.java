@@ -1,6 +1,5 @@
-package com.example.demo.displays;
+package com.example.demo.managers;
 
-import com.example.demo.managers.SoundManager;
 import javafx.animation.FadeTransition;
 import javafx.scene.Group;
 import javafx.scene.image.Image;

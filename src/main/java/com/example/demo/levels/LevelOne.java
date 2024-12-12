@@ -8,7 +8,7 @@ import java.util.*;
 
 public class LevelOne extends LevelParent {
 
-	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background6.jpg";
+	private static final String BACKGROUND_IMAGE_NAME = Config.LEVEL1_BACKGROUND;
 	private static final String NEXT_LEVEL = "com.example.demo.levels.LevelTwo";
 	private static final int TOTAL_ENEMIES = 5;
 	private static final int KILLS_TO_ADVANCE = 10;
@@ -17,6 +17,7 @@ public class LevelOne extends LevelParent {
 
 	public LevelOne(double screenHeight, double screenWidth) {
 		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
+		System.out.println("BG Image name: " + BACKGROUND_IMAGE_NAME);
 	}
 
 	@Override
@@ -32,10 +33,10 @@ public class LevelOne extends LevelParent {
 	@Override
 	protected List<ActorInfo> getActorsInfo() {
 		return List.of(
-				new ActorInfo("F-16", "/com/example/demo/images/enemyplane.png", 1, false, true),
-				new ActorInfo("Enemy Guns", "/com/example/demo/images/enemyfire.png", 1, false, false),
-				new ActorInfo("Guns", "/com/example/demo/images/userfire.png", 1, true, false),
-				new ActorInfo("Sidewinder", "/com/example/demo/images/usersidewinder.png", 3, true,false)
+				new ActorInfo("F-16", Config.ENEMY1_IMAGE, 1, false, true),
+				new ActorInfo("Enemy Guns", Config.ENEMY_GUN, 1, false, false),
+				new ActorInfo("Guns", Config.FRIENDLY_GUN, 1, true, false),
+				new ActorInfo("Sidewinder", Config.FRIENDLY_MISSILE, 3, true,false)
 		);
 	}
 

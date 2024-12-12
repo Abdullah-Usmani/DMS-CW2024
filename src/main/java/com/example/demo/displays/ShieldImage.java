@@ -1,11 +1,12 @@
 package com.example.demo.displays;
 
+import com.example.demo.Config;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class ShieldImage extends ImageView {
 
-	private static final String IMAGE_NAME = "/com/example/demo/images/shield.png";
+	private static final String IMAGE_NAME = Config.SHIELD_IMAGE;
 	private static final int SHIELD_SIZE = 50;
 
 	public ShieldImage(double xPosition, double yPosition) {

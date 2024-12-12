@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 public class UserProjectile extends Projectile {
 	private static final int SCREEN_HEIGHT = Config.getScreenHeight();
 	private static final int SCREEN_WIDTH = Config.getScreenWidth();
-	private static final String IMAGE_NAME = "userfire.png";
+	private static final String IMAGE_NAME = Config.FRIENDLY_GUN;
 
 	private static final int IMAGE_HEIGHT =  (int) (SCREEN_HEIGHT * .01);
 

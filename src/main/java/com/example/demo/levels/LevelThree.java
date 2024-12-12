@@ -10,7 +10,7 @@ import java.util.List;
 
 public class LevelThree extends LevelParent {
 
-	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background5.jpg";
+	private static final String BACKGROUND_IMAGE_NAME = Config.LEVEL3_BACKGROUND;
 	private static final String NEXT_LEVEL = "com.example.demo.levels.LevelBoss";
 	private static final int TOTAL_ENEMIES = 10;
 	private static final int KILLS_TO_ADVANCE = 20;
@@ -36,13 +36,13 @@ public class LevelThree extends LevelParent {
 	@Override
 	protected List<ActorInfo> getActorsInfo() {
 		return List.of(
-			new ActorInfo("F-16", "/com/example/demo/images/enemyplane.png", 1, false, true),
-			new ActorInfo("MiG-29", "/com/example/demo/images/enemymig-29.png", 2, false, true),
-			new ActorInfo("A-10c", "/com/example/demo/images/enemya10c.png", 3, false, true),
-			new ActorInfo("Enemy Guns", "/com/example/demo/images/enemyfire.png", 1, false, false),
-			new ActorInfo("R-33", "/com/example/demo/images/enemymissiler33.png", 3, false, false),
-			new ActorInfo("Guns", "/com/example/demo/images/userfire.png", 1, true, false),
-			new ActorInfo("Sidewinder", "/com/example/demo/images/usersidewinder.png", 3, true, false)
+			new ActorInfo("F-16", Config.ENEMY1_IMAGE, 1, false, true),
+			new ActorInfo("MiG-29", Config.ENEMY2_IMAGE, 2, false, true),
+			new ActorInfo("A-10c", Config.ENEMY3_IMAGE, 3, false, true),
+			new ActorInfo("Enemy Guns", Config.ENEMY_GUN, 1, false, false),
+			new ActorInfo("R-33", Config.ENEMY_MISSILE, 3, false, false),
+			new ActorInfo("Guns", Config.FRIENDLY_GUN, 1, true, false),
+			new ActorInfo("Sidewinder", Config.FRIENDLY_MISSILE, 3, true, false)
 		);
 	}
 

@@ -7,7 +7,7 @@ public class EnemyPlane3 extends FighterPlane {
 
 	private static final int SCREEN_HEIGHT = Config.getScreenHeight();
 	private static final int SCREEN_WIDTH = Config.getScreenWidth();
-	private static final String IMAGE_NAME = "enemya10c.png";
+	private static final String IMAGE_NAME = Config.ENEMY3_IMAGE;
 
 	private static final int IMAGE_HEIGHT =  (int) (SCREEN_HEIGHT * .08);
 

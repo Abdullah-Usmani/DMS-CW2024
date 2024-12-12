@@ -6,7 +6,6 @@ public abstract class FighterPlane extends ActiveActorDestructible {
 
 	private final int imageHeight;
 	private final int imageWidth;
-	private static final String DEFAULT_FIRE_SOUND = "/com/example/demo/audio/ricochet-2.mp3";
 
     public FighterPlane(String imageName, int imageHeight, int imageWidth, double initialXPos, double initialYPos, int health) {
 		super(imageName, imageHeight, imageWidth, initialXPos, initialYPos, health);

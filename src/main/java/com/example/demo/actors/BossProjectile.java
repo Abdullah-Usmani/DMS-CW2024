@@ -7,7 +7,7 @@ public class BossProjectile extends Projectile {
 
 	private static final int SCREEN_HEIGHT = Config.getScreenHeight();
 	private static final int SCREEN_WIDTH = Config.getScreenWidth();
-	private static final String IMAGE_NAME = "bossfire.png";
+	private static final String IMAGE_NAME = Config.BOSS_MISSILE;
 
 	private static final int IMAGE_HEIGHT =  (int) (SCREEN_HEIGHT * .05);
 

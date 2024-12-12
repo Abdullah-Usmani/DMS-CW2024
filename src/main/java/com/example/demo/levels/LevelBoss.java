@@ -1,5 +1,6 @@
 package com.example.demo.levels;
 
+import com.example.demo.Config;
 import com.example.demo.actors.BossPlane;
 import com.example.demo.displays.ActorInfo;
 import com.example.demo.displays.BossHealthDisplay;
@@ -8,7 +9,7 @@ import java.util.List;
 
 public class LevelBoss extends LevelParent {
 
-	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background7.jpg";
+	private static final String BACKGROUND_IMAGE_NAME = Config.LEVELBOSS_BACKGROUND;
 	private static final int PLAYER_INITIAL_HEALTH = 5;
 	private final BossPlane bossPlane;
 	private final BossHealthDisplay bossHealthDisplay;
@@ -34,10 +35,10 @@ public class LevelBoss extends LevelParent {
 	@Override
 	protected List<ActorInfo> getActorsInfo() {
 		return List.of(
-				new ActorInfo("C-17", "/com/example/demo/images/enemyc17.png", 1, false,true),
-				new ActorInfo("R-33", "/com/example/demo/images/enemymissiler33.png", 3, false, false),
-				new ActorInfo("Guns", "/com/example/demo/images/userfire.png", 1, true, false),
-				new ActorInfo("Sidewinder", "/com/example/demo/images/usersidewinder.png", 3, true, false)
+				new ActorInfo("C-17", Config.BOSS_IMAGE, 1, false,true),
+				new ActorInfo("R-33", Config.BOSS_MISSILE, 3, false, false),
+				new ActorInfo("Guns", Config.FRIENDLY_GUN, 1, true, false),
+				new ActorInfo("Sidewinder", Config.FRIENDLY_MISSILE, 3, true, false)
 		);
 	}
 

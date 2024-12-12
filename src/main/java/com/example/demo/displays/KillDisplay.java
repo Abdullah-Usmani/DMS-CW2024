@@ -1,5 +1,6 @@
 package com.example.demo.displays;
 
+import com.example.demo.Config;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -7,7 +8,7 @@ import javafx.scene.layout.HBox;
 
 public class KillDisplay {
 
-	private static final String KILL_IMAGE_NAME = "/com/example/demo/images/killcount.png";
+	private static final String KILL_IMAGE_NAME = Config.KILL_IMAGE;
 	private static final int KILL_HEIGHT = 50;
 
 	private HBox container;
