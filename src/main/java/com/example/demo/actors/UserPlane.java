@@ -1,7 +1,7 @@
 package com.example.demo.actors;
 
 import com.example.demo.Config;
-import com.example.demo.managers.SoundManager;
+import com.example.demo.managers.AudioManager;
 import javafx.scene.image.Image;
 
 public class UserPlane extends FighterPlane {
@@ -52,7 +52,7 @@ public class UserPlane extends FighterPlane {
 		long currentTime = System.currentTimeMillis();
 		if (currentTime - lastFiredTime >= GUN_COOLDOWN) { // Check cooldown
 			lastFiredTime = currentTime; // Update last fired time
-			SoundManager.playSound(Config.FRIENDLY_GUN_AUDIO); // Play user-specific sound
+			AudioManager.playAudio(Config.FRIENDLY_GUN_AUDIO); // Play user-specific Audio
 			return new UserProjectile(getProjectileXPosition(), getProjectileYPosition());
 		} else {
 			return null;
@@ -63,7 +63,7 @@ public class UserPlane extends FighterPlane {
 		long currentTime = System.currentTimeMillis();
 		if (currentTime - lastFiredTime >= MISSILE_COOLDOWN) { // Check cooldown
 			lastFiredTime = currentTime; // Update last fired time
-			SoundManager.playSound(Config.FRIENDLY_MISSILE_AUDIO); // Play enemy-specific sound
+			AudioManager.playAudio(Config.FRIENDLY_MISSILE_AUDIO); // Play enemy-specific Audio
 			return new UserMissile(getProjectileXPosition(), getProjectileYPosition());
 		} else {
 			return null;

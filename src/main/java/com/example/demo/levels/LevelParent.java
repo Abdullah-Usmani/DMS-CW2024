@@ -10,7 +10,7 @@ import com.example.demo.displays.ActorInfo;
 import com.example.demo.displays.StartOverlay;
 import com.example.demo.managers.CollisionManager;
 import com.example.demo.managers.EffectManager;
-import com.example.demo.managers.SoundManager;
+import com.example.demo.managers.AudioManager;
 import com.example.demo.menus.EndMenu;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -46,9 +46,9 @@ public abstract class LevelParent extends Observable {
 		this.startOverlay = new StartOverlay(root, this::startGame);
 		this.scene = new Scene(root, screenWidth, screenHeight);
 		this.user = new UserPlane(playerInitialHealth);
-        SoundManager soundManager = new SoundManager();
+        AudioManager AudioManager = new AudioManager();
         EffectManager effectManager = new EffectManager();
-		this.collisionManager = new CollisionManager(root, this::updateHitCount, this::updateKillCount, effectManager, soundManager);
+		this.collisionManager = new CollisionManager(root, this::updateHitCount, this::updateKillCount, effectManager, AudioManager);
 
 		this.background = new ImageView(new Image(getClass().getResource(backgroundImageName).toExternalForm()));
 		this.screenHeight = screenHeight;
@@ -146,17 +146,17 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private void fireProjectile() {
-		Projectile userprojectile = (Projectile) user.fireProjectile();
-		if (userprojectile != null) {
-			root.getChildren().add(userprojectile);
-			friendlyProjectiles.add(userprojectile);
+		Projectile userProjectile = (Projectile) user.fireProjectile();
+		if (userProjectile != null) {
+			root.getChildren().add(userProjectile);
+			friendlyProjectiles.add(userProjectile);
 		}
 	}
 	private void fireMissile() {
-		Projectile usermissile = (Projectile) user.fireMissile();
-		if (usermissile != null) {
-			root.getChildren().add(usermissile);
-			friendlyProjectiles.add(usermissile);
+		Projectile userMissile = (Projectile) user.fireMissile();
+		if (userMissile != null) {
+			root.getChildren().add(userMissile);
+			friendlyProjectiles.add(userMissile);
 		}
 	}
 
@@ -213,11 +213,11 @@ public abstract class LevelParent extends Observable {
 
 	protected void endGame(boolean isWin) {
 		stopGame();
-		// Play the appropriate sound
+		// Play the appropriate Audio
 		if (isWin) {
-			SoundManager.winSound();
+			AudioManager.winAudio();
 		} else {
-			SoundManager.loseSound();
+			AudioManager.loseAudio();
 		}
 		// Show the appropriate image
 		if (isWin) {

@@ -1,5 +1,6 @@
 package com.example.demo.displays;
 
+import com.example.demo.Config;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.geometry.Pos;
@@ -108,8 +109,8 @@ public class StartOverlay {
             actorRow.setAlignment(Pos.CENTER_LEFT);
 
             ImageView actorImage = new ImageView(getClass().getResource(info.imagePath).toExternalForm());
-            actorImage.setFitWidth(120);
-            actorImage.setFitHeight(40);
+            actorImage.setFitWidth(Config.getScreenWidth() * 0.08);
+            actorImage.setFitHeight(Config.getScreenHeight() * 0.04);
 
             Label actorName = new Label(info.name);
             actorName.setStyle("-fx-font-family: 'Arial'; -fx-font-size: 16px; -fx-text-fill: white;");

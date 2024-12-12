@@ -1,7 +1,7 @@
 package com.example.demo.displays;
 
 import com.example.demo.Config;
-import com.example.demo.managers.SoundManager;
+import com.example.demo.managers.AudioManager;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 

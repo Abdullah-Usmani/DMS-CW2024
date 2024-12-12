@@ -11,7 +11,6 @@ public class BossPlane extends FighterPlane {
 	private static final int SCREEN_HEIGHT = Config.getScreenHeight();
 	private static final int SCREEN_WIDTH = Config.getScreenWidth();
 	private static final String IMAGE_NAME = Config.BOSS_IMAGE;
-	private static final String FIRE_SOUND = Config.ENEMY_MISSILE_AUDIO;
 	private static final int IMAGE_HEIGHT =  Config.BOSS_IMAGE_HEIGHT;
 	private static final int IMAGE_WIDTH =  Config.BOSS_IMAGE_WIDTH;   // Dynamically get width
 	private static final double INITIAL_X_POSITION = Config.BOSS_INITIAL_X_POSITION;
@@ -63,7 +62,7 @@ public class BossPlane extends FighterPlane {
 	@Override
 	public ActiveActorDestructible fireProjectile() {
 		if (bossFiresInCurrentFrame()) {
-			playFiringSound(FIRE_SOUND); // Play enemy-specific sound
+			playFiringAudio(Config.ENEMY_MISSILE_AUDIO); // Play enemy-specific Audio
 			return new BossProjectile(getProjectileXPosition(), getProjectileYPosition());
 		}
 		else {

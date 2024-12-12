@@ -1,6 +1,7 @@
 package com.example.demo.actors;
 
 import com.example.demo.Config;
+import com.example.demo.managers.AudioManager;
 import javafx.scene.image.Image;
 
 public class EnemyPlane2 extends FighterPlane {
@@ -28,7 +29,7 @@ public class EnemyPlane2 extends FighterPlane {
 	@Override
 	public ActiveActorDestructible fireProjectile() {
 		if (Math.random() < FIRE_RATE) {
-			playFiringSound("/com/example/demo/audio/ricochet-1.mp3"); // Play enemy-specific sound
+			AudioManager.playAudio(Config.ENEMY_GUN_AUDIO); // Play enemy-specific Audio
 			return new EnemyProjectile(getProjectileXPosition(), getProjectileYPosition());
 		}
 		return null;

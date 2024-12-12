@@ -9,7 +9,7 @@ import javafx.scene.layout.HBox;
 public class BossHealthDisplay {
 
     private static final String HEART_IMAGE_NAME = Config.HEART_IMAGE;
-    private static final int HEART_SIZE = Config.HEART_SIZE;
+    private static final double HEART_SIZE = Config.HEART_SIZE;
     private static final double SPACING = Config.HEART_SPACING;
 
     private final HBox container;

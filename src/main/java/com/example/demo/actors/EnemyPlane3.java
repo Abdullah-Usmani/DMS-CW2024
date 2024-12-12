@@ -1,6 +1,7 @@
 package com.example.demo.actors;
 
 import com.example.demo.Config;
+import com.example.demo.managers.AudioManager;
 import javafx.scene.image.Image;
 
 public class EnemyPlane3 extends FighterPlane {
@@ -28,7 +29,7 @@ public class EnemyPlane3 extends FighterPlane {
 	@Override
 	public ActiveActorDestructible fireProjectile() {
 		if (Math.random() < FIRE_RATE) {
-			playFiringSound("/com/example/demo/audio/fortnite-rpg.mp3"); // Play enemy-specific sound
+			AudioManager.playAudio(Config.ENEMY_MISSILE_AUDIO); // Play enemy-specific Audio
 			return new EnemyProjectile2(getProjectileXPosition(), getProjectileYPosition());
 		}
 		return null;

@@ -8,7 +8,7 @@ import javafx.scene.layout.HBox;
 public class HeartDisplay {
 	
 	private static final String HEART_IMAGE_NAME = Config.HEART_IMAGE;
-	private static final int HEART_SIZE = Config.HEART_SIZE;
+	private static final double HEART_SIZE = Config.HEART_SIZE;
 	private HBox container;
 	private final double containerXPosition;
 	private final double containerYPosition;

@@ -14,19 +14,19 @@ public class CollisionManager {
     private final Runnable updateHitCount;
     private final Runnable updateKillCount;
     private final EffectManager effectManager;
-    private final SoundManager soundManager;
+    private final AudioManager AudioManager;
 
     private List<ActiveActorDestructible> friendlyUnits;
     private List<ActiveActorDestructible> enemyUnits;
     private List<ActiveActorDestructible> friendlyProjectiles;
     private List<ActiveActorDestructible> enemyProjectiles;
 
-    public CollisionManager(Group root, Runnable updateHitCount, Runnable updateKillCount, EffectManager effectManager, SoundManager soundManager) {
+    public CollisionManager(Group root, Runnable updateHitCount, Runnable updateKillCount, EffectManager effectManager, AudioManager AudioManager) {
         this.root = root;
         this.updateHitCount = updateHitCount;
         this.updateKillCount = updateKillCount;
         this.effectManager = effectManager;
-        this.soundManager = soundManager;
+        this.AudioManager = AudioManager;
     }
 
     public void handleAllCollisions( List<ActiveActorDestructible> friendlyUnits, List<ActiveActorDestructible> enemyUnits, List<ActiveActorDestructible> friendlyProjectiles, List<ActiveActorDestructible> enemyProjectiles) {
@@ -45,7 +45,7 @@ public class CollisionManager {
         for (CollisionResult result : results) {
             result.target.takeDamage(result.projectile.getDamage());
             effectManager.createSparkEffect(result.collisionX, result.collisionY, root);
-            soundManager.takeDamageSound();
+            AudioManager.takeDamageAudio();
         }
     }
 
@@ -55,11 +55,11 @@ public class CollisionManager {
             result.target.takeDamage(result.projectile.getDamage());
             if (result.target.isDestroyed()) {
                 effectManager.createDestructionEffect(result.collisionX, result.collisionY, root);
-                soundManager.destructionSound();
+                AudioManager.destructionAudio();
                 updateKillCount.run();
             } else {
                 effectManager.createSparkEffect(result.collisionX, result.collisionY, root);
-                soundManager.sparkSound();
+                AudioManager.sparkAudio();
             }
             updateHitCount.run();
         }
@@ -70,7 +70,7 @@ public class CollisionManager {
         for (CollisionResult result : results) {
             result.target.takeDamage(1);
             effectManager.createDestructionEffect(result.collisionX, result.collisionY, root);
-            soundManager.collisionSound();
+            AudioManager.collisionAudio();
         }
     }
 
@@ -79,7 +79,7 @@ public class CollisionManager {
             if (enemyHasPenetratedDefenses(enemy)) {
                 for (ActiveActorDestructible friend : friendlyUnits) {
                     friend.takeDamage(1);
-                    soundManager.takeDamageSound();
+                    AudioManager.takeDamageAudio();
                 }
                 enemy.destroy();
             }

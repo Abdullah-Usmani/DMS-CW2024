@@ -12,7 +12,7 @@ public class LevelOne extends LevelParent {
 	private static final String NEXT_LEVEL = Config.LEVEL_TWO_CLASS_NAME;
 	private static final int TOTAL_ENEMIES = Config.LEVEL_ONE_TOTAL_ENEMIES;
 	private static final int KILLS_TO_ADVANCE = Config.LEVEL_ONE_KILLS_TO_ADVANCE;
-	private static final double ENEMY_SPAWN_PROBABILITY = Config.LEVEL_ONE_ENEMY_SPAWN_PROBABILITY;
+	private static final double ENEMY1_SPAWN_PROBABILITY = Config.ENEMY1_SPAWN_PROBABILITY;
 	private static final int PLAYER_INITIAL_HEALTH = Config.LEVEL_ONE_INITIAL_HEALTH;
 
 	public LevelOne(double screenHeight, double screenWidth) {
@@ -59,7 +59,7 @@ public class LevelOne extends LevelParent {
 	protected void spawnEnemyUnits() {
 		int currentNumberOfEnemies = getCurrentNumberOfEnemies();
 		for (int i = 0; i < TOTAL_ENEMIES - currentNumberOfEnemies; i++) {
-			if (Math.random() < ENEMY_SPAWN_PROBABILITY) {
+			if (Math.random() < ENEMY1_SPAWN_PROBABILITY) {
 				double newEnemyInitialYPosition = Math.random() * getEnemyMaximumYPosition();
 				EnemyPlane newEnemy = new EnemyPlane(Config.getScreenWidth(), newEnemyInitialYPosition);
 				addEnemyUnit(newEnemy);

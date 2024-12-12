@@ -17,7 +17,7 @@ public class EffectManager {
         createEffect(x, y, Config.EXPLOSION_SIZE, Config.EXPLOSION_DURATION, Config.EXPLOSION_IMAGE, root);
     }
 
-    private void createEffect(double x, double y, int size, int fadeDuration, String imagePath, Group root) {
+    private void createEffect(double x, double y, double size, int fadeDuration, String imagePath, Group root) {
         ImageView effectImage = new ImageView(new Image(getClass().getResource(imagePath).toExternalForm()));
         effectImage.setFitWidth(size);
         effectImage.setFitHeight(size);

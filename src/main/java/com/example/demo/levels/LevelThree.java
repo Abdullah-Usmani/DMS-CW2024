@@ -14,9 +14,9 @@ public class LevelThree extends LevelParent {
 	private static final String NEXT_LEVEL = Config.LEVEL_BOSS_CLASS_NAME;
 	private static final int TOTAL_ENEMIES = Config.LEVEL_THREE_TOTAL_ENEMIES;
 	private static final int KILLS_TO_ADVANCE = Config.LEVEL_THREE_KILLS_TO_ADVANCE;
-	private static final double ENEMY_SPAWN_PROBABILITY = Config.LEVEL_THREE_ENEMY_SPAWN_PROBABILITY;
-	private static final double ENEMY2_SPAWN_PROBABILITY = Config.LEVEL_THREE_ENEMY2_SPAWN_PROBABILITY;
-	private static final double ENEMY3_SPAWN_PROBABILITY = Config.LEVEL_THREE_ENEMY3_SPAWN_PROBABILITY;
+	private static final double ENEMY1_SPAWN_PROBABILITY = Config.ENEMY1_SPAWN_PROBABILITY;
+	private static final double ENEMY2_SPAWN_PROBABILITY = Config.ENEMY2_SPAWN_PROBABILITY;
+	private static final double ENEMY3_SPAWN_PROBABILITY = Config.ENEMY3_SPAWN_PROBABILITY;
 	private static final int PLAYER_INITIAL_HEALTH = Config.LEVEL_THREE_INITIAL_HEALTH;
 
 	public LevelThree(double screenHeight, double screenWidth) {
@@ -66,7 +66,7 @@ public class LevelThree extends LevelParent {
 	protected void spawnEnemyUnits() {
 		int currentNumberOfEnemies = getCurrentNumberOfEnemies();
 		for (int i = 0; i < TOTAL_ENEMIES - currentNumberOfEnemies; i++) {
-			if (Math.random() < ENEMY_SPAWN_PROBABILITY) {
+			if (Math.random() < ENEMY1_SPAWN_PROBABILITY) {
 				double newEnemyInitialYPosition = Math.random() * getEnemyMaximumYPosition();
 				EnemyPlane newEnemy = new EnemyPlane(Config.getScreenWidth(), newEnemyInitialYPosition);
 				addEnemyUnit(newEnemy);
