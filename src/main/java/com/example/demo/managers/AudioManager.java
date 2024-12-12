@@ -30,7 +30,7 @@ public class AudioManager {
     }
 
     public static void transitionAudio() {
-        playAudio(Config.LOSE_AUDIO);
+        playAudio(Config.TRANSITION_AUDIO);
     }
 
     public static void backgroundOST() {

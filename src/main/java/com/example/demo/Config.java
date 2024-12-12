@@ -37,9 +37,9 @@ public class Config {
     public static final String SHIELD_IMAGE = IMAGE_PATH + "shield.png";
     public static final String KILL_IMAGE = IMAGE_PATH + "killcount.png";
 
-    public static final String LEVEL1_BACKGROUND = IMAGE_PATH + "background9.jpg";
-    public static final String LEVEL2_BACKGROUND = IMAGE_PATH + "background4.jpg";
-    public static final String LEVEL3_BACKGROUND = IMAGE_PATH + "background1.jpg";
+    public static final String LEVEL1_BACKGROUND = IMAGE_PATH + "background2.jpg";
+    public static final String LEVEL2_BACKGROUND = IMAGE_PATH + "background6.jpg";
+    public static final String LEVEL3_BACKGROUND = IMAGE_PATH + "background9.jpg";
     public static final String LEVELBOSS_BACKGROUND = IMAGE_PATH + "background10.jpg";
 
     public static final String LEVEL_ONE_CLASS_NAME = LEVEL_PATH + "LevelOne";

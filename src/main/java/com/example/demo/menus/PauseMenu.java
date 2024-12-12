@@ -1,5 +1,6 @@
 package com.example.demo.menus;
 
+import com.example.demo.managers.StyleManager;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -48,16 +49,16 @@ public class PauseMenu extends Parent {
         title.setFill(Color.CYAN); // Neon blue text
 
         // Buttons
-        Button playButton = createStyledButton("Continue");
+        Button playButton = StyleManager.createStyledButton("Continue");
         playButton.setOnAction(event -> resumeGame());
 
-        Button restartLevelButton = createStyledButton("Restart Level");
+        Button restartLevelButton = StyleManager.createStyledButton("Restart Level");
         restartLevelButton.setOnAction(event -> restartLevel());
 
-        Button restartGameButton = createStyledButton("Restart Game");
+        Button restartGameButton = StyleManager.createStyledButton("Restart Game");
         restartGameButton.setOnAction(event -> restartGame());
 
-        Button exitToMainMenuButton = createStyledButton("Exit to Main Menu");
+        Button exitToMainMenuButton = StyleManager.createStyledButton("Exit to Main Menu");
         exitToMainMenuButton.setOnAction(event -> exitToMainMenu());
 
         // Layout
@@ -110,44 +111,5 @@ public class PauseMenu extends Parent {
         if (onExitToMainMenu != null) {
             onExitToMainMenu.run();
         }
-    }
-
-    private Button createStyledButton(String text) {
-        Button button = new Button(text);
-        Font customFont = Font.loadFont(getClass().getResourceAsStream("/com/example/demo/fonts/Roboto-Regular.ttf"), 20);
-        if (customFont == null) {
-            customFont = Font.font("Arial", 20); // Fallback font
-        }
-        button.setFont(customFont);
-        button.setTextFill(Color.CYAN); // Neon blue text
-        button.setStyle(
-                "-fx-background-color: transparent; " +
-                        "-fx-border-color: cyan; " +
-                        "-fx-border-width: 2; " +
-                        "-fx-padding: 10; " +
-                        "-fx-background-radius: 5; " +
-                        "-fx-border-radius: 5;"
-        );
-
-        button.setOnMouseEntered(e -> button.setStyle(
-                "-fx-background-color: cyan; " +
-                        "-fx-border-color: cyan; " +
-                        "-fx-border-width: 2; " +
-                        "-fx-padding: 10; " +
-                        "-fx-background-radius: 5; " +
-                        "-fx-border-radius: 5;" +
-                        "-fx-text-fill: black;"
-        ));
-        button.setOnMouseExited(e -> button.setStyle(
-                "-fx-background-color: transparent; " +
-                        "-fx-border-color: cyan; " +
-                        "-fx-border-width: 2; " +
-                        "-fx-padding: 10; " +
-                        "-fx-background-radius: 5; " +
-                        "-fx-border-radius: 5;"
-        ));
-
-        button.setPrefWidth(200); // Ensure all buttons are the same width
-        return button;
     }
 }

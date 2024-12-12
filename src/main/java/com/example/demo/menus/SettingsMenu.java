@@ -2,6 +2,7 @@ package com.example.demo.menus;
 
 import com.example.demo.Config;
 import com.example.demo.controller.Main;
+import com.example.demo.managers.StyleManager;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -33,7 +34,7 @@ public class SettingsMenu {
         resolutionDropdown.setValue(getCurrentResolution());
 
         // Apply Settings button
-        Button applySettingsButton = new Button("Apply Settings");
+        Button applySettingsButton = StyleManager.createStyledButton("Apply Settings");
         applySettingsButton.setOnAction(event -> {
             String selectedResolution = resolutionDropdown.getValue();
             if (selectedResolution != null) {
