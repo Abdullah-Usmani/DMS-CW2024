@@ -9,15 +9,14 @@ import java.util.*;
 public class LevelOne extends LevelParent {
 
 	private static final String BACKGROUND_IMAGE_NAME = Config.LEVEL1_BACKGROUND;
-	private static final String NEXT_LEVEL = "com.example.demo.levels.LevelTwo";
-	private static final int TOTAL_ENEMIES = 5;
-	private static final int KILLS_TO_ADVANCE = 10;
-	private static final double ENEMY_SPAWN_PROBABILITY = 0.20;
-	private static final int PLAYER_INITIAL_HEALTH = 5;
+	private static final String NEXT_LEVEL = Config.LEVEL_TWO_CLASS_NAME;
+	private static final int TOTAL_ENEMIES = Config.LEVEL_ONE_TOTAL_ENEMIES;
+	private static final int KILLS_TO_ADVANCE = Config.LEVEL_ONE_KILLS_TO_ADVANCE;
+	private static final double ENEMY_SPAWN_PROBABILITY = Config.LEVEL_ONE_ENEMY_SPAWN_PROBABILITY;
+	private static final int PLAYER_INITIAL_HEALTH = Config.LEVEL_ONE_INITIAL_HEALTH;
 
 	public LevelOne(double screenHeight, double screenWidth) {
 		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
-		System.out.println("BG Image name: " + BACKGROUND_IMAGE_NAME);
 	}
 
 	@Override
@@ -33,6 +32,7 @@ public class LevelOne extends LevelParent {
 	@Override
 	protected List<ActorInfo> getActorsInfo() {
 		return List.of(
+				new ActorInfo("F-15", Config.USER_IMAGE, PLAYER_INITIAL_HEALTH, true, true),
 				new ActorInfo("F-16", Config.ENEMY1_IMAGE, 1, false, true),
 				new ActorInfo("Enemy Guns", Config.ENEMY_GUN, 1, false, false),
 				new ActorInfo("Guns", Config.FRIENDLY_GUN, 1, true, false),
@@ -43,7 +43,7 @@ public class LevelOne extends LevelParent {
 	@Override
 	protected void checkIfGameOver() {
 		if (userIsDestroyed()) {
-			loseGame();
+			endGame(false);
 		} else if (userHasReachedKillTarget()) {
 			goToNextLevel(NEXT_LEVEL);
 			System.out.println("Going to next level");

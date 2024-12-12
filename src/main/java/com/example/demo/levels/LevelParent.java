@@ -40,7 +40,6 @@ public abstract class LevelParent extends Observable {
 	private int currentNumberOfEnemies;
 	protected final LevelView levelView;
 
-
 	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
         this.gameLoop = new GameLoop(this::updateScene, Config.MILLISECOND_DELAY);
         this.root = new Group();
@@ -60,7 +59,6 @@ public abstract class LevelParent extends Observable {
 		friendlyUnits.add(user);
 	}
 
-	// Static method to set the Controller
 	public static void setController(Controller gameController) {
 		controller = gameController;
 	}
@@ -95,7 +93,7 @@ public abstract class LevelParent extends Observable {
 
 	private void updateLevelView() {
 		levelView.removeHearts(user.getHealth());
-		levelView.updateKills(user.getNumberOfKills());
+		levelView.addKills(user.getNumberOfKills());
 	}
 
 	private void initializeBackground() {
@@ -207,34 +205,32 @@ public abstract class LevelParent extends Observable {
 
 	public void stopGame() {
 		gameLoop.stop();
-
 		friendlyUnits.clear();
 		enemyUnits.clear();
 		friendlyProjectiles.clear();
 		enemyProjectiles.clear();
 	}
 
-	protected void winGame() {
+	protected void endGame(boolean isWin) {
 		stopGame();
-		levelView.showWinImage();
+		// Play the appropriate sound
+		if (isWin) {
+			SoundManager.winSound();
+		} else {
+			SoundManager.loseSound();
+		}
+		// Show the appropriate image
+		if (isWin) {
+			levelView.showWinImage();
+		} else {
+			levelView.showLoseImage();
+		}
+		// Create and display the EndMenu
 		EndMenu endMenu = new EndMenu(
 				screenWidth,
 				screenHeight,
 				() -> controller.goToMainMenu(),       // Exit to main menu logic
-				() -> controller.restartGame(),       // Exit to main menu logic
-				() -> controller.restartCurrentLevel() // Restart level logic
-		);
-		root.getChildren().add(endMenu);
-	}
-
-	protected void loseGame() {
-		stopGame();
-		levelView.showGameOverImage();
-		EndMenu endMenu = new EndMenu(
-				screenWidth,
-				screenHeight,
-				() -> controller.goToMainMenu(),       // Exit to main menu logic
-				() -> controller.restartGame(),       // Exit to main menu logic
+				() -> controller.restartGame(),       // Restart game logic
 				() -> controller.restartCurrentLevel() // Restart level logic
 		);
 		root.getChildren().add(endMenu);
@@ -276,5 +272,4 @@ public abstract class LevelParent extends Observable {
 	private void updateNumberOfEnemies() {
 		currentNumberOfEnemies = enemyUnits.size();
 	}
-
 }

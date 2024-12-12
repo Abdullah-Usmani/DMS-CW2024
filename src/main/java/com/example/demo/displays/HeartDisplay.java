@@ -8,12 +8,11 @@ import javafx.scene.layout.HBox;
 public class HeartDisplay {
 	
 	private static final String HEART_IMAGE_NAME = Config.HEART_IMAGE;
-	private static final int HEART_HEIGHT = 50;
-	private static final int INDEX_OF_FIRST_ITEM = 0;
+	private static final int HEART_SIZE = Config.HEART_SIZE;
 	private HBox container;
-	private double containerXPosition;
-	private double containerYPosition;
-	private int numberOfHeartsToDisplay;
+	private final double containerXPosition;
+	private final double containerYPosition;
+	private final int numberOfHeartsToDisplay;
 	
 	public HeartDisplay(double xPosition, double yPosition, int heartsToDisplay) {
 		this.containerXPosition = xPosition;
@@ -33,7 +32,7 @@ public class HeartDisplay {
 		for (int i = 0; i < numberOfHeartsToDisplay; i++) {
 			ImageView heart = new ImageView(new Image(getClass().getResource(HEART_IMAGE_NAME).toExternalForm()));
 
-			heart.setFitHeight(HEART_HEIGHT);
+			heart.setFitHeight(HEART_SIZE);
 			heart.setPreserveRatio(true);
 			container.getChildren().add(heart);
 		}
@@ -41,7 +40,7 @@ public class HeartDisplay {
 	
 	public void removeHeart() {
 		if (!container.getChildren().isEmpty())
-			container.getChildren().remove(INDEX_OF_FIRST_ITEM);
+			container.getChildren().remove(0);
 	}
 	
 	public HBox getContainer() {

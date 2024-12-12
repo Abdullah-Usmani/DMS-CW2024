@@ -10,7 +10,7 @@ import java.util.List;
 public class LevelBoss extends LevelParent {
 
 	private static final String BACKGROUND_IMAGE_NAME = Config.LEVELBOSS_BACKGROUND;
-	private static final int PLAYER_INITIAL_HEALTH = 5;
+	private static final int PLAYER_INITIAL_HEALTH = Config.LEVEL_BOSS_INITIAL_HEALTH;
 	private final BossPlane bossPlane;
 	private final BossHealthDisplay bossHealthDisplay;
 
@@ -19,7 +19,7 @@ public class LevelBoss extends LevelParent {
 
 		this.bossPlane = new BossPlane();
 		this.bossPlane.setLevelView(levelView);
-		this.bossHealthDisplay = new BossHealthDisplay(850, 25, bossPlane.getHealth());
+		this.bossHealthDisplay = new BossHealthDisplay(Config.BOSS_HEALTH_X_POSITION, Config.BOSS_HEALTH_Y_POSITION, bossPlane.getHealth());
 	}
 
 	@Override
@@ -35,6 +35,7 @@ public class LevelBoss extends LevelParent {
 	@Override
 	protected List<ActorInfo> getActorsInfo() {
 		return List.of(
+				new ActorInfo("F-15", Config.USER_IMAGE, PLAYER_INITIAL_HEALTH, true, true),
 				new ActorInfo("C-17", Config.BOSS_IMAGE, 1, false,true),
 				new ActorInfo("R-33", Config.BOSS_MISSILE, 3, false, false),
 				new ActorInfo("Guns", Config.FRIENDLY_GUN, 1, true, false),
@@ -62,10 +63,9 @@ public class LevelBoss extends LevelParent {
 		// Update the boss health display after spawning logic
 		bossHealthDisplay.updateHealth(bossPlane.getHealth());
 		if (userIsDestroyed()) {
-			loseGame();
+			endGame(false);
 		} else if (bossPlane.isDestroyed()) {
-			System.out.println("Boss Destroyed");
-			winGame();
+			endGame(true);
 		}
 	}
 

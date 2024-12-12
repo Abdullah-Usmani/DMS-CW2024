@@ -9,7 +9,7 @@ import javafx.scene.layout.HBox;
 public class KillDisplay {
 
 	private static final String KILL_IMAGE_NAME = Config.KILL_IMAGE;
-	private static final int KILL_HEIGHT = 50;
+	private static final int KILL_HEIGHT = Config.KILL_SIZE;
 
 	private HBox container;
 	private double containerXPosition;

@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.Config;
+import com.example.demo.managers.SoundManager;
 import com.example.demo.menus.StartMenu;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -22,6 +23,8 @@ public class Main extends Application {
 		primaryStage.setWidth(Config.getScreenWidth());
 		primaryStage.setHeight(Config.getScreenHeight());
 		primaryStage.show();
+
+		SoundManager.backgroundOST();
 	}
 
 	public static void restartGame() {

@@ -104,12 +104,12 @@ public class StartOverlay {
         categoryBox.setAlignment(Pos.TOP_CENTER);
 
         for (ActorInfo info : actors) {
-            HBox actorRow = new HBox(10);
+            HBox actorRow = new HBox(20);
             actorRow.setAlignment(Pos.CENTER_LEFT);
 
             ImageView actorImage = new ImageView(getClass().getResource(info.imagePath).toExternalForm());
-            actorImage.setFitWidth(50);
-            actorImage.setFitHeight(50);
+            actorImage.setFitWidth(120);
+            actorImage.setFitHeight(40);
 
             Label actorName = new Label(info.name);
             actorName.setStyle("-fx-font-family: 'Arial'; -fx-font-size: 16px; -fx-text-fill: white;");

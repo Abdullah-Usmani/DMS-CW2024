@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 public class ShieldImage extends ImageView {
 
 	private static final String IMAGE_NAME = Config.SHIELD_IMAGE;
-	private static final int SHIELD_SIZE = 50;
+	private static final int SHIELD_SIZE = Config.SHIELD_SIZE;
 
 	public ShieldImage(double xPosition, double yPosition) {
 		this.setLayoutX(xPosition);

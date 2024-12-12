@@ -12,20 +12,19 @@ public class BossPlane extends FighterPlane {
 	private static final int SCREEN_WIDTH = Config.getScreenWidth();
 	private static final String IMAGE_NAME = Config.BOSS_IMAGE;
 	private static final String FIRE_SOUND = Config.ENEMY_MISSILE_AUDIO;
-	private static final int IMAGE_HEIGHT =  (int) (SCREEN_HEIGHT * .2);
-	private static final int IMAGE_WIDTH =  (int) (SCREEN_WIDTH * .2);   // Dynamically get width
-	private static final double INITIAL_X_POSITION = SCREEN_WIDTH - (SCREEN_WIDTH * .3);
-	private static final double INITIAL_Y_POSITION = SCREEN_HEIGHT * .5;
-	private static final int Y_POSITION_UPPER_BOUND =  (int) -(SCREEN_HEIGHT * .01);
-	private static final int Y_POSITION_LOWER_BOUND = SCREEN_HEIGHT - (2*IMAGE_HEIGHT) - Y_POSITION_UPPER_BOUND;
-	private static final int VERTICAL_VELOCITY = (int) (SCREEN_HEIGHT * .0075);
-	private static final double BOSS_FIRE_RATE = .04;
-	private static final double BOSS_SHIELD_PROBABILITY = .01;
-	private static final int HEALTH = 15;
-	private static final int ZERO = 0;
-	private static final int MOVE_FREQUENCY_PER_CYCLE = 5;
-	private static final int MAX_FRAMES_WITH_SAME_MOVE = 10;
-	private static final int MAX_FRAMES_WITH_SHIELD = 50;
+	private static final int IMAGE_HEIGHT =  Config.BOSS_IMAGE_HEIGHT;
+	private static final int IMAGE_WIDTH =  Config.BOSS_IMAGE_WIDTH;   // Dynamically get width
+	private static final double INITIAL_X_POSITION = Config.BOSS_INITIAL_X_POSITION;
+	private static final double INITIAL_Y_POSITION = Config.BOSS_INITIAL_Y_POSITION;
+	private static final int Y_POSITION_UPPER_BOUND = Config.BOSS_Y_POSITION_UPPER_BOUND;
+	private static final int Y_POSITION_LOWER_BOUND = Config.BOSS_Y_POSITION_LOWER_BOUND;
+	private static final int VERTICAL_VELOCITY = Config.BOSS_VERTICAL_VELOCITY;
+	private static final double BOSS_FIRE_RATE = Config.BOSS_FIRE_RATE;
+	private static final double BOSS_SHIELD_PROBABILITY = Config.BOSS_SHIELD_PROBABILITY;
+	private static final int HEALTH = Config.BOSS_HEALTH;
+	private static final int MOVE_FREQUENCY_PER_CYCLE = Config.MOVE_FREQUENCY_PER_CYCLE;
+	private static final int MAX_FRAMES_WITH_SAME_MOVE = Config.MAX_FRAMES_WITH_SAME_MOVE;
+	private static final int MAX_FRAMES_WITH_SHIELD = Config.MAX_FRAMES_WITH_SHIELD;
 	private final List<Integer> movePattern;
 	private boolean isShielded;
 	private int consecutiveMovesInSameDirection;
@@ -129,7 +128,7 @@ public class BossPlane extends FighterPlane {
 		for (int i = 0; i < MOVE_FREQUENCY_PER_CYCLE; i++) {
 			movePattern.add(VERTICAL_VELOCITY);
 			movePattern.add(-VERTICAL_VELOCITY);
-			movePattern.add(ZERO);
+			movePattern.add(0);
 		}
 		Collections.shuffle(movePattern);
 	}

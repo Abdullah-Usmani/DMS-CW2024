@@ -1,5 +1,6 @@
 package com.example.demo.actors;
 
+import com.example.demo.managers.SoundManager;
 import javafx.scene.media.AudioClip;
 
 public abstract class FighterPlane extends ActiveActorDestructible {
@@ -17,8 +18,7 @@ public abstract class FighterPlane extends ActiveActorDestructible {
 
 	// Plays the firing sound for the plane
 	protected void playFiringSound(String audioFilePath) {
-		AudioClip fireSound = new AudioClip(getClass().getResource(audioFilePath).toExternalForm());
-		fireSound.play();
+		SoundManager.playSound(audioFilePath);
 	}
 
 	protected double getProjectileXPosition() {

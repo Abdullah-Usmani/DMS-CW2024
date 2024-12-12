@@ -1,39 +1,32 @@
 package com.example.demo.levels;
 
+import com.example.demo.Config;
 import com.example.demo.displays.*;
 import javafx.scene.Group;
 
 public class LevelView {
 
-	private static final double HEART_DISPLAY_X_POSITION = 5;
-	private static final double HEART_DISPLAY_Y_POSITION = 25;
-	private static final double KILL_DISPLAY_X_POSITION = 1000;
-	private static final double KILL_DISPLAY_Y_POSITION = 25;
-	private static final double SHIELD_X_POSITION = 1150;
-	private static final double SHIELD_Y_POSITION = 25;
-	private static final double BOSS_HEALTH_X_POSITION = 1150;
-	private static final double BOSS_HEALTH_Y_POSITION = 75;
-	private static final int WIN_IMAGE_X_POSITION = 0;
-	private static final int WIN_IMAGE_Y_POSITION = 0;
-	private static final int LOSS_SCREEN_X_POSITION = 0;
-	private static final int LOSS_SCREEN_Y_POSITION = 0;
+	private static final double HEART_DISPLAY_X_POSITION = Config.HEART_X_POSITION;
+	private static final double HEART_DISPLAY_Y_POSITION = Config.HEART_Y_POSITION;
+	private static final double KILL_DISPLAY_X_POSITION = Config.KILL_X_POSITION;
+	private static final double KILL_DISPLAY_Y_POSITION = Config.KILL_Y_POSITION;
+	private static final double SHIELD_X_POSITION = Config.SHIELD_X_POSITION;
+	private static final double SHIELD_Y_POSITION = Config.SHIELD_Y_POSITION;
 
 	private final Group root;
 	private final WinImage winImage;
-	private final GameOverImage gameOverImage;
+	private final LoseImage loseImage;
 	private final HeartDisplay heartDisplay;
 	private final KillDisplay killDisplay;
 	private final ShieldImage shieldImage;
-	private final BossHealthDisplay bossHealthDisplay;
 
 	public LevelView(Group root, int heartsToDisplay, int killsNeeded) {
 		this.root = root;
 		this.heartDisplay = new HeartDisplay(HEART_DISPLAY_X_POSITION, HEART_DISPLAY_Y_POSITION, heartsToDisplay);
 		this.killDisplay = new KillDisplay(KILL_DISPLAY_X_POSITION, KILL_DISPLAY_Y_POSITION, killsNeeded);
-		this.winImage = new WinImage(WIN_IMAGE_X_POSITION, WIN_IMAGE_Y_POSITION);
-		this.gameOverImage = new GameOverImage(LOSS_SCREEN_X_POSITION, LOSS_SCREEN_Y_POSITION);
+		this.winImage = new WinImage();
+		this.loseImage = new LoseImage();
 		this.shieldImage = new ShieldImage(SHIELD_X_POSITION, SHIELD_Y_POSITION);
-		this.bossHealthDisplay = new BossHealthDisplay(BOSS_HEALTH_X_POSITION, BOSS_HEALTH_Y_POSITION, 5); // Initialize with 5 health
 	}
 
 	public void showHeartDisplay() {
@@ -44,20 +37,12 @@ public class LevelView {
 		root.getChildren().add(killDisplay.getContainer());
 	}
 
-	public void showBossHealthDisplay() {
-		root.getChildren().add(bossHealthDisplay.getContainer());
-	}
-
-	public void updateBossHealth(int newHealth) {
-		bossHealthDisplay.updateHealth(newHealth);
-	}
-
 	public void showWinImage() {
 		root.getChildren().add(winImage);
 	}
 
-	public void showGameOverImage() {
-		root.getChildren().add(gameOverImage);
+	public void showLoseImage() {
+		root.getChildren().add(loseImage);
 	}
 
 	public void removeHearts(int heartsRemaining) {
@@ -67,7 +52,7 @@ public class LevelView {
 		}
 	}
 
-	public void updateKills(int newKillCount) {
+	public void addKills(int newKillCount) {
 		killDisplay.updateKills(newKillCount);
 	}
 

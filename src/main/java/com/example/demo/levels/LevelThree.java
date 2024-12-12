@@ -11,13 +11,13 @@ import java.util.List;
 public class LevelThree extends LevelParent {
 
 	private static final String BACKGROUND_IMAGE_NAME = Config.LEVEL3_BACKGROUND;
-	private static final String NEXT_LEVEL = "com.example.demo.levels.LevelBoss";
-	private static final int TOTAL_ENEMIES = 10;
-	private static final int KILLS_TO_ADVANCE = 20;
-	private static final double ENEMY_SPAWN_PROBABILITY = .20;
-	private static final double ENEMY2_SPAWN_PROBABILITY = .10;
-	private static final double ENEMY3_SPAWN_PROBABILITY = .05;
-	private static final int PLAYER_INITIAL_HEALTH = 15;
+	private static final String NEXT_LEVEL = Config.LEVEL_BOSS_CLASS_NAME;
+	private static final int TOTAL_ENEMIES = Config.LEVEL_THREE_TOTAL_ENEMIES;
+	private static final int KILLS_TO_ADVANCE = Config.LEVEL_THREE_KILLS_TO_ADVANCE;
+	private static final double ENEMY_SPAWN_PROBABILITY = Config.LEVEL_THREE_ENEMY_SPAWN_PROBABILITY;
+	private static final double ENEMY2_SPAWN_PROBABILITY = Config.LEVEL_THREE_ENEMY2_SPAWN_PROBABILITY;
+	private static final double ENEMY3_SPAWN_PROBABILITY = Config.LEVEL_THREE_ENEMY3_SPAWN_PROBABILITY;
+	private static final int PLAYER_INITIAL_HEALTH = Config.LEVEL_THREE_INITIAL_HEALTH;
 
 	public LevelThree(double screenHeight, double screenWidth) {
 		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
@@ -36,6 +36,7 @@ public class LevelThree extends LevelParent {
 	@Override
 	protected List<ActorInfo> getActorsInfo() {
 		return List.of(
+			new ActorInfo("F-15", Config.USER_IMAGE, PLAYER_INITIAL_HEALTH, true, true),
 			new ActorInfo("F-16", Config.ENEMY1_IMAGE, 1, false, true),
 			new ActorInfo("MiG-29", Config.ENEMY2_IMAGE, 2, false, true),
 			new ActorInfo("A-10c", Config.ENEMY3_IMAGE, 3, false, true),
@@ -48,7 +49,7 @@ public class LevelThree extends LevelParent {
 
 	protected void checkIfGameOver() {
 		if (userIsDestroyed()) {
-			loseGame();
+			endGame(false);
 		}
 		else if (userHasReachedKillTarget()) {
 			goToNextLevel(NEXT_LEVEL);

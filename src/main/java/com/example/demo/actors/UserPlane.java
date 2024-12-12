@@ -1,6 +1,7 @@
 package com.example.demo.actors;
 
 import com.example.demo.Config;
+import com.example.demo.managers.SoundManager;
 import javafx.scene.image.Image;
 
 public class UserPlane extends FighterPlane {
@@ -8,15 +9,16 @@ public class UserPlane extends FighterPlane {
 	private static final int SCREEN_HEIGHT = Config.getScreenHeight();
 	private static final int SCREEN_WIDTH = Config.getScreenWidth();
 	private static final String IMAGE_NAME = Config.USER_IMAGE;
-	private static final int IMAGE_HEIGHT =  (int) (SCREEN_HEIGHT * .05);
-	private static final int IMAGE_WIDTH =  (int) (SCREEN_WIDTH * .05);  // Dynamically get width
-	private static final double INITIAL_X_POSITION = SCREEN_WIDTH * .01;
-	private static final double INITIAL_Y_POSITION = SCREEN_HEIGHT * .5;
+	private static final double SCALAR = Config.USER_SCALAR;
+	private static final int IMAGE_HEIGHT =  (int) (SCREEN_HEIGHT * SCALAR);
+	private static final int IMAGE_WIDTH =  (int) (SCREEN_WIDTH * SCALAR);  // Dynamically get width
+	private static final double INITIAL_X_POSITION = SCREEN_WIDTH * Config.USER_INITIAL_X_POSITION_SCALAR;
+	private static final double INITIAL_Y_POSITION = SCREEN_HEIGHT * Config.USER_INITIAL_Y_POSITION_SCALAR;
 	private static final double Y_UPPER_BOUND = 0;
 	private static final double Y_LOWER_BOUND = (double) SCREEN_HEIGHT - 2*IMAGE_HEIGHT;
-	private static final double VERTICAL_VELOCITY = SCREEN_HEIGHT * .015;
-	private static final long FIRE_RATE_COOLDOWN = 150; // Cooldown in milliseconds
-	private static final long MISSILE_COOLDOWN = 1000; // Cooldown in milliseconds
+	private static final double VERTICAL_VELOCITY = Config.USER_VERTICAL_VELOCITY;
+	private static final long GUN_COOLDOWN = Config.USER_GUN_COOLDOWN; // Cooldown in milliseconds
+	private static final long MISSILE_COOLDOWN = Config.USER_MISSILE_COOLDOWN; // Cooldown in milliseconds
 	private int velocityMultiplier;
 	private int numberOfHits;
 	private int numberOfKills;
@@ -48,9 +50,9 @@ public class UserPlane extends FighterPlane {
 	@Override
 	public ActiveActorDestructible fireProjectile() {
 		long currentTime = System.currentTimeMillis();
-		if (currentTime - lastFiredTime >= FIRE_RATE_COOLDOWN) { // Check cooldown
+		if (currentTime - lastFiredTime >= GUN_COOLDOWN) { // Check cooldown
 			lastFiredTime = currentTime; // Update last fired time
-			playFiringSound("/com/example/demo/audio/single-shot.mp3"); // Play user-specific sound
+			SoundManager.playSound(Config.FRIENDLY_GUN_AUDIO); // Play user-specific sound
 			return new UserProjectile(getProjectileXPosition(), getProjectileYPosition());
 		} else {
 			return null;
@@ -61,7 +63,7 @@ public class UserPlane extends FighterPlane {
 		long currentTime = System.currentTimeMillis();
 		if (currentTime - lastFiredTime >= MISSILE_COOLDOWN) { // Check cooldown
 			lastFiredTime = currentTime; // Update last fired time
-			playFiringSound("/com/example/demo/audio/fortnite-rpg.mp3"); // Play enemy-specific sound
+			SoundManager.playSound(Config.FRIENDLY_MISSILE_AUDIO); // Play enemy-specific sound
 			return new UserMissile(getProjectileXPosition(), getProjectileYPosition());
 		} else {
 			return null;
