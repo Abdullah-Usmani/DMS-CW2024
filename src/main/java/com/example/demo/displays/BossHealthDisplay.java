@@ -8,9 +8,9 @@ import javafx.scene.layout.HBox;
 
 public class BossHealthDisplay {
 
-    private static final String heartImage_NAME = Config.heartImage;
-    private static final double HEART_SIZE = Config.heartSize;
-    private static final double SPACING = Config.heartSpacing;
+    private static final String HEART_IMAGE_NAME = Config.HEART_IMAGE;
+    private static final double HEART_SIZE = Config.HEART_SIZE;
+    private static final double SPACING = Config.HEART_SPACING;
 
     private final HBox container;
     private final Label healthCounter;
@@ -24,7 +24,7 @@ public class BossHealthDisplay {
         container.setLayoutY(yPosition);
 
         // Add heart image
-        ImageView heartImage = new ImageView(new Image(getClass().getResource(heartImage_NAME).toExternalForm()));
+        ImageView heartImage = new ImageView(new Image(getClass().getResource(HEART_IMAGE_NAME).toExternalForm()));
         heartImage.setFitHeight(HEART_SIZE);
         heartImage.setFitWidth(HEART_SIZE);
         container.getChildren().add(heartImage);

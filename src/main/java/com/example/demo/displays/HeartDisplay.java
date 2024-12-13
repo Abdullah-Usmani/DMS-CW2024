@@ -7,8 +7,8 @@ import javafx.scene.layout.HBox;
 
 public class HeartDisplay {
 	
-	private static final String heartImage_NAME = Config.heartImage;
-	private static final double HEART_SIZE = Config.heartSize;
+	private static final String HEART_IMAGE_NAME = Config.HEART_IMAGE;
+	private static final double HEART_SIZE = Config.HEART_SIZE;
 	private HBox container;
 	private final double containerXPosition;
 	private final double containerYPosition;
@@ -30,7 +30,7 @@ public class HeartDisplay {
 	
 	private void initializeHearts() {
 		for (int i = 0; i < numberOfHeartsToDisplay; i++) {
-			ImageView heart = new ImageView(new Image(getClass().getResource(heartImage_NAME).toExternalForm()));
+			ImageView heart = new ImageView(new Image(getClass().getResource(HEART_IMAGE_NAME).toExternalForm()));
 
 			heart.setFitHeight(HEART_SIZE);
 			heart.setPreserveRatio(true);

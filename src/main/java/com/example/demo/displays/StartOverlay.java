@@ -129,7 +129,7 @@ public class StartOverlay {
                     (Config.getScreenHeight() * 0.025) + "px; -fx-text-fill: white;");
 
             ImageView statIcon = new ImageView(
-                    new Image(Objects.requireNonNull(getClass().getResourceAsStream(info.isPlane ? Config.heartImage : Config.killImage)))
+                    new Image(Objects.requireNonNull(getClass().getResourceAsStream(info.isPlane ? Config.HEART_IMAGE : Config.KILL_IMAGE)))
             );
             statIcon.setFitWidth(Config.getScreenWidth() * 0.02);
             statIcon.setFitHeight(Config.getScreenWidth() * 0.02);

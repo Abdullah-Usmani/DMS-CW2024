@@ -10,8 +10,8 @@ import javafx.scene.layout.HBox;
 
 public class KillDisplay {
 
-	private static final String killImage_NAME = Config.killImage;
-	private static final double KILL_HEIGHT = Config.killSize;
+	private static final String KILL_IMAGE_NAME = Config.KILL_IMAGE;
+	private static final double KILL_HEIGHT = Config.KILL_SIZE;
 
 	private HBox container;
 	private final double containerXPosition;
@@ -37,7 +37,7 @@ public class KillDisplay {
 
 	private void initializeKills() {
 		// Kill Image
-		ImageView kill = new ImageView(new Image(getClass().getResource(killImage_NAME).toExternalForm()));
+		ImageView kill = new ImageView(new Image(getClass().getResource(KILL_IMAGE_NAME).toExternalForm()));
 		kill.setFitHeight(KILL_HEIGHT);
 		kill.setPreserveRatio(true);
 

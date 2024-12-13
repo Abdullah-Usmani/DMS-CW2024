@@ -10,11 +10,11 @@ import javafx.util.Duration;
 public class EffectManager {
 
     public void createSparkEffect(double x, double y, Group root) {
-        createEffect(x, y, Config.sparkSize, Config.sparkDuration, Config.sparkImage, root);
+        createEffect(x, y, Config.SPARK_SIZE, Config.SPARK_DURATION, Config.SPARK_IMAGE, root);
     }
 
     public void createDestructionEffect(double x, double y, Group root) {
-        createEffect(x, y, Config.explosionSize, Config.explosionDuration, Config.explosionImage, root);
+        createEffect(x, y, Config.EXPLOSION_SIZE, Config.EXPLOSION_DURATION, Config.EXPLOSION_IMAGE, root);
     }
 
     private void createEffect(double x, double y, double size, int fadeDuration, String imagePath, Group root) {

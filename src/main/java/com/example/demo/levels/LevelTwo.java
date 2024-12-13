@@ -10,13 +10,13 @@ import java.util.logging.Logger;
 
 public class LevelTwo extends LevelParent {
 
-	private static final String BACKGROUND_IMAGE_NAME = Config.level2Background;
-	private static final String NEXT_LEVEL = Config.level3ClassName;
-	private static final int TOTAL_ENEMIES = Config.level2TotalEnemies;
-	private static final int KILLS_TO_ADVANCE = Config.level2KillsToAdvance;
-	private static final double ENEMY1_SPAWN_PROBABILITY = Config.enemy1SpawnProbability;
-	private static final double ENEMY2_SPAWN_PROBABILITY = Config.enemy2SpawnProbability;
-	private static final int PLAYER_INITIAL_HEALTH = Config.level2InitialHealth;
+	private static final String BACKGROUND_IMAGE_NAME = Config.LEVEL2_BACKGROUND;
+	private static final String NEXT_LEVEL = Config.LEVEL_THREE_CLASS_NAME;
+	private static final int TOTAL_ENEMIES = Config.LEVEL_TWO_TOTAL_ENEMIES;
+	private static final int KILLS_TO_ADVANCE = Config.LEVEL_TWO_KILLS_TO_ADVANCE;
+	private static final double ENEMY1_SPAWN_PROBABILITY = Config.ENEMY1_SPAWN_PROBABILITY;
+	private static final double ENEMY2_SPAWN_PROBABILITY = Config.ENEMY2_SPAWN_PROBABILITY;
+	private static final int PLAYER_INITIAL_HEALTH = Config.LEVEL_TWO_INITIAL_HEALTH;
 
 	Logger logger = Logger.getLogger(getClass().getName());
 
@@ -37,12 +37,12 @@ public class LevelTwo extends LevelParent {
 	@Override
 	protected List<ActorInfo> getActorsInfo() {
 		return List.of(
-				new ActorInfo("F-15", Config.userImage, PLAYER_INITIAL_HEALTH, true, true),
-				new ActorInfo("F-16", Config.enemy1Image, 1, false, true),
-				new ActorInfo("MiG-29", Config.enemy2Image, 2, false, true),
-				new ActorInfo("Enemy Guns", Config.enemyGun, 1, false, false),
-				new ActorInfo("Guns", Config.friendlyGun, 1, true, false),
-				new ActorInfo("Sidewinder", Config.friendlyMissile, 3, true,false)
+				new ActorInfo("F-15", Config.USER_IMAGE, PLAYER_INITIAL_HEALTH, true, true),
+				new ActorInfo("F-16", Config.ENEMY1_IMAGE, 1, false, true),
+				new ActorInfo("MiG-29", Config.ENEMY2_IMAGE, 2, false, true),
+				new ActorInfo("Enemy Guns", Config.ENEMY_GUN, 1, false, false),
+				new ActorInfo("Guns", Config.FRIENDLY_GUN, 1, true, false),
+				new ActorInfo("Sidewinder", Config.FRIENDLY_MISSILE, 3, true,false)
 		);
 	}
 

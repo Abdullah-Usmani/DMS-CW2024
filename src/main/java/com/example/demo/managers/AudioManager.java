@@ -6,39 +6,39 @@ import javafx.scene.media.AudioClip;
 public class AudioManager {
 
     public void sparkAudio() {
-        playAudio(Config.enemyTakeDamageAudio);
+        playAudio(Config.ENEMY_TAKE_DAMAGE_AUDIO);
     }
 
     public void destructionAudio() {
-        playAudio(Config.destructionAudio);
+        playAudio(Config.DESTRUCTION_AUDIO);
     }
 
     public void collisionAudio() {
-        playAudio(Config.planeCollisionAudio);
+        playAudio(Config.PLANE_COLLISION_AUDIO);
     }
 
     public void takeDamageAudio() {
-        playAudio(Config.friendlyTakeDamageAudio);
+        playAudio(Config.FRIENDLY_TAKE_DAMAGE_AUDIO);
     }
 
     public static void winAudio() {
-        playAudio(Config.winAudio);
+        playAudio(Config.WIN_AUDIO);
     }
 
     public static void loseAudio() {
-        playAudio(Config.loseAudio);
+        playAudio(Config.LOSE_AUDIO);
     }
 
     public static void transitionAudio() {
-        playAudio(Config.transitionAudio);
+        playAudio(Config.TRANSITION_AUDIO);
     }
 
     public static void startAudio() {
-        playAudio(Config.startAudio);
+        playAudio(Config.START_AUDIO);
     }
 
     public static void backgroundOST() {
-        playAudio(Config.backgroundAudio);
+        playAudio(Config.BACKGROUND_AUDIO);
     }
 
     public static void playAudio(String AudioPath) {

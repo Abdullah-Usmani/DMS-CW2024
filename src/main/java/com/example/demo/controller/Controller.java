@@ -17,7 +17,7 @@ import com.example.demo.levels.LevelParent;
 
 public class Controller implements Observer {
 
-	public static final String level1ClassName = Config.level1ClassName;
+	public static final String LEVEL_ONE_CLASS_NAME = Config.LEVEL_BOSS_CLASS_NAME;
 	private final Stage stage;
 	private final PauseMenuController pauseMenuController;
 	private LevelParent currentLevel;
@@ -35,7 +35,7 @@ public class Controller implements Observer {
 		try {
 			stage.show();
 			AudioManager.startAudio();
-			goToLevel(level1ClassName);
+			goToLevel(LEVEL_ONE_CLASS_NAME);
 		} catch (Exception e) {
 			logger.info("Error launching the game: " + e.getMessage());
 			e.printStackTrace();
@@ -76,7 +76,7 @@ public class Controller implements Observer {
 	// Method to restart the current level
 	public void restartGame() {
 		try {
-			goToLevel(level1ClassName);
+			goToLevel(LEVEL_ONE_CLASS_NAME);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

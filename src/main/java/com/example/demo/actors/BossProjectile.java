@@ -7,7 +7,7 @@ public class BossProjectile extends Projectile {
 
 	private static final int SCREEN_HEIGHT = Config.getScreenHeight();
 	private static final int SCREEN_WIDTH = Config.getScreenWidth();
-	private static final String IMAGE_NAME = Config.bossMissile;
+	private static final String IMAGE_NAME = Config.BOSS_MISSILE;
 	private static final int IMAGE_HEIGHT =  (int) (SCREEN_HEIGHT * .05);
 	private static final int IMAGE_WIDTH = (int) (SCREEN_WIDTH * .05);  // Dynamically get width
 	private static final double HORIZONTAL_VELOCITY = -(SCREEN_WIDTH * .015);
