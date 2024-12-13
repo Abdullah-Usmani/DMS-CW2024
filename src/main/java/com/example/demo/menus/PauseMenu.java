@@ -1,3 +1,9 @@
+/**
+ * Represents the pause menu for the game "F-15: Strike Eagle."
+ *
+ * The PauseMenu class displays a modal menu when the game is paused, allowing
+ * the user to resume the game, restart the current level, restart the game, or exit to the main menu.
+ */
 package com.example.demo.menus;
 
 import com.example.demo.managers.StyleManager;
@@ -11,20 +17,40 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+/**
+ * PauseMenu handles the user interface for pausing the game and provides
+ * options to resume, restart, or exit the game.
+ */
 public class PauseMenu extends Parent {
 
+    /** The stage used for displaying the pause menu. */
     private final Stage pauseStage;
+
+    /** Callback for resuming the game. */
     private final Runnable onResume;
+
+    /** Callback for restarting the current level. */
     private final Runnable onRestartLevel;
+
+    /** Callback for restarting the game. */
     private final Runnable onRestartGame;
+
+    /** Callback for exiting to the main menu. */
     private final Runnable onExitToMainMenu;
 
+    /**
+     * Constructs a PauseMenu with specified callbacks for user actions.
+     *
+     * @param primaryStage       the primary stage of the application.
+     * @param onResume           the callback to execute when resuming the game.
+     * @param onRestartLevel     the callback to execute when restarting the current level.
+     * @param onRestartGame      the callback to execute when restarting the game.
+     * @param onExitToMainMenu   the callback to execute when exiting to the main menu.
+     */
     public PauseMenu(Stage primaryStage, Runnable onResume, Runnable onRestartLevel, Runnable onRestartGame, Runnable onExitToMainMenu) {
         this.onResume = onResume;
         this.onRestartLevel = onRestartLevel;
@@ -38,16 +64,16 @@ public class PauseMenu extends Parent {
         pauseStage.initStyle(StageStyle.UNDECORATED);
         pauseStage.setResizable(false);
 
-        // Background
+        // Create the background
         StackPane root = new StackPane();
         Rectangle background = new Rectangle(400, 600);
         background.setFill(Color.rgb(30, 30, 30, 0.9)); // Grayish-black background
         root.getChildren().add(background);
 
-        // Title Text
+        // Create the title label
         Label title = StyleManager.createStyledLabel("Game Paused", true, 0.05);
 
-        // Buttons
+        // Create buttons with associated actions
         Button playButton = StyleManager.createStyledButton("Continue");
         playButton.setOnAction(event -> resumeGame());
 
@@ -60,11 +86,12 @@ public class PauseMenu extends Parent {
         Button exitToMainMenuButton = StyleManager.createStyledButton("Exit to Main Menu");
         exitToMainMenuButton.setOnAction(event -> exitToMainMenu());
 
-        // Layout
+        // Create the layout
         VBox menu = new VBox(20, title, playButton, restartLevelButton, restartGameButton, exitToMainMenuButton);
         menu.setAlignment(Pos.CENTER);
         root.getChildren().add(menu);
 
+        // Set up the scene
         Scene pauseScene = new Scene(root, 400, 600);
         pauseStage.setScene(pauseScene);
 
@@ -76,14 +103,23 @@ public class PauseMenu extends Parent {
         });
     }
 
+    /**
+     * Displays the pause menu.
+     */
     public void show() {
         pauseStage.show();
     }
 
+    /**
+     * Hides the pause menu.
+     */
     public void hide() {
         pauseStage.close();
     }
 
+    /**
+     * Resumes the game and executes the onResume callback.
+     */
     private void resumeGame() {
         hide();
         if (onResume != null) {
@@ -91,6 +127,9 @@ public class PauseMenu extends Parent {
         }
     }
 
+    /**
+     * Restarts the current level and executes the onRestartLevel callback.
+     */
     private void restartLevel() {
         hide();
         if (onRestartLevel != null) {
@@ -98,6 +137,9 @@ public class PauseMenu extends Parent {
         }
     }
 
+    /**
+     * Restarts the game and executes the onRestartGame callback.
+     */
     private void restartGame() {
         hide();
         if (onRestartGame != null) {
@@ -105,6 +147,9 @@ public class PauseMenu extends Parent {
         }
     }
 
+    /**
+     * Exits to the main menu and executes the onExitToMainMenu callback.
+     */
     private void exitToMainMenu() {
         hide();
         if (onExitToMainMenu != null) {

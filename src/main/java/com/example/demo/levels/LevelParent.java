@@ -26,6 +26,9 @@ import javafx.scene.input.*;
 
 public abstract class LevelParent extends Observable {
 
+	/**
+	 * Flag for preventing delay repetition.
+	 */
 	private boolean isGameOver = false;
 
 	/**

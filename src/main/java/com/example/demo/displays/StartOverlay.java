@@ -1,3 +1,9 @@
+/**
+ * Represents the start overlay for a game level in "F-15: Strike Eagle."
+ *
+ * The StartOverlay class displays introductory information about the current level,
+ * including required kills and actors involved, before the game begins.
+ */
 package com.example.demo.displays;
 
 import com.example.demo.Config;
@@ -19,25 +25,46 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * StartOverlay manages the level introduction, displaying details about the actors,
+ * required kills, and other relevant information.
+ */
 public class StartOverlay {
+
+    /** The root group to which the overlay is added. */
     private final Group root;
+
+    /** The runnable action to start the game after the overlay is dismissed. */
     private final Runnable startGame;
 
+    /**
+     * Constructs a StartOverlay instance.
+     *
+     * @param root      the root group for adding the overlay.
+     * @param startGame the runnable action to start the game.
+     */
     public StartOverlay(Group root, Runnable startGame) {
         this.root = root;
         this.startGame = startGame;
     }
 
+    /**
+     * Displays the level overlay with information about the current level.
+     *
+     * @param levelName   the name of the level.
+     * @param actorsInfo  a list of ActorInfo objects describing the actors in the level.
+     * @param killsNeeded the number of kills required to complete the level.
+     */
     public void showLevelOverlay(String levelName, List<ActorInfo> actorsInfo, int killsNeeded) {
         // Create the overlay container
         StackPane overlay = new StackPane();
         overlay.setPrefSize(root.getScene().getWidth(), root.getScene().getHeight());
 
-        // Semi-transparent overlay
+        // Semi-transparent background
         Rectangle semiTransparentOverlay = new Rectangle(Config.getScreenWidth(), Config.getScreenHeight());
         semiTransparentOverlay.setFill(Color.rgb(0, 0, 0, 0.6)); // Black with 60% opacity
 
-        // Main overlay label for the level info
+        // Main overlay label for level details
         Label overlayText = new Label(
                 "Level: " + levelName + "\n" +
                         "Kills Needed: " + killsNeeded
@@ -47,13 +74,12 @@ public class StartOverlay {
                 "-fx-text-fill: #00FF00; " + // Neon green color
                 "-fx-effect: dropshadow(gaussian, #00FF00, 15, 0.5, 0, 0);");
 
-        // Create separate lists for each category
+        // Categorize actors into groups
         List<ActorInfo> userPlanes = new ArrayList<>();
         List<ActorInfo> userProjectiles = new ArrayList<>();
         List<ActorInfo> enemyPlanes = new ArrayList<>();
         List<ActorInfo> enemyProjectiles = new ArrayList<>();
 
-        // Categorize actors
         for (ActorInfo info : actorsInfo) {
             if (info.isPlane) {
                 if (info.isFriendly) {
@@ -76,37 +102,42 @@ public class StartOverlay {
         VBox enemyPlanesBox = createCategoryBox("Enemy Planes", enemyPlanes);
         VBox enemyProjectilesBox = createCategoryBox("Enemy Projectiles", enemyProjectiles);
 
-        // Layout the categories in an HBox
+        // Layout the categories horizontally
         HBox categoriesBox = new HBox(Config.getScreenWidth() * 0.02, userPlanesBox, userProjectilesBox, enemyPlanesBox, enemyProjectilesBox);
         categoriesBox.setAlignment(Pos.TOP_CENTER);
 
-        // Combine everything into the overlay
+        // Combine overlay elements
         VBox overlayContent = new VBox(Config.getScreenHeight() * 0.03, overlayText, categoriesBox);
         overlayContent.setAlignment(Pos.CENTER);
 
-        // Add everything to the overlay
+        // Add elements to the overlay
         overlay.getChildren().addAll(semiTransparentOverlay, overlayContent);
         root.getChildren().add(overlay);
 
-        // Fade-out transition for the overlay
+        // Transition effects for the overlay
         FadeTransition fadeOut = new FadeTransition(Duration.seconds(2), overlay);
         fadeOut.setFromValue(1.0);
         fadeOut.setToValue(0.0);
 
-        // Remove overlay and start the game after fade-out
+        // Remove overlay and start game after fade-out
         fadeOut.setOnFinished(e -> {
             root.getChildren().remove(overlay);
-            startGame.run(); // Start the game
+            startGame.run();
         });
 
         // Pause before fade-out
         PauseTransition delay = new PauseTransition(Duration.seconds(3));
         delay.setOnFinished(e -> fadeOut.play());
-
-        delay.play(); // Begin the delay
+        delay.play();
     }
 
-    // Create a function to generate a VBox for each category
+    /**
+     * Creates a category box to display actor details.
+     *
+     * @param title  the title of the category.
+     * @param actors the list of ActorInfo objects to display.
+     * @return a VBox containing the actor details.
+     */
     public VBox createCategoryBox(String title, List<ActorInfo> actors) {
         Label titleLabel = new Label(title);
         titleLabel.setStyle("-fx-font-family: 'HornetDisplay-Regular'; " +
@@ -134,7 +165,7 @@ public class StartOverlay {
             statIcon.setFitWidth(Config.getScreenWidth() * 0.02);
             statIcon.setFitHeight(Config.getScreenWidth() * 0.02);
 
-            Label actorStat = new Label(""+info.statValue);
+            Label actorStat = new Label("" + info.statValue);
             actorStat.setStyle("-fx-font-family: 'HornetDisplay-Regular'; -fx-font-size: " +
                     (Config.getScreenHeight() * 0.025) + "px; -fx-text-fill: white;");
 

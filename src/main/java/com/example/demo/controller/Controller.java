@@ -1,3 +1,9 @@
+/**
+ * The Controller class handles game flow and level transitions for "F-15: Strike Eagle."
+ *
+ * This class manages the initialization of levels, transitions between levels, and interactions
+ * with the pause menu. It serves as the main controller for the game's functionality.
+ */
 package com.example.demo.controller;
 
 import java.lang.reflect.Constructor;
@@ -15,22 +21,40 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import com.example.demo.levels.LevelParent;
 
+/**
+ * Controller manages the game's levels, transitions, and menus.
+ */
 public class Controller implements Observer {
 
-	public static final String LEVEL_ONE_CLASS_NAME = Config.LEVEL_BOSS_CLASS_NAME;
+	/** The class name for the first level. */
+	public static final String LEVEL_ONE_CLASS_NAME = Config.LEVEL_ONE_CLASS_NAME;
+
+	/** The primary stage for the application. */
 	private final Stage stage;
+
+	/** The controller for the pause menu. */
 	private final PauseMenuController pauseMenuController;
+
+	/** The currently active level. */
 	private LevelParent currentLevel;
 
+	/** Logger for debugging and error tracking. */
 	Logger logger = Logger.getLogger(getClass().getName());
 
+	/**
+	 * Constructs a Controller for managing game flow and menus.
+	 *
+	 * @param stage the primary stage for the application.
+	 */
 	public Controller(Stage stage) {
 		this.stage = stage;
-        this.pauseMenuController = new PauseMenuController(stage,this);
-        LevelParent.setController(this);
+		this.pauseMenuController = new PauseMenuController(stage, this);
+		LevelParent.setController(this);
 	}
 
-	// Launch the first level explicitly
+	/**
+	 * Launches the first level of the game and starts background audio.
+	 */
 	public void launchGame() {
 		try {
 			stage.show();
@@ -42,7 +66,18 @@ public class Controller implements Observer {
 		}
 	}
 
-	// Transition to a new level
+	/**
+	 * Transitions to a specified level.
+	 *
+	 * @param className the fully qualified class name of the level to load.
+	 * @throws ClassNotFoundException   if the class cannot be found.
+	 * @throws NoSuchMethodException    if the constructor is not found.
+	 * @throws SecurityException        if access to the constructor is denied.
+	 * @throws InstantiationException   if the level instance cannot be created.
+	 * @throws IllegalAccessException   if the constructor is inaccessible.
+	 * @throws IllegalArgumentException if invalid arguments are passed.
+	 * @throws InvocationTargetException if the constructor invocation fails.
+	 */
 	public void goToLevel(String className) throws ClassNotFoundException, NoSuchMethodException, SecurityException,
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		// Reflectively create the new level instance
@@ -61,19 +96,29 @@ public class Controller implements Observer {
 		this.pauseMenuController.setCurrentLevel(currentLevel);
 	}
 
+	/**
+	 * Handles key press events, toggling the pause menu on 'P'.
+	 *
+	 * @param event the key event to handle.
+	 */
 	private void handleKeyPress(KeyEvent event) {
 		if (event.getCode() == KeyCode.P) {
 			pauseMenuController.togglePauseMenu();
 		}
 	}
 
+	/**
+	 * Transitions to the main menu.
+	 */
 	public void goToMainMenu() {
-		StartMenu startMenu = new StartMenu(stage); // Pass the controller's launchGame method
+		StartMenu startMenu = new StartMenu(stage);
 		Scene menuScene = startMenu.initializeMenu();
 		stage.setScene(menuScene);
 	}
 
-	// Method to restart the current level
+	/**
+	 * Restarts the game by transitioning to the first level.
+	 */
 	public void restartGame() {
 		try {
 			goToLevel(LEVEL_ONE_CLASS_NAME);
@@ -82,8 +127,10 @@ public class Controller implements Observer {
 		}
 	}
 
-	// Method to restart the current level
-    public void restartCurrentLevel() {
+	/**
+	 * Restarts the current level if one is active.
+	 */
+	public void restartCurrentLevel() {
 		if (currentLevel != null) {
 			try {
 				goToLevel(currentLevel.getClass().getName());
@@ -92,7 +139,13 @@ public class Controller implements Observer {
 			}
 		}
 	}
-	// Observer update logic for transitions and game end states
+
+	/**
+	 * Updates the controller in response to level changes or game state changes.
+	 *
+	 * @param observable the observable object.
+	 * @param arg        the argument passed by the observable.
+	 */
 	@Override
 	public void update(Observable observable, Object arg) {
 		try {
@@ -101,5 +154,4 @@ public class Controller implements Observer {
 			e.printStackTrace();
 		}
 	}
-
 }
