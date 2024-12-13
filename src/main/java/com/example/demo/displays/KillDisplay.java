@@ -2,6 +2,7 @@ package com.example.demo.displays;
 
 import com.example.demo.Config;
 import com.example.demo.managers.StyleManager;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,7 +17,7 @@ public class KillDisplay {
 	private final double containerXPosition;
 	private final double containerYPosition;
 	private Label killCounter; // To display the kill count
-	private final int killsNeeded;         // Tracks the current kill count
+	private final int killsNeeded; // Tracks the current kill count
 
 	public KillDisplay(double xPosition, double yPosition, int killsNeeded) {
 		this.containerXPosition = xPosition;
@@ -31,6 +32,7 @@ public class KillDisplay {
 		container.setLayoutX(containerXPosition);
 		container.setLayoutY(containerYPosition);
 		container.setSpacing(10); // Adds some spacing between elements
+		container.setAlignment(Pos.CENTER_LEFT); // Align items vertically
 	}
 
 	private void initializeKills() {
@@ -41,6 +43,10 @@ public class KillDisplay {
 
 		// Kill Counter Label
 		killCounter = StyleManager.createStyledLabel("" + 0, true, 0.025); // Initial kill count
+
+		// Ensure the label is vertically aligned with the image
+		killCounter.setStyle("-fx-alignment: center-left;");
+
 		// Add the image and label to the container
 		container.getChildren().addAll(kill, killCounter);
 	}

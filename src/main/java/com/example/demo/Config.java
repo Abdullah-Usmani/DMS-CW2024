@@ -37,7 +37,7 @@ public class Config {
     public static final String SHIELD_IMAGE = IMAGE_PATH + "shieldbubble.png";
     public static final String KILL_IMAGE = IMAGE_PATH + "killcount.png";
 
-    public static final String START_BACKGROUND = IMAGE_PATH + "backgroundstart.jpg";
+    public static final String START_BACKGROUND = IMAGE_PATH + "backgroundstart2.jpg";
     public static final String LEVEL1_BACKGROUND = IMAGE_PATH + "background2.jpg";
     public static final String LEVEL2_BACKGROUND = IMAGE_PATH + "background6.jpg";
     public static final String LEVEL3_BACKGROUND = IMAGE_PATH + "background9.jpg";
@@ -48,9 +48,8 @@ public class Config {
     public static final String LEVEL_THREE_CLASS_NAME = LEVEL_PATH + "LevelThree";
     public static final String LEVEL_BOSS_CLASS_NAME = LEVEL_PATH + "LevelBoss";
 
-    public static final String START_IMAGE = IMAGE_PATH + "background10.jpg";
-    public static final String WIN_IMAGE = IMAGE_PATH + "you-win.jpg";
-    public static final String LOSE_IMAGE = IMAGE_PATH + "game-over.jpg";
+    public static final String WIN_IMAGE = IMAGE_PATH + "you-win-AI.png";
+    public static final String LOSE_IMAGE = IMAGE_PATH + "game-over-AI.png";
 
     public static final String BACKGROUND_AUDIO = AUDIO_PATH + "backgroundOST.mp3";
 
@@ -143,7 +142,7 @@ public class Config {
     public static double HEART_SIZE = screenWidth*.04;
     public static double HEART_SPACING = screenWidth*.01;
     public static double KILL_SIZE = screenWidth*.04;
-    public static double SHIELD_SIZE = screenWidth*.04;
+    public static double SHIELD_SIZE = screenWidth*.1;
 
     public static double SPARK_SIZE = screenWidth*.04;
     public static double EXPLOSION_SIZE = screenWidth*.05;

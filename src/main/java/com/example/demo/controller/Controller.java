@@ -17,7 +17,7 @@ import com.example.demo.levels.LevelParent;
 
 public class Controller implements Observer {
 
-	public static final String LEVEL_ONE_CLASS_NAME = Config.LEVEL_ONE_CLASS_NAME;
+	public static final String LEVEL_ONE_CLASS_NAME = Config.LEVEL_BOSS_CLASS_NAME;
 	private final Stage stage;
 	private final PauseMenuController pauseMenuController;
 	private LevelParent currentLevel;

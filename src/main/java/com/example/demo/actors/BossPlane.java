@@ -1,8 +1,8 @@
 package com.example.demo.actors;
 
 import com.example.demo.Config;
+import com.example.demo.displays.ShieldDisplay;
 import com.example.demo.levels.LevelView;
-import javafx.scene.image.Image;
 
 import java.util.*;
 
@@ -29,11 +29,12 @@ public class BossPlane extends FighterPlane {
 	private int consecutiveMovesInSameDirection;
 	private int indexOfCurrentMove;
 	private int framesWithShieldActivated;
-	private LevelView levelView;
+	private final ShieldDisplay shieldDisplay;
 
 
 	public BossPlane() {
 		super(IMAGE_NAME, IMAGE_HEIGHT, IMAGE_WIDTH, INITIAL_X_POSITION, INITIAL_Y_POSITION, HEALTH);
+		this.shieldDisplay = new ShieldDisplay(INITIAL_X_POSITION, INITIAL_Y_POSITION);
 		movePattern = new ArrayList<>();
 		consecutiveMovesInSameDirection = 0;
 		indexOfCurrentMove = 0;
@@ -51,6 +52,17 @@ public class BossPlane extends FighterPlane {
 			setTranslateY(initialTranslateY);
 		}
 		super.updatePosition();
+		updateShieldPosition();
+	}
+
+	private void updateShieldPosition() {
+		double bossCenterX = getLayoutX() + getTranslateX() + getFitWidth() / 2;
+		double bossCenterY = getLayoutY() + getTranslateY() + getFitHeight() / 2;
+		shieldDisplay.updatePosition(bossCenterX, bossCenterY);
+	}
+
+	public ShieldDisplay getShieldDisplay() {
+		return shieldDisplay;
 	}
 
 	@Override
@@ -101,11 +113,11 @@ public class BossPlane extends FighterPlane {
 			framesWithShieldActivated++;
 		} else if (shieldShouldBeActivated()) {
 			activateShield();
-			levelView.showShield();
+			shieldDisplay.showShield();
 		}
 		if (shieldExhausted()) {
 			deactivateShield();
-			levelView.hideShield();
+			shieldDisplay.hideShield();
 		}
 	}
 
@@ -130,9 +142,5 @@ public class BossPlane extends FighterPlane {
 			movePattern.add(0);
 		}
 		Collections.shuffle(movePattern);
-	}
-
-	public void setLevelView(LevelView levelView) {
-		this.levelView = levelView;
 	}
 }

@@ -18,7 +18,6 @@ public class LevelView {
 	private final LoseImage loseImage;
 	private final HeartDisplay heartDisplay;
 	private final KillDisplay killDisplay;
-	private final ShieldImage shieldImage;
 
 	public LevelView(Group root, int heartsToDisplay, int killsNeeded) {
 		this.root = root;
@@ -26,7 +25,6 @@ public class LevelView {
 		this.killDisplay = new KillDisplay(KILL_DISPLAY_X_POSITION, KILL_DISPLAY_Y_POSITION, killsNeeded);
 		this.winImage = new WinImage();
 		this.loseImage = new LoseImage();
-		this.shieldImage = new ShieldImage(Config.BOSS_INITIAL_X_POSITION, Config.BOSS_INITIAL_Y_POSITION);
 	}
 
 	public void showHeartDisplay() {
@@ -54,16 +52,5 @@ public class LevelView {
 
 	public void addKills(int newKillCount) {
 		killDisplay.updateKills(newKillCount);
-	}
-
-	public void showShield() {
-		if (!root.getChildren().contains(shieldImage)) {
-			root.getChildren().add(shieldImage);
-		}
-		shieldImage.showShield();
-	}
-
-	public void hideShield() {
-		shieldImage.hideShield();
 	}
 }

@@ -18,7 +18,6 @@ public class LevelBoss extends LevelParent {
 		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
 
 		this.bossPlane = new BossPlane();
-		this.bossPlane.setLevelView(levelView);
 		this.bossHealthDisplay = new BossHealthDisplay(Config.BOSS_HEALTH_X_POSITION, Config.BOSS_HEALTH_Y_POSITION, bossPlane.getHealth());
 	}
 
@@ -54,6 +53,7 @@ public class LevelBoss extends LevelParent {
 		if (getCurrentNumberOfEnemies() == 0 && !bossPlane.isDestroyed()) {
 			addEnemyUnit(bossPlane);
 			getRoot().getChildren().add(bossHealthDisplay.getContainer());
+			getRoot().getChildren().add(bossPlane.getShieldDisplay());
 		}
 	}
 
