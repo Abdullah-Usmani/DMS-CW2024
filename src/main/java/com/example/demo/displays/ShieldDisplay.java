@@ -6,7 +6,7 @@ import com.example.demo.actors.ActiveActor;
 public class ShieldDisplay extends ActiveActor {
 
 	public ShieldDisplay(double initialXPos, double initialYPos) {
-		super(Config.SHIELD_IMAGE, (int) Config.SHIELD_SIZE, (int) Config.SHIELD_SIZE, initialXPos, initialYPos);
+		super(Config.shieldImage, (int) Config.shieldSize, (int) Config.shieldSize, initialXPos, initialYPos);
 		this.setVisible(false); // Initially invisible
 	}
 

@@ -12,7 +12,7 @@ public class Main extends Application {
 
 	public void start(Stage stage) {
 		primaryStage = stage;
-		primaryStage.setTitle("F-15 Strike Eagle");
+		primaryStage.setTitle(Config.gameTitle);
 		primaryStage.setResizable(false);
 		// Load the Start Menu
 		StartMenu startMenu = new StartMenu(primaryStage);

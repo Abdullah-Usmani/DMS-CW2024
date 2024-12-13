@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 
 public class WinImage extends ImageView {
 	
-	private static final String IMAGE_NAME = Config.WIN_IMAGE;
+	private static final String IMAGE_NAME = Config.winImage;
 	private static final int HEIGHT = Config.getScreenHeight(); // Use centralized height
 	private static final int WIDTH = Config.getScreenWidth();  // Use centralized width
 	

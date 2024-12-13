@@ -6,12 +6,10 @@ import javafx.scene.Group;
 
 public class LevelView {
 
-	private static final double HEART_DISPLAY_X_POSITION = Config.HEART_X_POSITION;
-	private static final double HEART_DISPLAY_Y_POSITION = Config.HEART_Y_POSITION;
-	private static final double KILL_DISPLAY_X_POSITION = Config.KILL_X_POSITION;
-	private static final double KILL_DISPLAY_Y_POSITION = Config.KILL_Y_POSITION;
-	private static final double SHIELD_X_POSITION = Config.SHIELD_X_POSITION;
-	private static final double SHIELD_Y_POSITION = Config.SHIELD_Y_POSITION;
+	private static final double HEART_DISPLAY_X_POSITION = Config.heartXPosition;
+	private static final double HEART_DISPLAY_Y_POSITION = Config.heartYPosition;
+	private static final double KILL_DISPLAY_X_POSITION = Config.killXPosition;
+	private static final double KILL_DISPLAY_Y_POSITION = Config.killYPosition;
 
 	private final Group root;
 	private final WinImage winImage;

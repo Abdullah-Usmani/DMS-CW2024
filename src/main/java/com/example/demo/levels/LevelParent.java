@@ -4,9 +4,7 @@
  */
 package com.example.demo.levels;
 
-import java.time.Duration;
 import java.util.*;
-import java.util.stream.Stream;
 
 import com.example.demo.Config;
 import com.example.demo.actors.*;
@@ -134,7 +132,7 @@ public abstract class LevelParent extends Observable {
 		this.background = new ImageView(new Image(getClass().getResource(backgroundImageName).toExternalForm()));
 		this.screenHeight = screenHeight;
 		this.screenWidth = screenWidth;
-		this.enemyMaximumYPosition = screenHeight - Config.SCREEN_HEIGHT_ADJUSTMENT;
+		this.enemyMaximumYPosition = screenHeight - Config.screenHeightAdjustment;
 		this.levelView = instantiateLevelView();
 		this.currentNumberOfEnemies = 0;
 		friendlyUnits.add(user);

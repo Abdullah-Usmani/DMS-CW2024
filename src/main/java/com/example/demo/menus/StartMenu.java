@@ -13,8 +13,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.awt.*;
-
 public class StartMenu {
 
     private final Stage stage;
@@ -22,7 +20,7 @@ public class StartMenu {
 
     public StartMenu(Stage stage) {
         this.stage = stage;
-        this.background = new ImageView(new Image(getClass().getResource(Config.START_BACKGROUND).toExternalForm()));
+        this.background = new ImageView(new Image(getClass().getResource(Config.startBackground).toExternalForm()));
     }
 
     public Scene initializeMenu() {
@@ -34,7 +32,7 @@ public class StartMenu {
         layout.setAlignment(Pos.CENTER);
 
         // Title Text
-        Label title = StyleManager.createStyledLabel("F-15 - Strike Eagle", true, 0.1);
+        Label title = StyleManager.createStyledLabel(Config.gameTitle, true, 0.1);
 
         Button startGameButton = StyleManager.createStyledButton("Start Game");
         startGameButton.setOnAction(e -> {

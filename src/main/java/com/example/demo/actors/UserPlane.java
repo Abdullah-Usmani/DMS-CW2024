@@ -2,23 +2,22 @@ package com.example.demo.actors;
 
 import com.example.demo.Config;
 import com.example.demo.managers.AudioManager;
-import javafx.scene.image.Image;
 
 public class UserPlane extends FighterPlane {
 
 	private static final int SCREEN_HEIGHT = Config.getScreenHeight();
 	private static final int SCREEN_WIDTH = Config.getScreenWidth();
-	private static final String IMAGE_NAME = Config.USER_IMAGE;
-	private static final double SCALAR = Config.USER_SCALAR;
+	private static final String IMAGE_NAME = Config.userImage;
+	private static final double SCALAR = Config.userScalar;
 	private static final int IMAGE_HEIGHT =  (int) (SCREEN_HEIGHT * SCALAR);
 	private static final int IMAGE_WIDTH =  (int) (SCREEN_WIDTH * SCALAR);  // Dynamically get width
-	private static final double INITIAL_X_POSITION = SCREEN_WIDTH * Config.USER_INITIAL_X_POSITION_SCALAR;
-	private static final double INITIAL_Y_POSITION = SCREEN_HEIGHT * Config.USER_INITIAL_Y_POSITION_SCALAR;
+	private static final double INITIAL_X_POSITION = SCREEN_WIDTH * Config.userInitialXPositionScalar;
+	private static final double INITIAL_Y_POSITION = SCREEN_HEIGHT * Config.userInitialYPositionScalar;
 	private static final double Y_UPPER_BOUND = 0;
 	private static final double Y_LOWER_BOUND = (double) SCREEN_HEIGHT - 2*IMAGE_HEIGHT;
-	private static final double VERTICAL_VELOCITY = Config.USER_VERTICAL_VELOCITY;
-	private static final long GUN_COOLDOWN = Config.USER_GUN_COOLDOWN; // Cooldown in milliseconds
-	private static final long MISSILE_COOLDOWN = Config.USER_MISSILE_COOLDOWN; // Cooldown in milliseconds
+	private static final double VERTICAL_VELOCITY = Config.userVerticalVelocity;
+	private static final long GUN_COOLDOWN = Config.userGunCooldown; // Cooldown in milliseconds
+	private static final long MISSILE_COOLDOWN = Config.userMissileCooldown; // Cooldown in milliseconds
 	private int velocityMultiplier;
 	private int numberOfHits;
 	private int numberOfKills;
@@ -52,7 +51,7 @@ public class UserPlane extends FighterPlane {
 		long currentTime = System.currentTimeMillis();
 		if (currentTime - lastFiredTime >= GUN_COOLDOWN) { // Check cooldown
 			lastFiredTime = currentTime; // Update last fired time
-			AudioManager.playAudio(Config.FRIENDLY_GUN_AUDIO); // Play user-specific Audio
+			AudioManager.playAudio(Config.friendlyGunAudio); // Play user-specific Audio
 			return new UserProjectile(getProjectileXPosition(), getProjectileYPosition());
 		} else {
 			return null;
@@ -63,7 +62,7 @@ public class UserPlane extends FighterPlane {
 		long currentTime = System.currentTimeMillis();
 		if (currentTime - lastFiredTime >= MISSILE_COOLDOWN) { // Check cooldown
 			lastFiredTime = currentTime; // Update last fired time
-			AudioManager.playAudio(Config.FRIENDLY_MISSILE_AUDIO); // Play enemy-specific Audio
+			AudioManager.playAudio(Config.friendlyMissileAudio); // Play enemy-specific Audio
 			return new UserMissile(getProjectileXPosition(), getProjectileYPosition());
 		} else {
 			return null;
