@@ -33,6 +33,10 @@ public class AudioManager {
         playAudio(Config.TRANSITION_AUDIO);
     }
 
+    public static void startAudio() {
+        playAudio(Config.START_AUDIO);
+    }
+
     public static void backgroundOST() {
         playAudio(Config.BACKGROUND_AUDIO);
     }

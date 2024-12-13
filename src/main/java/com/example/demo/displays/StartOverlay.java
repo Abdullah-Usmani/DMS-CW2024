@@ -6,14 +6,18 @@ import javafx.animation.PauseTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class StartOverlay {
     private final Group root;
@@ -27,18 +31,21 @@ public class StartOverlay {
     public void showLevelOverlay(String levelName, List<ActorInfo> actorsInfo, int killsNeeded) {
         // Create the overlay container
         StackPane overlay = new StackPane();
-        overlay.setStyle("-fx-background-color: black;"); // Black background
         overlay.setPrefSize(root.getScene().getWidth(), root.getScene().getHeight());
+
+        // Semi-transparent overlay
+        Rectangle semiTransparentOverlay = new Rectangle(Config.getScreenWidth(), Config.getScreenHeight());
+        semiTransparentOverlay.setFill(Color.rgb(0, 0, 0, 0.6)); // Black with 60% opacity
 
         // Main overlay label for the level info
         Label overlayText = new Label(
                 "Level: " + levelName + "\n" +
                         "Kills Needed: " + killsNeeded
         );
-        overlayText.setStyle("-fx-font-family: 'Arial'; " +
-                "-fx-font-size: 36px; " +
-                "-fx-text-fill: #00ffff; " + // Neon blue color
-                "-fx-effect: dropshadow(gaussian, #00ffff, 15, 0.5, 0, 0);");
+        overlayText.setStyle("-fx-font-family: 'HornetDisplay-Bold'; " +
+                "-fx-font-size: " + (Config.getScreenHeight() * 0.05) + "px; " +
+                "-fx-text-fill: #00FF00; " + // Neon green color
+                "-fx-effect: dropshadow(gaussian, #00FF00, 15, 0.5, 0, 0);");
 
         // Create separate lists for each category
         List<ActorInfo> userPlanes = new ArrayList<>();
@@ -62,6 +69,7 @@ public class StartOverlay {
                 }
             }
         }
+
         // Create boxes for each category
         VBox userPlanesBox = createCategoryBox("User Planes", userPlanes);
         VBox userProjectilesBox = createCategoryBox("User Projectiles", userProjectiles);
@@ -69,14 +77,15 @@ public class StartOverlay {
         VBox enemyProjectilesBox = createCategoryBox("Enemy Projectiles", enemyProjectiles);
 
         // Layout the categories in an HBox
-        HBox categoriesBox = new HBox(20, userPlanesBox, userProjectilesBox, enemyPlanesBox, enemyProjectilesBox);
+        HBox categoriesBox = new HBox(Config.getScreenWidth() * 0.02, userPlanesBox, userProjectilesBox, enemyPlanesBox, enemyProjectilesBox);
         categoriesBox.setAlignment(Pos.TOP_CENTER);
 
         // Combine everything into the overlay
-        VBox overlayContent = new VBox(20, overlayText, categoriesBox); // Spacing of 20
+        VBox overlayContent = new VBox(Config.getScreenHeight() * 0.03, overlayText, categoriesBox);
         overlayContent.setAlignment(Pos.CENTER);
 
-        overlay.getChildren().add(overlayContent);
+        // Add everything to the overlay
+        overlay.getChildren().addAll(semiTransparentOverlay, overlayContent);
         root.getChildren().add(overlay);
 
         // Fade-out transition for the overlay
@@ -100,12 +109,15 @@ public class StartOverlay {
     // Create a function to generate a VBox for each category
     public VBox createCategoryBox(String title, List<ActorInfo> actors) {
         Label titleLabel = new Label(title);
-        titleLabel.setStyle("-fx-font-family: 'Arial'; -fx-font-size: 24px; -fx-text-fill: white;");
-        VBox categoryBox = new VBox(10, titleLabel); // Spacing of 10
+        titleLabel.setStyle("-fx-font-family: 'HornetDisplay-Regular'; " +
+                "-fx-font-size: " + (Config.getScreenHeight() * 0.03) + "px; " +
+                "-fx-text-fill: #FFFF00;"); // Yellow color
+
+        VBox categoryBox = new VBox(Config.getScreenHeight() * 0.02, titleLabel); // Dynamic spacing
         categoryBox.setAlignment(Pos.TOP_CENTER);
 
         for (ActorInfo info : actors) {
-            HBox actorRow = new HBox(20);
+            HBox actorRow = new HBox(Config.getScreenWidth() * 0.01);
             actorRow.setAlignment(Pos.CENTER_LEFT);
 
             ImageView actorImage = new ImageView(getClass().getResource(info.imagePath).toExternalForm());
@@ -113,13 +125,20 @@ public class StartOverlay {
             actorImage.setFitHeight(Config.getScreenHeight() * 0.04);
 
             Label actorName = new Label(info.name);
-            actorName.setStyle("-fx-font-family: 'Arial'; -fx-font-size: 16px; -fx-text-fill: white;");
+            actorName.setStyle("-fx-font-family: 'HornetDisplay-Regular'; -fx-font-size: " +
+                    (Config.getScreenHeight() * 0.025) + "px; -fx-text-fill: white;");
 
-            String typeText = info.isPlane ? "Health: " : "Damage: ";
-            Label actorStat = new Label(typeText + info.statValue);
-            actorStat.setStyle("-fx-font-family: 'Arial'; -fx-font-size: 16px; -fx-text-fill: white;");
+            ImageView statIcon = new ImageView(
+                    new Image(Objects.requireNonNull(getClass().getResourceAsStream(info.isPlane ? Config.HEART_IMAGE : Config.KILL_IMAGE)))
+            );
+            statIcon.setFitWidth(Config.getScreenWidth() * 0.02);
+            statIcon.setFitHeight(Config.getScreenWidth() * 0.02);
 
-            actorRow.getChildren().addAll(actorImage, actorName, actorStat);
+            Label actorStat = new Label(""+info.statValue);
+            actorStat.setStyle("-fx-font-family: 'HornetDisplay-Regular'; -fx-font-size: " +
+                    (Config.getScreenHeight() * 0.025) + "px; -fx-text-fill: white;");
+
+            actorRow.getChildren().addAll(actorImage, actorName, statIcon, actorStat);
             categoryBox.getChildren().add(actorRow);
         }
         return categoryBox;

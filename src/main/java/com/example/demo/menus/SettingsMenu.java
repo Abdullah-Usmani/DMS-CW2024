@@ -20,11 +20,12 @@ public class SettingsMenu {
 
     public Scene initializeMenu() {
         // Message for disabled dropdown
-        Label messageLabel = new Label();
+        // Title Text
+        Label messageLabel = StyleManager.createStyledLabel("Resolution changes can only be made on the first run.", false, 0.05);
         messageLabel.setVisible(false); // Initially hidden
 
         // Resolution dropdown
-        ComboBox<String> resolutionDropdown = new ComboBox<>();
+        ComboBox<String> resolutionDropdown = StyleManager.createStyledDropdown();
         resolutionDropdown.getItems().addAll(
                 "800x600",
                 "1024x768",
@@ -50,19 +51,17 @@ public class SettingsMenu {
                 // Disable resolution changes
                 resolutionDropdown.setDisable(true);
                 applySettingsButton.setDisable(true);
-                messageLabel.setText("Resolution changes can only be made on the first run.");
                 messageLabel.setVisible(true);
             }
         });
 
         // Back to Main Menu button
-        Button backButton = new Button("Back");
+        Button backButton = StyleManager.createStyledButton("Back");
         backButton.setOnAction(e -> goToStartMenu());
 
         // Check if it's the first run
         if (!Config.isFirstRun()) {
             resolutionDropdown.setDisable(true);
-            messageLabel.setText("Resolution changes can only be made on the first run.");
             messageLabel.setVisible(true);
             applySettingsButton.setDisable(true);
         }

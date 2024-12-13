@@ -1,6 +1,7 @@
 package com.example.demo.displays;
 
 import com.example.demo.Config;
+import com.example.demo.managers.StyleManager;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,10 +13,10 @@ public class KillDisplay {
 	private static final double KILL_HEIGHT = Config.KILL_SIZE;
 
 	private HBox container;
-	private double containerXPosition;
-	private double containerYPosition;
+	private final double containerXPosition;
+	private final double containerYPosition;
 	private Label killCounter; // To display the kill count
-	private int killsNeeded;         // Tracks the current kill count
+	private final int killsNeeded;         // Tracks the current kill count
 
 	public KillDisplay(double xPosition, double yPosition, int killsNeeded) {
 		this.containerXPosition = xPosition;
@@ -39,9 +40,7 @@ public class KillDisplay {
 		kill.setPreserveRatio(true);
 
 		// Kill Counter Label
-		killCounter = new Label(""+0); // Initial kill count
-		killCounter.setStyle("-fx-font-size: 20px; -fx-text-fill: black;"); // Optional styling
-
+		killCounter = StyleManager.createStyledLabel("" + 0, true, 0.025); // Initial kill count
 		// Add the image and label to the container
 		container.getChildren().addAll(kill, killCounter);
 	}

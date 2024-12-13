@@ -53,7 +53,6 @@ public class LevelTwo extends LevelParent {
 		}
 		else if (userHasReachedKillTarget()) {
 			goToNextLevel(NEXT_LEVEL);
-			logger.info("Going to next level");
 		}
 	}
 

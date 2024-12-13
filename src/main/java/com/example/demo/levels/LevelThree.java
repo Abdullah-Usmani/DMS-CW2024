@@ -55,8 +55,7 @@ public class LevelThree extends LevelParent {
 			endGame(false);
 		}
 		else if (userHasReachedKillTarget()) {
-			goToNextLevel(NEXT_LEVEL);
-			logger.info("Going to next level");
+			goToNextLevel(NEXT_LEVEL);;
 		}
 	}
 

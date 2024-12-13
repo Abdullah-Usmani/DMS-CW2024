@@ -49,7 +49,7 @@ public class LevelOne extends LevelParent {
 			endGame(false);
 		} else if (userHasReachedKillTarget()) {
 			goToNextLevel(NEXT_LEVEL);
-			logger.info("Going to next level");
+//			logger.info("Going to next level");
 		}
 	}
 

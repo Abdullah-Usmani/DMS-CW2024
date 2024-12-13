@@ -34,6 +34,7 @@ public class Controller implements Observer {
 	public void launchGame() {
 		try {
 			stage.show();
+			AudioManager.startAudio();
 			goToLevel(LEVEL_ONE_CLASS_NAME);
 		} catch (Exception e) {
 			logger.info("Error launching the game: " + e.getMessage());
@@ -57,7 +58,6 @@ public class Controller implements Observer {
 		stage.setScene(scene);
 		currentLevel = myLevel; // Set the current level reference
 		myLevel.initializeLevel();
-		AudioManager.transitionAudio();
 		this.pauseMenuController.setCurrentLevel(currentLevel);
 	}
 

@@ -34,9 +34,10 @@ public class Config {
     public static final String BOSS_MISSILE = IMAGE_PATH + "bossfire.png";
 
     public static final String HEART_IMAGE = IMAGE_PATH + "heart.png";
-    public static final String SHIELD_IMAGE = IMAGE_PATH + "shield.png";
+    public static final String SHIELD_IMAGE = IMAGE_PATH + "shieldbubble.png";
     public static final String KILL_IMAGE = IMAGE_PATH + "killcount.png";
 
+    public static final String START_BACKGROUND = IMAGE_PATH + "backgroundstart.jpg";
     public static final String LEVEL1_BACKGROUND = IMAGE_PATH + "background2.jpg";
     public static final String LEVEL2_BACKGROUND = IMAGE_PATH + "background6.jpg";
     public static final String LEVEL3_BACKGROUND = IMAGE_PATH + "background9.jpg";
@@ -63,9 +64,10 @@ public class Config {
     public static final String ENEMY_GUN_AUDIO = AUDIO_PATH + "enemyfire.mp3";
     public static final String ENEMY_MISSILE_AUDIO = AUDIO_PATH + "enemymissile.mp3";
 
+    public static final String START_AUDIO = AUDIO_PATH + "start-audio.mp3";
+    public static final String TRANSITION_AUDIO = AUDIO_PATH + "nextlevel.mp3";
     public static final String WIN_AUDIO = AUDIO_PATH + "tf2-win.mp3";
     public static final String LOSE_AUDIO = AUDIO_PATH + "tf2-lose.mp3";
-    public static final String TRANSITION_AUDIO = AUDIO_PATH + "nextlevel.mp3";
 
     public static final int LEVEL_ONE_TOTAL_ENEMIES = 5;
     public static final int LEVEL_TWO_TOTAL_ENEMIES = 10;
@@ -151,10 +153,10 @@ public class Config {
     public static double HEART_X_POSITION = .5*HEART_SIZE;
     public static double HEART_Y_POSITION = (.5*HEART_SIZE);
 
-    public static double KILL_X_POSITION = screenWidth - (3*KILL_SIZE);
+    public static double KILL_X_POSITION = screenWidth - (4*KILL_SIZE);
     public static double KILL_Y_POSITION = (.5*KILL_SIZE);
 
-    public static double BOSS_HEALTH_X_POSITION = screenWidth - (6*HEART_SIZE);
+    public static double BOSS_HEALTH_X_POSITION = screenWidth - (7*HEART_SIZE);
     public static double BOSS_HEALTH_Y_POSITION = (.5*HEART_SIZE);
 
     public static double SHIELD_X_POSITION = screenWidth - (8*SHIELD_SIZE);

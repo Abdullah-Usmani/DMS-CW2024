@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -44,9 +45,7 @@ public class PauseMenu extends Parent {
         root.getChildren().add(background);
 
         // Title Text
-        Text title = new Text("Game Paused");
-        title.setFont(Font.loadFont(getClass().getResourceAsStream("/com/example/demo/fonts/Roboto-Regular.ttf"), 40));
-        title.setFill(Color.CYAN); // Neon blue text
+        Label title = StyleManager.createStyledLabel("Game Paused", true, 0.05);
 
         // Buttons
         Button playButton = StyleManager.createStyledButton("Continue");

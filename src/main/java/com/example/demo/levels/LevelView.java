@@ -26,7 +26,7 @@ public class LevelView {
 		this.killDisplay = new KillDisplay(KILL_DISPLAY_X_POSITION, KILL_DISPLAY_Y_POSITION, killsNeeded);
 		this.winImage = new WinImage();
 		this.loseImage = new LoseImage();
-		this.shieldImage = new ShieldImage(SHIELD_X_POSITION, SHIELD_Y_POSITION);
+		this.shieldImage = new ShieldImage(Config.BOSS_INITIAL_X_POSITION, Config.BOSS_INITIAL_Y_POSITION);
 	}
 
 	public void showHeartDisplay() {

@@ -1,6 +1,7 @@
 package com.example.demo.menus;
 
 import com.example.demo.Config;
+import com.example.demo.managers.StyleManager;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,15 +22,15 @@ public class HelpMenu {
         VBox layout = new VBox(20);
         layout.setAlignment(Pos.CENTER);
 
-        Label helpLabel = new Label("""
+        Label helpLabel = StyleManager.createStyledLabel("""
                 Game Controls:
                 - Arrow Keys: Move Up/Down
                 - Space: Fire Projectile
                 - M: Fire Missile
-                - P: Pause Game""");
+                - P: Pause Game""", false, 0.1);
         helpLabel.setStyle("-fx-font-family: 'Arial'; -fx-font-size: 18px; -fx-text-fill: black;");
 
-        Button backButton = new Button("Back");
+        Button backButton = StyleManager.createStyledButton("Back");
         backButton.setOnAction(e -> goToStartMenu());
 
         layout.getChildren().addAll(helpLabel, backButton);

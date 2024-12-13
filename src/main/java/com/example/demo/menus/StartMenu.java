@@ -6,20 +6,35 @@ import com.example.demo.managers.StyleManager;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.awt.*;
 
 public class StartMenu {
 
     private final Stage stage;
+    private final ImageView background;
 
     public StartMenu(Stage stage) {
         this.stage = stage;
+        this.background = new ImageView(new Image(getClass().getResource(Config.START_BACKGROUND).toExternalForm()));
     }
 
     public Scene initializeMenu() {
+        background.setFitWidth(Config.getScreenWidth());
+        background.setFitHeight(Config.getScreenHeight());
+        background.setPreserveRatio(false);
+
         VBox layout = new VBox(20);
         layout.setAlignment(Pos.CENTER);
+
+        // Title Text
+        Label title = StyleManager.createStyledLabel("F-15 - Strike Eagle", true, 0.1);
 
         Button startGameButton = StyleManager.createStyledButton("Start Game");
         startGameButton.setOnAction(e -> {
@@ -46,8 +61,12 @@ public class StartMenu {
         Button exitButton = StyleManager.createStyledButton("Exit");
         exitButton.setOnAction(e -> System.exit(0));
 
-        layout.getChildren().addAll(startGameButton, settingsButton, helpButton, exitButton);
+        layout.getChildren().addAll(title, startGameButton, settingsButton, helpButton, exitButton);
 
-        return new Scene(layout, Config.getScreenWidth(), Config.getScreenHeight());
+        // Combine background and menu using StackPane
+        StackPane root = new StackPane();
+        root.getChildren().addAll(background, layout);
+
+        return new Scene(root, Config.getScreenWidth(), Config.getScreenHeight());
     }
 }

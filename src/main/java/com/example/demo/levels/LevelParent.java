@@ -283,9 +283,19 @@ public abstract class LevelParent extends Observable {
 	 * @param levelName the name of the next level.
 	 */
 	public void goToNextLevel(String levelName) {
-		gameLoop.stop();
-		setChanged();
-		notifyObservers(levelName);
+		if (isGameOver) {
+			return; // Prevent duplicate execution
+		}
+
+		isGameOver = true; // Set the flag to true
+		PauseTransition transition = new PauseTransition();
+		transition.setOnFinished(event -> {
+			AudioManager.transitionAudio();
+			stopGame();
+			setChanged();
+			notifyObservers(levelName);
+		});
+		transition.play();
 	}
 
 	/**
