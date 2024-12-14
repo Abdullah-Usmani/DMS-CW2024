@@ -92,7 +92,7 @@ public class PauseMenuController {
     /**
      * Restarts the current level by delegating to the main controller.
      */
-    private void restartCurrentLevel() {
+    void restartCurrentLevel() {
         isPaused = false;
         controller.restartCurrentLevel();
     }
@@ -100,7 +100,7 @@ public class PauseMenuController {
     /**
      * Restarts the game by delegating to the main controller.
      */
-    private void restartGame() {
+    void restartGame() {
         isPaused = false;
         controller.restartGame();
     }
@@ -108,8 +108,12 @@ public class PauseMenuController {
     /**
      * Returns to the main menu by delegating to the main controller.
      */
-    private void goToMainMenu() {
+    void goToMainMenu() {
         isPaused = false;
         controller.goToMainMenu();
+    }
+
+    public boolean isPaused() {
+        return isPaused;
     }
 }

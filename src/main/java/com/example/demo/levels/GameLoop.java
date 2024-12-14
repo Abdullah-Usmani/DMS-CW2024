@@ -17,7 +17,7 @@ import javafx.util.Duration;
 public class GameLoop {
 
     /** Timeline for managing the game loop. */
-    private final Timeline timeline;
+    final Timeline timeline;
 
     /**
      * Constructs a GameLoop with the specified action and interval.

@@ -9,10 +9,10 @@ package com.example.demo.levels;
 import com.example.demo.Config;
 import com.example.demo.actors.EnemyPlane;
 import com.example.demo.actors.EnemyPlane2;
+import com.example.demo.actors.EnemyPlane3;
 import com.example.demo.displays.ActorInfo;
 
 import java.util.*;
-import java.util.logging.Logger;
 
 /**
  * LevelThree defines the game logic for the third level, including enemy spawns
@@ -26,9 +26,8 @@ public class LevelThree extends LevelParent {
 	private static final int KILLS_TO_ADVANCE = Config.LEVEL_THREE_KILLS_TO_ADVANCE;
 	private static final double ENEMY1_SPAWN_PROBABILITY = Config.ENEMY1_SPAWN_PROBABILITY;
 	private static final double ENEMY2_SPAWN_PROBABILITY = Config.ENEMY2_SPAWN_PROBABILITY;
+	private static final double ENEMY3_SPAWN_PROBABILITY = Config.ENEMY3_SPAWN_PROBABILITY;
 	private static final int PLAYER_INITIAL_HEALTH = Config.LEVEL_THREE_INITIAL_HEALTH;
-
-	Logger logger = Logger.getLogger(getClass().getName());
 
 	/**
 	 * Constructs a LevelThree instance with the specified screen dimensions.
@@ -71,7 +70,9 @@ public class LevelThree extends LevelParent {
 				new ActorInfo("F-15", Config.USER_IMAGE, PLAYER_INITIAL_HEALTH, true, true),
 				new ActorInfo("F-16", Config.ENEMY1_IMAGE, 1, false, true),
 				new ActorInfo("MiG-29", Config.ENEMY2_IMAGE, 2, false, true),
+				new ActorInfo("A-10C", Config.ENEMY3_IMAGE, 3, false, true),
 				new ActorInfo("Enemy Guns", Config.ENEMY_GUN, 1, false, false),
+				new ActorInfo("R-33", Config.ENEMY_MISSILE, 3, false, false),
 				new ActorInfo("Guns", Config.FRIENDLY_GUN, 1, true, false),
 				new ActorInfo("Sidewinder", Config.FRIENDLY_MISSILE, 3, true,false)
 		);
@@ -112,6 +113,11 @@ public class LevelThree extends LevelParent {
 			if (Math.random() < ENEMY2_SPAWN_PROBABILITY) {
 				double newEnemyInitialYPosition = Math.random() * getEnemyMaximumYPosition();
 				EnemyPlane2 newEnemy = new EnemyPlane2(Config.getScreenWidth(), newEnemyInitialYPosition);
+				addEnemyUnit(newEnemy);
+			}
+			if (Math.random() < ENEMY3_SPAWN_PROBABILITY) {
+				double newEnemyInitialYPosition = Math.random() * getEnemyMaximumYPosition();
+				EnemyPlane3 newEnemy = new EnemyPlane3(Config.getScreenWidth(), newEnemyInitialYPosition);
 				addEnemyUnit(newEnemy);
 			}
 		}

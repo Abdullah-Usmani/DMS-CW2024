@@ -8,7 +8,7 @@ package com.example.demo.levels;
 import com.example.demo.Config;
 import com.example.demo.actors.BossPlane;
 import com.example.demo.displays.ActorInfo;
-import com.example.demo.displays.BossHealthDisplay;
+import com.example.demo.displays.BossHeartDisplay;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class LevelBoss extends LevelParent {
 	private static final int PLAYER_INITIAL_HEALTH = Config.LEVEL_BOSS_INITIAL_HEALTH;
 
 	private final BossPlane bossPlane;
-	private final BossHealthDisplay bossHealthDisplay;
+	private final BossHeartDisplay bossHeartDisplay;
 
 	/**
 	 * Constructs a LevelBoss instance with the specified screen dimensions.
@@ -32,9 +32,8 @@ public class LevelBoss extends LevelParent {
 	 */
 	public LevelBoss(double screenHeight, double screenWidth) {
 		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
-
 		this.bossPlane = new BossPlane();
-		this.bossHealthDisplay = new BossHealthDisplay(Config.BOSS_HEALTH_X_POSITION, Config.BOSS_HEALTH_Y_POSITION, bossPlane.getHealth());
+		this.bossHeartDisplay = new BossHeartDisplay(Config.BOSS_HEALTH_X_POSITION, Config.BOSS_HEALTH_Y_POSITION, bossPlane.getHealth());
 	}
 
 	/**
@@ -67,7 +66,7 @@ public class LevelBoss extends LevelParent {
 		return List.of(
 				new ActorInfo("F-15", Config.USER_IMAGE, PLAYER_INITIAL_HEALTH, true, true),
 				new ActorInfo("C-17", Config.BOSS_IMAGE, 1, false, true),
-				new ActorInfo("R-33", Config.BOSS_MISSILE, 3, false, false),
+				new ActorInfo("Hellfire", Config.BOSS_MISSILE, 3, false, false),
 				new ActorInfo("Guns", Config.FRIENDLY_GUN, 1, true, false),
 				new ActorInfo("Sidewinder", Config.FRIENDLY_MISSILE, 3, true, false)
 		);
@@ -88,7 +87,7 @@ public class LevelBoss extends LevelParent {
 	protected void spawnEnemyUnits() {
 		if (getCurrentNumberOfEnemies() == 0 && !bossPlane.isDestroyed()) {
 			addEnemyUnit(bossPlane);
-			getRoot().getChildren().add(bossHealthDisplay.getContainer());
+			getRoot().getChildren().add(bossHeartDisplay.getContainer());
 			getRoot().getChildren().add(bossPlane.getShieldDisplay());
 		}
 	}
@@ -98,7 +97,7 @@ public class LevelBoss extends LevelParent {
 	 */
 	@Override
 	protected void checkIfGameOver() {
-		bossHealthDisplay.updateHealth(bossPlane.getHealth());
+		bossHeartDisplay.updateHealth(bossPlane.getHealth());
 		if (userIsDestroyed()) {
 			endGame(false);
 		} else if (bossPlane.isDestroyed()) {

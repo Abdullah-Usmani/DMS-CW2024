@@ -68,7 +68,7 @@ public abstract class ActiveActorDestructible extends ActiveActor {
 	/**
 	 * Sets the destruction state of the actor.
 	 */
-	protected void setDestroyed() {
+    public void setDestroyed() {
 		this.isDestroyed = true;
 	}
 
@@ -107,21 +107,21 @@ public abstract class ActiveActorDestructible extends ActiveActor {
 	}
 
 	/**
-	 * Gets the current health of the actor.
-	 *
-	 * @return the health of the actor.
-	 */
-	public int getHealth() {
-		return health;
-	}
-
-	/**
 	 * Sets the health of the actor.
 	 *
 	 * @param health the new health value.
 	 */
 	public void setHealth(int health) {
 		this.health = health;
+	}
+
+	/**
+	 * Gets the current health of the actor.
+	 *
+	 * @return the health of the actor.
+	 */
+	public int getHealth() {
+		return health;
 	}
 
 	/**

@@ -6,7 +6,7 @@ package com.example.demo.actors;
 
 public class Projectile extends ActiveActorDestructible {
 
-	private final double horizontalVelocity;
+	final double horizontalVelocity;
 	private final int damageMultiplier;
 	private final String imageName;
 

@@ -11,7 +11,6 @@ import com.example.demo.actors.EnemyPlane;
 import com.example.demo.displays.ActorInfo;
 
 import java.util.*;
-import java.util.logging.Logger;
 
 /**
  * LevelOne defines the game logic for the first level, including enemy spawns
@@ -25,8 +24,6 @@ public class LevelOne extends LevelParent {
 	private static final int KILLS_TO_ADVANCE = Config.LEVEL_ONE_KILLS_TO_ADVANCE;
 	private static final double ENEMY1_SPAWN_PROBABILITY = Config.ENEMY1_SPAWN_PROBABILITY;
 	private static final int PLAYER_INITIAL_HEALTH = Config.LEVEL_ONE_INITIAL_HEALTH;
-
-	Logger logger = Logger.getLogger(getClass().getName());
 
 	/**
 	 * Constructs a LevelOne instance with the specified screen dimensions.

@@ -46,7 +46,7 @@ public class EnemyPlane2 extends FighterPlane {
 	@Override
 	public ActiveActorDestructible fireProjectile() {
 		if (Math.random() < FIRE_RATE) {
-			AudioManager.playAudio(Config.ENEMY_GUN_AUDIO); // Play enemy-specific Audio
+			playFiringAudio(Config.ENEMY_GUN_AUDIO); // Play enemy-specific Audio
 			return new EnemyProjectile(getProjectileXPosition(), getProjectileYPosition());
 		}
 		return null;

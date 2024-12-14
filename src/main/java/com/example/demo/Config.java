@@ -14,7 +14,7 @@ public class Config {
     /**
      * Private constructor to prevent instantiation of the Config class.
      */
-    private Config() {
+    Config() {
         throw new IllegalStateException("Config class");
     }
 
@@ -97,11 +97,11 @@ public class Config {
     /**
      * Background images for various game states and levels.
      */
-    public static final String START_BACKGROUND = IMAGE_PATH + "backgroundstart2.jpg";
-    public static final String LEVEL1_BACKGROUND = IMAGE_PATH + "background2.jpg";
-    public static final String LEVEL2_BACKGROUND = IMAGE_PATH + "background6.jpg";
-    public static final String LEVEL3_BACKGROUND = IMAGE_PATH + "background9.jpg";
-    public static final String LEVELBOSS_BACKGROUND = IMAGE_PATH + "background10.jpg";
+    public static final String START_BACKGROUND = IMAGE_PATH + "backgroundstart.jpg";
+    public static final String LEVEL1_BACKGROUND = IMAGE_PATH + "background1.jpg";
+    public static final String LEVEL2_BACKGROUND = IMAGE_PATH + "background2.jpg";
+    public static final String LEVEL3_BACKGROUND = IMAGE_PATH + "background3.jpg";
+    public static final String LEVELBOSS_BACKGROUND = IMAGE_PATH + "background4.jpg";
 
     // Audio Resources
 
@@ -151,8 +151,8 @@ public class Config {
      */
     public static final int LEVEL_ONE_INITIAL_HEALTH = 5;
     public static final int LEVEL_TWO_INITIAL_HEALTH = 10;
-    public static final int LEVEL_THREE_INITIAL_HEALTH = 15;
-    public static final int LEVEL_BOSS_INITIAL_HEALTH = 5;
+    public static final int LEVEL_THREE_INITIAL_HEALTH = 10;
+    public static final int LEVEL_BOSS_INITIAL_HEALTH = 7;
 
     /**
      * Level-based constants - Enemy Spawn Probabilities
@@ -182,7 +182,7 @@ public class Config {
     public static int BOSS_Y_POSITION_LOWER_BOUND = screenHeight - (2*BOSS_IMAGE_HEIGHT) - BOSS_Y_POSITION_UPPER_BOUND;
     public static int BOSS_VERTICAL_VELOCITY = (int) (screenHeight * .0075);
     public static final double BOSS_FIRE_RATE = .04;
-    public static final double BOSS_SHIELD_PROBABILITY = .05;
+    public static final double BOSS_SHIELD_PROBABILITY = .02;
     public static final int BOSS_HEALTH = 15;
     public static final int MOVE_FREQUENCY_PER_CYCLE = 5;
     public static final int MAX_FRAMES_WITH_SAME_MOVE = 10;
@@ -257,7 +257,7 @@ public class Config {
     public static double HEART_Y_POSITION = (.5*HEART_SIZE);
     public static double KILL_X_POSITION = screenWidth - (4*KILL_SIZE);
     public static double KILL_Y_POSITION = (.5*KILL_SIZE);
-    public static double BOSS_HEALTH_X_POSITION = screenWidth - (6*HEART_SIZE);
+    public static double BOSS_HEALTH_X_POSITION = screenWidth - (7*HEART_SIZE);
     public static double BOSS_HEALTH_Y_POSITION = (.5*HEART_SIZE);
 
     /**
@@ -346,7 +346,7 @@ public class Config {
         EXPLOSION_SIZE = screenWidth*.05;
         HEART_X_POSITION = .5*HEART_SIZE;
         KILL_X_POSITION = screenWidth - (4*KILL_SIZE);
-        BOSS_HEALTH_X_POSITION = screenWidth - (6*HEART_SIZE);
+        BOSS_HEALTH_X_POSITION = screenWidth - (7*HEART_SIZE);
         HEART_Y_POSITION = (.5*HEART_SIZE);
         KILL_Y_POSITION = (.5*KILL_SIZE);
         BOSS_HEALTH_Y_POSITION = (.5*HEART_SIZE);

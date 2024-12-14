@@ -33,7 +33,7 @@ public class Controller implements Observer {
 	private final Stage stage;
 
 	/** The controller for the pause menu. */
-	private final PauseMenuController pauseMenuController;
+	final PauseMenuController pauseMenuController;
 
 	/** The currently active level. */
 	private LevelParent currentLevel;
@@ -101,7 +101,7 @@ public class Controller implements Observer {
 	 *
 	 * @param event the key event to handle.
 	 */
-	private void handleKeyPress(KeyEvent event) {
+    void handleKeyPress(KeyEvent event) {
 		if (event.getCode() == KeyCode.P) {
 			pauseMenuController.togglePauseMenu();
 		}

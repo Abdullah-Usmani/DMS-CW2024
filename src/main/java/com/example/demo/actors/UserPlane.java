@@ -72,7 +72,7 @@ public class UserPlane extends FighterPlane {
 		long currentTime = System.currentTimeMillis();
 		if (currentTime - lastFiredTime >= GUN_COOLDOWN) { // Check cooldown
 			lastFiredTime = currentTime; // Update last fired time
-			AudioManager.playAudio(Config.FRIENDLY_GUN_AUDIO); // Play user-specific Audio
+			playFiringAudio(Config.FRIENDLY_GUN_AUDIO); // Play user-specific Audio
 			return new UserProjectile(getProjectileXPosition(), getProjectileYPosition());
 		} else {
 			return null;
@@ -88,7 +88,7 @@ public class UserPlane extends FighterPlane {
 		long currentTime = System.currentTimeMillis();
 		if (currentTime - lastFiredTime >= MISSILE_COOLDOWN) { // Check cooldown
 			lastFiredTime = currentTime; // Update last fired time
-			AudioManager.playAudio(Config.FRIENDLY_MISSILE_AUDIO); // Play enemy-specific Audio
+			playFiringAudio(Config.FRIENDLY_MISSILE_AUDIO); // Play enemy-specific Audio
 			return new UserMissile(getProjectileXPosition(), getProjectileYPosition());
 		} else {
 			return null;

@@ -21,10 +21,10 @@ public class LevelView {
 	private static final double KILL_DISPLAY_Y_POSITION = Config.KILL_Y_POSITION;
 
 	private final Group root;
-	private final WinImage winImage;
-	private final LoseImage loseImage;
-	private final HeartDisplay heartDisplay;
-	private final KillDisplay killDisplay;
+	final WinImage winImage;
+	final LoseImage loseImage;
+	final HeartDisplay heartDisplay;
+	final KillDisplay killDisplay;
 
 	/**
 	 * Constructs a LevelView instance with specified configurations.

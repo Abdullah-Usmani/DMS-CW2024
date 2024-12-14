@@ -6,6 +6,7 @@ package com.example.demo.actors;
 
 import com.example.demo.Config;
 import com.example.demo.displays.ShieldDisplay;
+import com.example.demo.managers.AudioManager;
 
 import java.util.*;
 
@@ -64,6 +65,47 @@ public class BossPlane extends FighterPlane {
 	}
 
 	/**
+	 * Updates the boss plane's position and manages shield activation and deactivation.
+	 */
+	@Override
+	public void updateActor() {
+		updatePosition();
+		updateShield();
+	}
+
+	/**
+	 * Retrieves the next movement value from the boss's move pattern.
+	 *
+	 * @return the next move value.
+	 */
+	private int getNextMove() {
+		int currentMove = movePattern.get(indexOfCurrentMove);
+		consecutiveMovesInSameDirection++;
+		if (consecutiveMovesInSameDirection == MAX_FRAMES_WITH_SAME_MOVE) {
+			Collections.shuffle(movePattern);
+			consecutiveMovesInSameDirection = 0;
+			indexOfCurrentMove++;
+		}
+		if (indexOfCurrentMove == movePattern.size()) {
+			indexOfCurrentMove = 0;
+		}
+		return currentMove;
+	}
+
+	/**
+	 * Initializes the movement pattern for the boss plane.
+	 * Alternates between vertical velocities and stationary moves.
+	 */
+	private void initializeMovePattern() {
+		for (int i = 0; i < MOVE_FREQUENCY_PER_CYCLE; i++) {
+			movePattern.add(VERTICAL_VELOCITY);
+			movePattern.add(-VERTICAL_VELOCITY);
+			movePattern.add(0);
+		}
+		Collections.shuffle(movePattern);
+	}
+
+	/**
 	 * Updates the shield's position to follow the boss plane.
 	 */
 	private void updateShieldPosition() {
@@ -79,15 +121,6 @@ public class BossPlane extends FighterPlane {
 	 */
 	public ShieldDisplay getShieldDisplay() {
 		return shieldDisplay;
-	}
-
-	/**
-	 * Updates the boss plane's position and manages shield activation and deactivation.
-	 */
-	@Override
-	public void updateActor() {
-		updatePosition();
-		updateShield();
 	}
 
 	/**
@@ -144,14 +177,14 @@ public class BossPlane extends FighterPlane {
 	/**
 	 * Activates the boss's shield.
 	 */
-	private void activateShield() {
+    void activateShield() {
 		isShielded = true;
 	}
 
 	/**
 	 * Deactivates the boss's shield and resets shield activation frames.
 	 */
-	private void deactivateShield() {
+    void deactivateShield() {
 		isShielded = false;
 		framesWithShieldActivated = 0;
 	}
@@ -159,7 +192,7 @@ public class BossPlane extends FighterPlane {
 	/**
 	 * Manages the state of the boss's shield, including activation and deactivation.
 	 */
-	private void updateShield() {
+    void updateShield() {
 		if (isShielded) {
 			framesWithShieldActivated++;
 		} else if (shieldShouldBeActivated()) {
@@ -170,37 +203,5 @@ public class BossPlane extends FighterPlane {
 			deactivateShield();
 			shieldDisplay.hideShield();
 		}
-	}
-
-	/**
-	 * Retrieves the next movement value from the boss's move pattern.
-	 *
-	 * @return the next move value.
-	 */
-	private int getNextMove() {
-		int currentMove = movePattern.get(indexOfCurrentMove);
-		consecutiveMovesInSameDirection++;
-		if (consecutiveMovesInSameDirection == MAX_FRAMES_WITH_SAME_MOVE) {
-			Collections.shuffle(movePattern);
-			consecutiveMovesInSameDirection = 0;
-			indexOfCurrentMove++;
-		}
-		if (indexOfCurrentMove == movePattern.size()) {
-			indexOfCurrentMove = 0;
-		}
-		return currentMove;
-	}
-
-	/**
-	 * Initializes the movement pattern for the boss plane.
-	 * Alternates between vertical velocities and stationary moves.
-	 */
-	private void initializeMovePattern() {
-		for (int i = 0; i < MOVE_FREQUENCY_PER_CYCLE; i++) {
-			movePattern.add(VERTICAL_VELOCITY);
-			movePattern.add(-VERTICAL_VELOCITY);
-			movePattern.add(0);
-		}
-		Collections.shuffle(movePattern);
 	}
 }

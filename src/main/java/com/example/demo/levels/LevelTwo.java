@@ -12,7 +12,6 @@ import com.example.demo.actors.EnemyPlane2;
 import com.example.demo.displays.ActorInfo;
 
 import java.util.*;
-import java.util.logging.Logger;
 
 /**
  * LevelTwo defines the game logic for the second level, including enemy spawns
@@ -27,8 +26,6 @@ public class LevelTwo extends LevelParent {
 	private static final double ENEMY1_SPAWN_PROBABILITY = Config.ENEMY1_SPAWN_PROBABILITY;
 	private static final double ENEMY2_SPAWN_PROBABILITY = Config.ENEMY2_SPAWN_PROBABILITY;
 	private static final int PLAYER_INITIAL_HEALTH = Config.LEVEL_TWO_INITIAL_HEALTH;
-
-	Logger logger = Logger.getLogger(getClass().getName());
 
 	/**
 	 * Constructs a LevelTwo instance with the specified screen dimensions.

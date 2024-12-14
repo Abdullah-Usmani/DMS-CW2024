@@ -4,9 +4,7 @@
  */
 package com.example.demo.levels;
 
-import java.time.Duration;
 import java.util.*;
-import java.util.stream.Stream;
 
 import com.example.demo.Config;
 import com.example.demo.actors.*;
@@ -351,7 +349,7 @@ public abstract class LevelParent extends Observable {
 	/**
 	 * Removes destroyed actors from the level.
 	 */
-	private void removeActors() {
+    void removeActors() {
 		removeDestroyedActors(friendlyUnits);
 		removeDestroyedActors(enemyUnits);
 		removeDestroyedActors(friendlyProjectiles);
