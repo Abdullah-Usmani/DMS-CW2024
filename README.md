@@ -178,7 +178,7 @@ To compile and run the project, follow these steps:
 - **UserMissile.java, EnemyProjectile2**:
   - New projectiles having 3 damage each and being replicas of the Sidewinder and R-33 missiles respectively.
 
-### Changed Classes
+### Modified Classes
 
 All classes were updated to include resolution-based scaling logic.
 Most, if not, all hard-coded constants within classes were either removed or moved to Config.java.
@@ -272,14 +272,14 @@ All of these below were not implemented purely on the basis of not having enough
   - The `PowerUp.java` class is created, but no subclasses of it exist yet, nor their implementations. The implementation woould be very simple - the addition of another collision handling function in the `CollisionManager`, adding a `PowerUpManager`, adding new values and images for the proposed `HealthPack` and `IncreaseFireRate` powerups in the `Config`, and adding some audio and visual effects through `AudioManager` and `EffectManager`. Some of these are present in a recent commit, but on the basis of lack of time it was rolled back.
   
 **Unattempted**:
-- Firefight/Endless game mode.
-- Custom game mode: adjust enemies, spawn probabilities, damages.
+- Endless game mode - similar to the waves in the Firefight mode from the HALO series
+- Custom game mode: allow user to adjust enemies, spawn probabilities, damages - similar to the custom night mode from the FNAF series
 - Stat tracking at game end: Time survived, total kills, total hits, projectiles dodged.
 - Day/night cycles.
 - Updated gun/missile cooldown visualizations and game overlays.
-- Level Transition cutscene.
+- Level Transition cutscenes
 - Changeable keybinds.
-- About menu.
+- About menu - serve as a proper tutorial/guide for the user to play the game
 
 ### Refactoring
 
@@ -321,11 +321,14 @@ All of these below were not implemented purely on the basis of not having enough
     - Unaddressed, could be a memory leak issue or due to the reduced millisecond delay. 
 - **Collision handling bugs**:
   - Initially had issues whereby some projectiles clearly missed units but still counted as collisions.
-   - Addressed by cropping images to content size using photo editing software.
+    - Addressed by cropping images to content size using photo editing software.
   - Some hits would be counted as kills, and kills were dependent on reduced number of enemies.
     - Addressed by introducing `CollisionManager.java` class and revamping the entire collision detection functionality.
 - **JUnit testing**
-  - Unaddressed issues in some tests cases of `Config`, `Controller`, `PauseMenuController`, `LevelParent`, `LevelBoss`.
+  - Requirement of JavaFX to be loaded and some tests failing due to requiring other actions to proceed beforehand
+    - Addressed by using Platform to import the JavaFX library and the usage of delays within tests  
+  - Issues in some tests cases of `Config`, `Controller`, `PauseMenuController`, `LevelParent`, `LevelBoss`.
+    - Unaddressed due to lack of time
 
 
 ---
