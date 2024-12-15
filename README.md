@@ -9,6 +9,18 @@ This game draws heavy inspiration from the **DCS** and **Ace Combat** series, bl
 
 ---
 
+## Table of Contents
+
+ 1. [Compilation Instructions](#compilation-instructions)
+ 2. [Features Implemented](#features-implemented)
+ 3. [Refactoring: New, Modified, Removed Classes](#refactoring)
+ 4. [Features Not Implemented: Not Working, Attempted & Unattempted](#features-not-implemented)
+ 5. [Unexpected Problems](#unexpected-problems)
+ 6. [Change Log](#change-log)
+ 7. [Documentation](#documentation)
+
+---
+
 ## Compilation Instructions
 To compile and run the project, follow these steps:
 
@@ -49,16 +61,15 @@ To compile and run the project, follow these steps:
 - Planes with variable health.
 - New planes: MiG-29, A-10C, C-17.
 - Adjusted levels: Two, Three, Boss.
-- Power-ups (e.g., Sidewinder missiles).
 - Scalable gameplay adjusting to screen size.
 
 ### UI Experience
 - Start Menu.
-- Settings Menu - Resolution Change.
-- Help Menu - Control Description.
-- Pause Menu - restart level, restart game, exit to main menu.
-- End Game Menu - restart level, restart game, exit to main menu.
-- Overlay Cutscenes - show dynamically updatable level actor details upon level instantiation.
+- Settings Menu - Option to Change Resolution.
+- Help Menu - Description for Controls.
+- Pause Menu - Restart level, Restart game, Exit to main menu.
+- End Game Menu - Restart level, Restart game, Exit to main menu.
+- Overlay Cutscenes - Show Dynamically Updatable Level Actor Details Upon Level Instantiation.
 
 ### Audio/Visuals
 #### Visuals:
@@ -87,10 +98,12 @@ To compile and run the project, follow these steps:
 ## Refactoring
 
 ### Goals
-- Reduce redundancies and follow design patterns (SOLID, SRP, Singleton).
+- Reduce redundancies and follow design patterns (SOLID principles).
 
 ### Improvements
+- Most, if not, all variables within the game are handled within the `Config` class to provide a centralized location for all classes to access.
 - Package separation: `actors`, `controllers`, `displays`, `levels`, `managers`, `menus` (each contains a new `package-info.java` class).
+- Managers included for the sake of creating new files for different classes, such as `CollisionManager`, `AudioManager`, `EffectManager`, `StylingManager`.
 - `module-info.java`: Included new requirements for `javafx.media`, `java.desktop`, `java.logging`, along with openings for JavaFX reflections and exports.
 - `pom.xml`: Included a dependency for `javafx.media`.
 - Renamed for better readability:
@@ -99,7 +112,7 @@ To compile and run the project, follow these steps:
   - `ShieldImage` → `ShieldDisplay`.
   - `LevelTwo.java` → `LevelBoss.java`.
 
-## Modified & New Java Classes
+## New, Modified, Removed - Java Classes
 
 ### New Classes
 
@@ -232,15 +245,19 @@ Most, if not, all hard-coded constants within classes were either removed or mov
   - Enhanced boss mechanics with dynamic shields by adding `updateShieldPosition()`, `updateShield()`, and `shouldTakeDamage()` methods.
   - Boss fires different missiles.
 
-- **Projectile.java**: 
+- **Projectile**: 
 Added `getDamage()` and `getImageName()` methods.
 
 - **HeartDisplay, EnemyPlane, UserProjectile, EnemyProjectile, BossProjectile**: 
   - No changes.
 
-## Features Implemented But Not Working
-- **Power-ups**:
-  - The `PowerUp.java` class was created, but no subclasses of it exist yet, nor their implementations, on the basis of lack of time.
+### Removed Classes
+
+- **LevelViewLevelTwo**
+  - Too similar to LevelView in name, doesn't justify the need for another class like it, moved functionality to `LevelBoss.java`
+
+- **Destructible**
+  - Interface too small, moved functionality into `ActiveActorDestructible.java`
 
 ---
 
@@ -249,25 +266,37 @@ Added `getDamage()` and `getImageName()` methods.
 All of these below were not implemented purely on the basis of not having enough time.
 
 ### Features:
+
+**Attempted**:
+- Power-ups:
+  - The `PowerUp.java` class is created, but no subclasses of it exist yet, nor their implementations. The implementation woould be very simple - the addition of another collision handling function in the `CollisionManager`, adding a `PowerUpManager`, adding new values and images for the proposed `HealthPack` and `IncreaseFireRate` powerups in the `Config`, and adding some audio and visual effects through `AudioManager` and `EffectManager`. Some of these are present in a recent commit, but on the basis of lack of time it was rolled back.
+  
+**Unattempted**:
 - Firefight/Endless game mode.
 - Custom game mode: adjust enemies, spawn probabilities, damages.
 - Stat tracking at game end: Time survived, total kills, total hits, projectiles dodged.
 - Day/night cycles.
-- Updated cooldown visualizations and game overlays.
+- Updated gun/missile cooldown visualizations and game overlays.
 - Level Transition cutscene.
 - Changeable keybinds.
 - About menu.
 
 ### Refactoring
-- Custom `Observer` patterns to increase compatibility instead of using old deprecated observer
-- Merging `ActiveActor.java` and `ActiveActorDestructible.java` into one `ActiveActor.java` class
-- Reducing redundant classes through more managers, such as:
+
+**Attempted**:
+- ProjectileFactory: 
+  - Attempted: Due to lack of time, I had to roll back the class a week ago and could not therefore refactor all the `fireProjectile()` methods.
+
+**Unattempted**:
+- Reducing redundant classes and methods through more managers, such as:
   - `ProjectileManager.java` class
   - `PlaneManager.java` class
   - `MenuManager.java` class
   - `HUDManager.java` class
   - `GameEndScreenManager.java` class
 - Putting `Plane`/`Projectile` name constants in `Config.java` instead of using strings when defining `ActorInfo` for `StartOverlay` in each level
+- Custom `Observer` patterns to increase compatibility instead of using old deprecated observer
+- Merging `ActiveActor.java` and `ActiveActorDestructible.java` into one `ActiveActor.java` class
 
 ---
 
@@ -276,18 +305,27 @@ All of these below were not implemented purely on the basis of not having enough
 - **Desync issues**:
   - Game state ends quickly before collision/animation occurs on screen.
     - Addressed by introducing delay buffers.
-  - Game state sometimes spawns a user-fired projectile during the overlay cutscene if the fire button is pressed, but the projectile stays in position until the game starts
-  - In a similar issue with the overlay cutscene, the pause menu can be opened but the game does not pause
+  - Game state sometimes spawns a user-fired projectile during the overlay cutscene if the fire button is pressed, but the projectile stays in position until the game starts.
+    - Unaddressed, assume it's due to the gameloop functionality, or the deprecated observer pattern.
+  - In a similar issue with the overlay cutscene, the pause menu can be opened but the game does not pause.
+    - Unaddressed, assume it's due to the gameloop functionality, or the deprecated observer pattern.
+  - The first audio file played in the game is a bit delayed, possibly due to the way the `AudioClip` method works by loading the clip into memory first, then playing.
+    - Semi-addressed, made sure to play the background audio as soon as the game launches despite itself having a delay, so all following audio clips play without delay.
 - **Resolution changes**:
   - Had a customizable resolution feature, which included a settings menu for users to adjust the resolution on the fly, but elements would not resize correctly post-change.
-    - Addressed by locking resolution change to the start menu, which is to be only run on the first launch before the game is started, thus rolling back the dynamically updatable resolution feature.
-- **ProjectileFactory**: 
-  - Due to lack of time, I had to roll back the class and could not therefore refactor all the `fireProjectile()` methods.
-- **Collision handling bugs**:
-  - Addressed by introducing `CollisionManager.java` class and revamping the entire collision detection functionality.
+    - Semi-addressed by locking resolution change to the start menu, which is to be only run on the first launch before the game is started, thus rolling back the dynamically updatable resolution feature.
 - **Boss mechanics**:
-  - Early respawn bugs resolved by adding destruction checks.
-  - Boss projectiles sometimes stay on screen but do not cause any damage, could be a memory leak issue
+  - Early respawn bugs.
+    - Addressed by adding destruction checks.
+  - Boss projectiles sometimes stay on screen but do not cause any damage.
+    - Unaddressed, could be a memory leak issue or due to the reduced millisecond delay. 
+- **Collision handling bugs**:
+  - Initially had issues whereby some projectiles clearly missed units but still counted as collisions.
+   - Addressed by cropping images to content size using photo editing software.
+  - Some hits would be counted as kills, and kills were dependent on reduced number of enemies.
+    - Addressed by introducing `CollisionManager.java` class and revamping the entire collision detection functionality.
+- **JUnit testing**
+  - Unaddressed issues in some tests cases of `Config`, `Controller`, `PauseMenuController`, `LevelParent`, `LevelBoss`.
 
 
 ---
