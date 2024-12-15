@@ -58,7 +58,6 @@ public class BossHeartDisplay {
 
         // Add health counter label
         this.healthCounter = StyleManager.createStyledLabel("x " + health, false, .025);
-        healthCounter.setStyle("-fx-font-size: 20px; -fx-text-fill: white;");
         container.getChildren().add(healthCounter);
     }
 
