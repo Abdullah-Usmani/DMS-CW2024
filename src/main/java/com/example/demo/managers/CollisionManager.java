@@ -8,6 +8,7 @@ package com.example.demo.managers;
 
 import com.example.demo.Config;
 import com.example.demo.actors.ActiveActorDestructible;
+//import com.example.demo.actors.PowerUp;
 import javafx.scene.Group;
 
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ public class CollisionManager {
     private List<ActiveActorDestructible> enemyUnits;
     private List<ActiveActorDestructible> friendlyProjectiles;
     private List<ActiveActorDestructible> enemyProjectiles;
+//    private List<ActiveActorDestructible> powerUps;
 
     /**
      * Constructs a CollisionManager with the necessary dependencies.
@@ -126,6 +128,19 @@ public class CollisionManager {
             }
         }
     }
+
+//    /**
+//     * Handles collisions between the user's plane and power-ups.
+//     */
+//    private void handlePowerUpCollisions() {
+//        List<CollisionResult> results = detectCollisions(powerUps, friendlyUnits);
+//        for (CollisionResult result : results) {
+//            applyPowerUpEffect(powerUp);
+//            effectManager.createDestructionEffect(result.collisionX, result.collisionY, root);
+//            AudioManager.collisionAudio();
+//            }
+//        }
+//    }
 
     /**
      * Checks if an enemy has penetrated the friendly defenses.

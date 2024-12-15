@@ -104,6 +104,11 @@ public abstract class LevelParent extends Observable {
 	 */
 	private final List<ActiveActorDestructible> enemyProjectiles = new ArrayList<>();
 
+//	/**
+//	 * List of power ups in the level.
+//	 */
+//	protected final List<ActiveActorDestructible> powerUps = new ArrayList<>();
+
 	/**
 	 * The current number of enemy actors.
 	 */
@@ -173,10 +178,17 @@ public abstract class LevelParent extends Observable {
 	protected abstract void spawnEnemyUnits();
 
 	/**
+	 * Spawns power ups in the level.
+	 */
+	protected abstract void spawnPowerUps();
+
+
+	/**
 	 * Updates the scene during each game loop iteration.
 	 */
 	private void updateScene() {
 		spawnEnemyUnits();
+		spawnPowerUps();
 		updateActors();
 		generateEnemyFire();
 		updateNumberOfEnemies();

@@ -7,6 +7,7 @@ package com.example.demo.levels;
 
 import com.example.demo.Config;
 import com.example.demo.actors.BossPlane;
+//import com.example.demo.actors.PowerUp;
 import com.example.demo.displays.ActorInfo;
 import com.example.demo.displays.BossHeartDisplay;
 
@@ -91,6 +92,24 @@ public class LevelBoss extends LevelParent {
 			getRoot().getChildren().add(bossPlane.getShieldDisplay());
 		}
 	}
+
+//	/**
+//	 * Spawns a power-up in the level.
+//	 *
+//	 * @param powerUp The power-up to be spawned.
+//	 */
+//	@Override
+//	protected void spawnPowerUps() {
+//		powerUps.add(powerUp);
+//		getRoot().getChildren().add(powerUp);
+//	}
+//
+//	PowerUp healthPack = new PowerUp(Config.HEALTH_PACK_IMAGE, 30, 30, Config.getScreenWidth(), Math.random() * Config.getScreenHeight(), PowerUp.PowerUpType.HEALTH_PACK);
+//	spawnPowerUp(healthPack);
+//
+//	PowerUp fireRateBoost = new PowerUp(Config.FIRE_RATE_BOOST_IMAGE, 30, 30, Config.getScreenWidth(), Math.random() * Config.getScreenHeight(), PowerUp.PowerUpType.FIRE_RATE_BOOST);
+//	spawnPowerUp(fireRateBoost);
+
 
 	/**
 	 * Checks if the game is over or if the boss has been defeated.
