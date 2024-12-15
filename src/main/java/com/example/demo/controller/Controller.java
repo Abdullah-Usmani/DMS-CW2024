@@ -27,7 +27,7 @@ import com.example.demo.levels.LevelParent;
 public class Controller implements Observer {
 
 	/** The class name for the first level. */
-	public static final String LEVEL_ONE_CLASS_NAME = Config.LEVEL_BOSS_CLASS_NAME;
+	public static final String LEVEL_ONE_CLASS_NAME = Config.LEVEL_ONE_CLASS_NAME;
 
 	/** The primary stage for the application. */
 	private final Stage stage;
