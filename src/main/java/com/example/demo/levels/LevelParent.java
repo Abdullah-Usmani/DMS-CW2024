@@ -177,10 +177,10 @@ public abstract class LevelParent extends Observable {
 	 */
 	protected abstract void spawnEnemyUnits();
 
-	/**
-	 * Spawns power ups in the level.
-	 */
-	protected abstract void spawnPowerUps();
+//	/**
+//	 * Spawns power ups in the level.
+//	 */
+//	protected abstract void spawnPowerUps();
 
 
 	/**
@@ -188,7 +188,7 @@ public abstract class LevelParent extends Observable {
 	 */
 	private void updateScene() {
 		spawnEnemyUnits();
-		spawnPowerUps();
+//		spawnPowerUps();
 		updateActors();
 		generateEnemyFire();
 		updateNumberOfEnemies();
