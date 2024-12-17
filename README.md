@@ -269,7 +269,7 @@ All of these below were not implemented purely on the basis of not having enough
 
 **Attempted**:
 - Power-ups:
-  - The `PowerUp.java` class is created, but no subclasses of it exist yet, nor their implementations. The implementation woould be very simple - the addition of another collision handling function in the `CollisionManager`, adding a `PowerUpManager`, adding new values and images for the proposed `HealthPack` and `IncreaseFireRate` powerups in the `Config`, and adding some audio and visual effects through `AudioManager` and `EffectManager`. Some of these are present in a recent commit, but on the basis of lack of time it was rolled back.
+  - The `PowerUp.java` class is created, but no subclasses of it exist yet, nor their implementations. The implementation would be very simple - the addition of another collision handling function in the `CollisionManager`, adding a `PowerUpManager`, adding new values and images for the proposed `HealthPack` and `IncreaseFireRate` powerups in the `Config`, and adding some audio and visual effects through `AudioManager` and `EffectManager`. Some of these are present in a recent commit, but on the basis of lack of time it was rolled back.
   
 **Unattempted**:
 - Endless game mode - similar to the waves in the Firefight mode from the HALO series
