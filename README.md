@@ -169,13 +169,13 @@ To compile and run the project, follow these steps:
 - **PowerUp**:
   - Implements power-up logic and effects.
 
-- **LevelTwo.java, LevelThree**:
+- **LevelTwo, LevelThree**:
   - New levels of the game that contain 2 and 3 types of enemies respectively.
 
-- **EnemyPlane2.java, EnemyPlane3**:
+- **EnemyPlane2, EnemyPlane3**:
   - New planes having 2 and 3 health, and being replicas of the MiG-29 and A-10C aircraft respectively.
 
-- **UserMissile.java, EnemyProjectile2**:
+- **UserMissile, EnemyProjectile2**:
   - New projectiles having 3 damage each and being replicas of the Sidewinder and R-33 missiles respectively.
 
 ### Modified Classes
