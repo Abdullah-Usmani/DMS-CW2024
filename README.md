@@ -1,9 +1,6 @@
 # F-15: Strike Eagle (DMS-CW2024)
 ---
 
- **Abdullah Usmani** - 20615297  
-  [Github Repository](https://github.com/Abdullah-Usmani/DMS-CW2024.git)
-
 ## About
 This game draws heavy inspiration from the **DCS** and **Ace Combat** series, blending their iconic mechanics and art styles to deliver an engaging aerial combat experience. The art style is rooted in modern-day aircraft and air combat, showcasing the F-15 as the centerpiece. Known for its reliability and air-to-air superiority in real-life scenarios, the F-15 takes the spotlight as the ultimate fighter jet in this game.
 
